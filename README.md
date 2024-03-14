@@ -1,11 +1,11 @@
 <div align="center">
-<h1>100 days of Python</h1>
+<h1>Web Application Development with Python Level 04 Batch 03</h1>
 </div>
 
 </br>
 
 <details>
-<summary>Day-01</summary>
+<summary>Day-01-Environment & Django Setup (13-03-2024)</summary>
     
 ## Day 01 Topic:
 
