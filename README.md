@@ -20,7 +20,7 @@
 
 `python 3.11.8`
 
-> Make sure add to path is tick while installing or manually need to be added.
+> Make sure `add to path` is tick while installing or manually need to be added.
 
 ### Environment Setup:
 
@@ -111,7 +111,7 @@ python manage.py runserver
 
 ### Database migrations
 
-Always perform makemigrations first to initialize the schema (overal database sctructures initialization)
+Always perform makemigrations first to initialize the schema (overal database structures initialization)
 
 ```bash
 py manage.py makemigrations
@@ -121,7 +121,7 @@ Now do this:
 ```bash
 py manage.py migrate
 ```
-- Download [dbsqlite](https://sqlitebrowser.org/dl/) and install to see the `db.sqlite3` table
+- Download [DB Browser for SQLite](https://sqlitebrowser.org/dl/) and install to see the `db.sqlite3` table or in VSCode install [SQLite Viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer) extension
 
 ### Super user:
 To create superuser:
@@ -207,7 +207,7 @@ Similarly more pages can be added
 ### Task
   - Learn all predefined variables in `settings.py`
   - Learn all predefined variables in `urls.py`
-  - Write notes on [commands](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir) (e.g: `dir`,`cd` etc)
+  - Write notes on [commands](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) (e.g: `dir`,`cd` etc)
   - Submit a video of today's class
 
 </details>
