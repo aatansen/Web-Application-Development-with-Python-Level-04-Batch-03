@@ -7,7 +7,7 @@
 <details>
 <summary>Day-01-Environment & Django Setup (13-03-2024)</summary>
     
-## Day 01 Topic:
+## Day 01 Topics:
 
 - Python Install
 - Environment Setup
@@ -209,5 +209,86 @@ Similarly more pages can be added
   - Learn all predefined variables in `urls.py`
   - Write notes on [commands](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) (e.g: `dir`,`cd` etc)
   - Submit a video of today's class
+
+</details>
+
+<details>
+<summary>Day-02-Extra & Assignment Notes</summary>
+
+## Day-02-Extra Topics:
+
+- Windows Commands
+- Exploring settings.py & urls.py
+
+### Windows Commands
+
+1. `mkdir Make Directory`: This command is used to create a new directory or folder.
+Example: `mkdir MyFolder`
+2. `cd (Change Directory)`: This command is used to change the current directory.
+Example: `cd MyFolder`, `cd ..`
+3. `dir (Directory Listing)`: This command is used to list the contents of a directory.
+Example: `dir`.
+Also by passing `/b` parameter output will be simple: `dir /b`
+4. `echo`: This command is used to display a line of text/string on the console.
+Example: `echo Hello, Tansen!`.
+Text can be saved in file also like this: `echo Hello, Tansen! >> textfile.txt`
+5. `copy`: This command is used to copy one or more files from one location to another.
+Example: `copy file1.txt Destination_Path`
+6. `xcopy`: This command is used to copy files and directories, including subdirectories.
+Example: `xcopy source_folder destination_folder`
+7. `move`: This command is used to move files from one location to another.
+Example: `move file1.txt Destination_Path`
+8. `ren (Rename)`: This command is used to rename a file or directory.
+Example: `ren oldfilename.txt newfilename.txt`
+9. `del (Delete)`: This command is used to delete one or more files.
+Example: `del file1.txt`
+10. `rmdir (Remove Directory)`:This command is used to delete a directory.
+Example: `rmdir MyFolder`
+11. `type`:This command is used to display the contents of a text file.
+Example: `type file.txt`
+12. `tree`: This command is used to display the folder structure of a directory and its subdirectories as a tree diagram.
+Example: `tree`
+13. `find`: This command is used to search for a specific text string in files.
+Example: `find "search_term" file.txt`
+14. `fc (File Compare)`: This command is used to compare the contents of two files or sets of files.
+Example: `fc file1.txt file2.txt`
+15. `attrib (Attribute)`: This command is used to display or change file attributes (such as hidden, read-only).
+Example: `attrib +h file.txt` Here changing this command with `-h` will do the revert: `attrib -h file.txt`
+
+### Exploring settings.py & urls.py
+
+1. **BASE_DIR**: This variable represents the base directory of Django project.
+
+2. **SECRET_KEY**: This is a secret key used by Django for cryptographic signing and protect user session data.
+
+3. **DEBUG**: This is a boolean that determines whether project is in debug mode or not.Debug mode provides more detailed error pages and enables other debugging tools.
+
+4. **ALLOWED_HOSTS**: This is a list of strings representing the host/domain names that Django site can serve. It's a security measure to prevent HTTP Host header attacks.
+
+5. **INSTALLED_APPS**: This is a list of strings representing the names of all Django applications that are activated in the Django instance.
+
+6. **MIDDLEWARE**: Middleware are hooks into Django's request/response processing. They're executed in the order listed, and they can modify request/response objects, handle exceptions, and perform other operations.
+
+7. **ROOT_URLCONF**: This is the Python path to project's root URL configuration. It's the module that contains URL patterns.
+
+8. **TEMPLATES**: This is a list of dictionaries representing the configuration of Django's template engine. It specifies template directories, template loaders, and context processors.
+
+9. **WSGI_APPLICATION**: This is the Python path to the WSGI application object that Django's built-in server use.
+
+10. **DATABASES**: This is a dictionary containing the configuration of all database connections used by Django project. Default database engine SQLite is used.
+
+11. **AUTH_PASSWORD_VALIDATORS**: This is a list of validators that are used to validate user passwords. These validators enforce various password policies like minimum length, common password checks, etc.
+
+12. **LANGUAGE_CODE**: This is the language code that is used in certain parts of Django's infrastructure.
+
+13. **TIME_ZONE**: This is the time zone used to represent datetimes in the correct time zone.
+
+14. **USE_I18N** and **USE_TZ**: These are boolean flags that control internationalization and time zone support in Django.
+
+15. **STATIC_URL**: This is the URL prefix for static files (CSS, JavaScript, images, etc.) served by Django's static file server.
+
+16. **DEFAULT_AUTO_FIELD**: This is the default primary key field type to use for models that don't have a primary key field explicitly defined. In this case, it's set to use `BigAutoField`, which is a 64-bit integer primary key field that automatically increments.
+
+17. **urlpatterns**: This is a list of URL patterns that Django uses to match incoming browser requests to views within Django application.
 
 </details>
