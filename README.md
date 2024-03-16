@@ -222,7 +222,7 @@ Similarly more pages can be added
 
 ### Windows Commands
 
-1. `mkdir Make Directory`: This command is used to create a new directory or folder.
+1. `mkdir (Make Directory)`: This command is used to create a new directory or folder.
 Example: `mkdir MyFolder`
 2. `cd (Change Directory)`: This command is used to change the current directory.
 Example: `cd MyFolder`, `cd ..`
