@@ -294,7 +294,7 @@ Example: `attrib +h file.txt` Here changing this command with `-h` will do the r
 </details>
 
 <details>
-<summary>Day-03 Render Template, Dictionary DS , Template Language (16-03-2024)</summary>
+<summary>Day-03-Render Template, Dictionary DS , Template Language (16-03-2024)</summary>
 
 ## Day 03 Topics:
 
@@ -402,4 +402,114 @@ In `tableData.html` file:
 - Create a table and view it
 - Get a table from external source [Fancy HTML CSS table](https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy) and create 5 html pages
 - Dynamically change table data from backend using dictionary data structure & template laguage
+</details>
+
+<details>
+<summary>Day-04-Template Mastering, Navigation, url,include,block,extends (18-03-2024)</summary>
+
+## Day 04 Topics:
+
+- Day 3 recap
+- Template mastering
+- Organize reuse code
+- Day 04 Recap
+
+### Template mastering
+- clicking on navbar any section change other element of the page
+- In template mastering we reuse same element again and again. e.g: navbar
+
+Create a navbar (get it from [external source](https://www.w3schools.com/css/tryit.asp?filename=trycss_navbar_horizontal_black_right))
+
+Now in created `home.html`:
+```html
+<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li style="float:right"><a class="active" href="#about">About</a></li>
+</ul>
+```
+
+Now in `urls.py` file there is `path('home/', home,name='home')` where `name='home'` needs to be added in `href` like this: `href="{% url 'home' %}"`:
+```html
+<ul>
+  <li><a href="{% url 'home' %}">Home</a></li>
+  <li><a href="{% url 'news' %}">News</a></li>
+  <li><a href="{% url 'contact' %}">Contact</a></li>
+  <li style="float:right"><a class="active" href="{% url 'about' %}">About</a></li>
+</ul>
+```
+### Organize reuse code
+
+create a new `navbar.html` and add:
+```html
+<ul>
+  <li><a href="{% url 'home' %}">Home</a></li>
+  <li><a href="{% url 'news' %}">News</a></li>
+  <li><a href="{% url 'contact' %}">Contact</a></li>
+  <li style="float:right"><a class="active" href="{% url 'about' %}">About</a></li>
+</ul>
+```
+
+now include it in `home.html`:
+```html
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+</body>
+</html>
+```
+
+Now to use it in every page , block content need to be added in `home.html`:
+```html
+<body>
+
+{% include 'navbar.html' %}
+
+{% block content %}
+<h1>This is home page</h1>
+{% endblock content %}
+</body>
+```
+now let's add in `about.html`:
+first `home.html` need to be extend then all content need to be in `block` content:
+```html
+{% extends 'home.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This about page</h1>
+</body>
+</html>
+{% endblock content %}
+``` 
+
+### Day 04 Recap:
+- Day 03 recap
+- In Virtual environment Start Django Project with DB migrate & superuser
+- Initialize Django static file
+- Get a navbar from [external source](https://www.w3schools.com/css/tryit.asp?filename=trycss_navbar_horizontal_black_right)
+- Create a `template` folder `manage.py` file location
+- Create a `index.html` file  inside `template` folder and view the navbar
+- Template mastering
+  - Now create individual other 3 pages (news,contact,about)
+  - Make those navbar navigation working (hypertext reference `href`)
+  - Stick navbar on each page (Organize reused code)
+    - url
+    - Include
+    - block
+    - Extend
+
+### Task
+- Upload today's recap video 
+- Django Models
+
 </details>
