@@ -292,3 +292,114 @@ Example: `attrib +h file.txt` Here changing this command with `-h` will do the r
 17. **urlpatterns**: This is a list of URL patterns that Django uses to match incoming browser requests to views within Django application.
 
 </details>
+
+<details>
+<summary>Day-03 Render Template, Dictionary DS , Template Language (16-03-2024)</summary>
+
+## Day 03 Topics:
+
+- Day 2 recap
+- Render template
+- Show table data dinamically using dictionary
+- Notes on dictionary
+- Now Recap
+
+### Render template
+Create a folders `static`, `Template` in project directory where `manage.py` is present.
+Now in `settings.py` add `STATICFILES_DIRS`:
+```python
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    "/var/www/static/",
+]
+```
+Now in `TEMPLATES`'s `DIRS` list add these:
+```python
+'DIRS': [BASE_DIR, "Template"],
+```
+Now similarly in `views.py` file `return render(request,'homePage.html')` will be added as below:
+```python
+from django.shortcuts import render,redirect,HttpResponse
+
+def homePage(request):
+    return render(request,'homePage.html')
+```
+Now in `urls.py` this will be added:
+```python
+from first_project.views import homePage
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('homePage/',homePage,name='homePage'),
+]
+```
+### Show table data dinamically using dictionary
+In `views.py` file:
+```python
+from django.shortcuts import render,redirect,HttpResponse
+
+def tableData(request):
+    myDict={
+        'name':'Tansen',
+        'department':'CSE',
+        'city':'Dhaka',
+        'name2':'Shakil',
+        'department2':'EEE',
+        'city2':'Barisal',
+    }
+
+    return render(request,'tableData.html',myDict)
+```
+In `urls.py` file:
+```python
+from django.contrib import admin
+from django.urls import path
+from first_project.views import homePage,contactPage,orderPage,paymentPage,productPage,navBar,tableData
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('tableData',tableData,name='tableData'),
+
+]
+```
+In `tableData.html` file:
+```html
+<table id="info">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+  </tr>
+  <tr>
+    <td>{{name}}</td>
+    <td>{{department}}</td>
+    <td>{{city}}</td>
+  </tr>
+  <tr>
+    <td>{{name2}}</td>
+    <td>{{department2}}</td>
+    <td>{{city2}}</td>
+  </tr>
+
+</table>
+```
+### Notes on dictionary
+- Dictionary is `key - value` pair
+
+### Day 03 Recap:
+- Day 02 recap
+  - Create environment
+  - Activate environment
+  - Install necessary package (django)
+  - Create a project
+  - Run the project and view in browser
+  - Now migrate database
+  - View the database
+  - Create super user
+  - Now Create function of 5 pages in `views.py`
+  - Import those fuction in `urls.py` and add 5 pages path in `urlpatterns`
+  - View those pages in browser
+- Render template (`HTML` files)
+- Create a table and view it
+- Get a table from external source [Fancy HTML CSS table](https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy) and create 5 html pages
+- Dynamically change table data from backend using dictionary data structure & template laguage
+</details>
