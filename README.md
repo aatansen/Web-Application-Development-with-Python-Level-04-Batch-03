@@ -513,3 +513,254 @@ first `home.html` need to be extend then all content need to be in `block` conte
 - Django Models
 
 </details>
+
+<details>
+<summary>Day-05-App,Models,Entity & Attribute (19-03-2024)</summary>
+    
+## Day 05 Topics:
+- Day 4 recap
+- Create Django app
+- Install app
+- Models
+- Database note
+- Configure admin
+- Make created object table name more identical
+
+### Create Django app
+for creating django app:
+```bash
+py manage.py startapp myapp
+```
+This command will create myapp project with additional files
+### Install app
+inside settings.py there is `INSTALLED_APPS` where we have to add our `myapp`
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'myapp',
+]
+```
+### Models
+Now in created `myapp` there is `models.py` file where we will create models (database data/table) :
+```python
+from django.db import models
+
+# Create your models here.
+class studentModel(models.Model):
+    name=models.CharField(max_length=100)
+    roll=models.CharField(max_length=100)
+    department=models.CharField(max_length=100)
+    city=models.CharField(max_length=100)
+```
+### Database note
+`Entity` - Table initial column names (e.g.: name,roll,department,city)
+
+`Attribute` - values of entities (Tansen,05,CSE,Dhaka)
+
+**Whenever we change anything in models we must perform:**
+```bash
+py manage.py makemigrations
+```
+```bash
+py manage.py migrate
+```
+### Configure admin
+Now in `admin.py` which is in `myapp` we need to import the created model and register it.
+```python
+from django.contrib import admin
+
+from myapp.models import studentModel
+
+# Register your models here.
+
+admin.site.register(studentModel)
+```
+### Make created object table name more identical
+In `models.py` file inside `myapp` we need to add `__str__` functions:
+```python
+from django.db import models
+
+# Create your models here.
+class studentModel(models.Model):
+    name=models.CharField(max_length=100)
+    roll=models.CharField(max_length=100)
+    department=models.CharField(max_length=100)
+    city=models.CharField(max_length=100)
+
+    # this will make the table name more identical:
+    def __str__(self):
+        return f"{self.name}-{self.department}-{self.roll}"
+```
+### Quick Recap:
+- App
+- Model
+- Site Register
+- Create
+
+### Day 05 Recap:
+- Create Django project in virtual environment
+- Initialize database (migrate)
+- Create superuser (admin)
+- Models
+    - Create Django app
+    - Install app (`in settings.py`)
+    - Create some models
+    - Configure admin (`site register`)
+    - Migrate database (`Whenever changes in models`)
+    - View and add data in created models
+
+### Task
+- Create 5 apps, 5 models, each model with 3 entity
+- Submit video
+
+</details>
+
+<details>
+<summary>Day-05-Extra & Assignment Notes</summary>
+
+## Notes on creating 5 apps, 5 models & 3 entity for each
+
+### blogapp
+
+- BlogModel
+    - blog_title
+    - blog_date
+    - blog_category
+
+- NewsModel
+    - news_headings
+    - news_date
+    - news_category
+
+- CommentModel
+    - comment_text
+    - comment_date
+    - commenter_name
+
+- AuthorModel
+    - author_name
+    - author_bio
+    - author_email
+
+- TagModel
+    - tag_name
+    - tag_description
+    - tagged_items
+
+
+### kidsapp
+
+- KidModel
+    - kid_name
+    - kid_age
+    - kid_gender
+
+- ToyModel
+    - toy_name
+    - toy_category
+    - toy_price
+
+- RatingModel
+    - rating_value
+    - rating_date
+    - reviewer_name
+
+- ManufacturerModel
+    - manufacturer_name
+    - manufacturer_location
+    - manufacturer_contact
+- LocationModel
+    - location_name
+    - location_description
+    - location_address
+
+### portfolioapp
+
+- PortfolioModel
+    - project_title
+    - project_description
+    - project_date
+
+- ExperienceModel
+    - company_name
+    - job_title
+    - employment_duration
+
+- SkillModel
+    - skill_name
+    - skill_category
+    - skill_proficiency
+
+- EducationModel
+    - institution_name
+    - degree_obtained
+    - graduation_year
+
+- ProjectCategoryModel
+    - category_name
+    - category_description
+    - categorized_projects
+
+
+### ecommerceapp
+
+- ProductModel
+    - product_name
+    - product_price
+    - product_quantity
+
+- OrderModel
+    - order_number
+    - order_date
+    - customer_name
+
+
+- ReviewModel
+    - review_text
+    - review_date
+    - product_id
+
+- SellerModel
+    - seller_name
+    - seller_email
+    - seller_location
+
+- PaymentModel
+    - payment_method
+    - payment_date
+    - payment_amount
+
+
+### aiapp
+
+- aiModel
+    - ai_name
+    - ai_usages
+    - ai_category
+
+- TaskModel
+    - task_name
+    - task_deadline
+    - task_priority
+
+- DatasetModel
+    - dataset_name
+    - dataset_format
+    - dataset_size
+
+- ExperimentModel
+    - experiment_name
+    - experiment_date
+    - experiment_results
+
+- UserModel
+    - user_name
+    - user_email
+    - user_role
+
+</details>
