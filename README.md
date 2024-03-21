@@ -764,3 +764,243 @@ class studentModel(models.Model):
     - user_role
 
 </details>
+
+<details>
+<summary>Day-06-Reading Data from Database and Displaying it in Frontend (20-03-2024)</summary>
+
+## Day 06 Topics:
+
+- Day 5 recap
+- Render html recap
+- Navbar recap
+- Read database data and show in frontend
+- Common errors
+- Task
+
+### Read database data and show in frontend
+Create a model in `models.py`:
+```python
+class BlogModel(models.Model):
+    blog_title = models.CharField(max_length=100)
+    blog_author = models.CharField(max_length=100)
+    blog_date = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.blog_title
+```
+Now register `BlogModel` in `admin.py`:
+```python
+from blogapp.models import BlogModel,AuthorModel,CommentModel,ReviewModel,TagModel
+# Register your models here.
+
+admin.site.register(BlogModel)
+```
+Now perform database migrations:
+```bash
+py manage.py makemigrations
+py manage.py migrate
+```
+Now Let's enter some data from admin site and prepare to show it in frontend:
+create a `template` folder in `manage.py` directory and create `index.html` get a navbar from [external source](https://www.w3schools.com/css/tryit.asp?filename=trycss_navbar_horizontal_black_right) , make sure to add `template` dir in `settings.py` file: `'DIRS': [BASE_DIR, 'templates']`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li style="float:right"><a class="active" href="#about">About</a></li>
+</ul>
+<h1>This is home page</h1>
+</body>
+</html>
+```
+Now create separate `navbar.html` and only cut `ul` there:
+```html
+<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li style="float:right"><a class="active" href="#about">About</a></li>
+</ul>
+```
+Now in `index.html` do the template mastering using `include` and `block`:
+```html
+{% include 'navbar.html' %}
+{% block content %}
+<h1>This is home page</h1>
+{% endblock content %}
+```
+Now when creating others page we just need to `extends` `index.html` and `block content` will be that page content. e.g:
+```html
+{% extends 'index.html' %}
+{% block content %}
+<h1>This is news page</h1>
+{% endblock content %}
+```
+Now lets add it in `views.py`
+```python
+from django.shortcuts import render,redirect,HttpResponse
+from blogapp.models import BlogModel,AuthorModel,CommentModel,ReviewModel,TagModel
+
+def home(request):
+    blog=BlogModel.objects.all()
+    myDict={
+        'blog':blog
+    }
+    return render(request,'index.html',myDict)
+```
+here `blog=BlogModel.objects.all()` to read `blogModel` data from database. now set `url.py`'s `urlpatterns`:
+```python
+path('home/',home,name='home'),
+```
+Now let's add a table from [external source](https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy):
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+</style>
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+{% block content %}
+<h1>This is blog page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>A Fancy Table</h1>
+
+<table id="customers">
+  <tr>
+    <th>Blog Title</th>
+    <th>Blog Author</th>
+    <th>Blog Date</th>
+  </tr>
+
+  {% for i in blog %}
+  <tr>
+    <td>{{i.blog_title}}</td>
+    <td>{{i.blog_author}}</td>
+    <td>{{i.blog_date}}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+</body>
+</html>
+
+{% endblock content %}
+    
+</body>
+</html>
+
+```
+Here `{% for i in blog %}`is used to loop through the `blog`. Similarly other model will be created and read the data from database to show it in frontend.
+###  Common errors
+- `OperationalError`: When `makemigrations` / `migrate` not performed and try to access database data, it will give `OperationalError`
+- `Value not Assign`: This error occurs sometimes, to solve this error inside `app`'s `models.py` file set `null=True` e.g: `author_name=models.CharField(max_length=100, null=True)`
+
+### Day 06 Recap:
+- Create project & app under virtual environment
+- Migrate db & create superuser
+- Create 5 models, 5 navbar for each model
+- Read the database data
+- Show the data in frontend
+
+### Task
+- Presentation from day 1 to day 6
+- submit video (youtube)
+- 1 app, 5 model, 5 navbar
+
+</details>
