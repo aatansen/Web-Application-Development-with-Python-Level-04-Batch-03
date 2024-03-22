@@ -1004,3 +1004,55 @@ Here `{% for i in blog %}`is used to loop through the `blog`. Similarly other mo
 - 1 app, 5 model, 5 navbar
 
 </details>
+
+<details>
+<summary>Day-06-A Quick Recap from Day 01 to Day 06</summary>
+
+1. Create and active environment
+    - `py -m venv env`
+    - `./env/Scripts/activate`
+2. Create django project
+    - `django-admin startproject my_project`
+    - `cd my_project`
+    - `py manage.py runserver`
+3. Migrate database
+    - `py manage.py makemigrations`
+    - `py manage.py migrate`
+4. Create superuser
+    - `py manage.py createsuperuser`
+5. Show simple text on website
+    - Create a `views.py` within prject directory
+    - Use `HttpResponse` to view a simple `Text/String`
+    - import created function in `urls.py` file and add `urlpatterns` path
+6. Render a simple html page
+    - First add django static file path setting in `settings.py` file
+    - Create `template` folder in `manage.py` directory
+    - Now create a `html` file within `template` folder
+    - Go to project directory and create a function to render the created `html` file.
+7. Show a simple table in html page
+    - After doing `6th` step, create a simple table with html `table tag`
+8. Get a table from external source and view it
+    - Get a `fancy table` from `w3school`
+9. Now send table data from backend
+    - In `views.py` where `function` is defined add a `dictionary` there and `return` it
+10. Get a navbar from external source
+    - Get a horizontal `navbar` from `w3school`
+11. By template mastering separate navbar and use on other pages
+    - Create a `navbar.html` file
+    - Now use `include` in `index.html` page to show the navbar in index page
+    - Use `block content` to show the content
+    - For other pages use `extends`
+12. Now Create a app and model
+    - `py manage.py startapp blogapp`
+    - Add this app name in `settings.py` file within `INSTALLED_APPS`
+    - Now in created `blogapp` there is `models.py`
+    - Create a `Model` and register it in `admin.py`
+    - Each time changes in `models.py` do `py manage.py makemigrations` and `py manage.py migrate`
+13. Now show the created model data in frontend
+    - Create a `blog.html` put table data here using `block content` and `extends` `index.html` at first line which will include the `navbar`
+    - In views.py import the created `model`. Create a function and get the model data in a `varible` using `objects.all()`. Now create a `dictionary` and assign it with the `variable` of `model data`. return the dictionary.
+    - Now add `path` in `urls.py` file
+    - Go to `navber.html` and add `url` with created `path name`
+    - In `blog.html` create a for `loop` to show the model data
+
+</details>
