@@ -1056,3 +1056,34 @@ Here `{% for i in blog %}`is used to loop through the `blog`. Similarly other mo
     - In `blog.html` create a for `loop` to show the model data
 
 </details>
+
+<details>
+<summary>Day-07-Exam Day 01 Practical Exam (23-03-2024)</summary>
+
+## Exam Day 01 on Day-06 task (Practical Exam)
+### Question:
+- Create a studentModel with all the functionality you have learned from day 01 to day 06:
+  - Create a folder as 'your_name'
+  - Create Django project within virtual environment
+  - Create a app for model creation
+  - Include a navbar for navigation
+  - Do template mastering
+  - Fetch the data from database to frontend
+  - Show the student model data in frontend
+
+</details>
+
+<details>
+<summary>Day-08-Exam Day 02 Written Exam (24-03-2024)</summary>
+
+## Exam Day 02 on Day-06 task (Written Exam)
+### Question:
+- 5 MCQ Question
+- 8 Short Question
+- 2 Practical Question
+
+### Task : 
+- Poster presentation based on Day 01 to Day 06
+- Oral test tommorow (25-03-2024)
+
+</details>
