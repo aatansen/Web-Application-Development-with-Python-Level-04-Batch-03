@@ -1082,8 +1082,52 @@ Here `{% for i in blog %}`is used to loop through the `blog`. Similarly other mo
 - 8 Short Question
 - 2 Practical Question
 
+### MCQ Question
+Which of the following is not a component of a Django project?
+  - [ ] Views
+  - [ ] Models
+  - [ ] Controllers
+  - [ ] Templates
+
+What is the purpose of the urls.py file in Django?
+  - [ ] To define the structure of the database
+  - [ ] To specify the URL patterns of the routing
+  - [ ] To configure project-wide settings
+  - [ ] To define HTML templates
+
+What command is used to create a new Django project?
+  - [ ] django new
+  - [ ] django startproject
+  - [ ] django create
+  - [ ] django init
+
+In Django, which file is used to define database models?
+  - [ ] views.py
+  - [ ] models.py
+  - [ ] settings.py
+  - [ ] admin.py
+
+What command is used to apply database migrations in Django?
+  - [ ] manage.py apply
+  - [ ] manage.py migrate
+  - [ ] manage.py update
+  - [ ] manage.py deploy
+
+### Short Question
+1. Describe the purpose of urls.py, models.py, admin.py
+2. Which files is responsible for defining the database settings for a Django project?
+3. What are migrations in Django? Explain the purpose of the `manage.py makemigrations` and `manage.py migrate` commands.
+4. How do you define URL patterns in Django's `urls.py`
+5. What is the purpose of the `settings.py` file in Django?
+6. What is the purpose of Django's template language?
+7. What is the default database used by Django and how do you configure it?
+8. Explain the concept of the middleware in Django
+
+### Practical Question
+- Create a Django project named "myproject" and an app named "myapp". Define a model in "myapp" with fields: name (CharField) and age (IntegerField)
+- Write a function-based view in Django to render a simple HTML template that displays "Hello, World!"
 ### Task : 
-- Poster presentation based on Day 01 to Day 06
-- Oral test tommorow (25-03-2024)
+- Poster presentation based on Day 01 to Day 06 (27-03-2024)
+- Oral test tomorrow (25-03-2024)
 
 </details>
