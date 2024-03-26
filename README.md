@@ -1131,3 +1131,152 @@ What command is used to apply database migrations in Django?
 - Oral test tomorrow (25-03-2024)
 
 </details>
+
+<details>
+<summary>Day-09-Django CRUD Add Operation From Frontend (25-03-2024)</summary>
+
+## Day 09 Topics:
+- Day 01 - 06 recap
+- Oral test
+- Model add operation from frontend
+- null = True explained
+- An error after modifying previous saved model (null return typeError)
+- Day 09 Recap
+- Task
+
+### Model add operation from frontend
+Create a form page `addstudent.html`
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<body>
+
+<h3>Using CSS to style an HTML Form</h3>
+
+<div>
+  <form action="{% url 'addstudent' %}" method="POST">
+    {% csrf_token %}
+    <label for="fname">Name</label>
+    <input type="text" id="fname" name="name" placeholder="Your name..">
+
+    <label for="lname">Department</label>
+    <input type="text" id="lname" name="department" placeholder="Your Department">
+    <label for="lname">City</label>
+    <input type="text" id="lname" name="city" placeholder="Your City">
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>
+{% endblock content %}
+    
+```
+- Here method will be always `POST`
+- Here action url will be the name value from `urls.py` file of `addstudent`
+- `csrf_token` is used for security
+- Here `name="department"` is important as we will get the form value by this
+
+Now add a function in `views.py` as below:
+```python
+def addstudent(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        
+        student=studentModel(
+            Name=name,
+            Department=department,
+            City=city,
+        )
+        
+        student.save()
+        return redirect('student')
+    return render(request,'addstudent.html')
+```
+- Here if `request.method=='POST'` is true then we will get the value from form by `POST` method 
+- Then we will add those value in our previously created model which is `studentModel`
+- After that save the model and in frontend user will be redirected to `student.html` page
+
+### null = True explained
+Sometimes we get error while migrating a model. a common solution is adding `null=True`:
+```python
+class studentModel(models.Model):
+    Name=models.CharField(max_length=100,null=True)
+    Department=models.CharField(max_length=100,null=True)
+    City=models.CharField(max_length=100,null=True)
+```
+For example let's assume we created a model with 3 entity and work with that but after sometimes when we add a new entity to that model an error will occur as empty value is being assign to the model. so to add that new entity we have to explicitly add `null=True` to add that new entity as empty null value.
+
+### An error after modifying previous saved model (null return typeError)
+This error occur as below:
+```python
+class studentModel(models.Model):
+    Name=models.CharField(max_length=100)
+    Department=models.CharField(max_length=100)
+    City=models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.Name
+```
+In this code when we have modified our studentModel entity `return self.Name` will throw an error of type error. commenting this will solved it.
+### Day 09 Recap:
+- Create Django Models with 5 add operation in frontend
+  - Create django project & app in virtual environment
+  - Setup app, static, template files
+  - Create 5 navigation pages in navbar with table to show the added data
+    - Student Table
+    - Mark Table
+    - Teacher Table
+    - Subject Table
+    - University Table
+  - Create 5 more navigation pages in navbar to add data from frontend
+    - Add Student
+    - Add Mark
+    - Add Teacher
+    - Add Subject
+    - Add University
+  - Create form for each 5 add operation pages
+
+### Task
+- Create 5 add operation pages and show the data in table
+
+
+</details>
