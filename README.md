@@ -1280,3 +1280,147 @@ In this code when we have modified our studentModel entity `return self.Name` wi
 
 
 </details>
+
+<details>
+<summary>Day-10-Django CRUD Delete Operation From Frontend (27-03-2024)</summary>
+
+## Day 10 Topics
+- Day 09 recap
+- Oral test
+- Two annoying error (comma method in form, model return type error)
+- Delete operation
+- Special notes (return , redirect error)
+- Exam Result
+- Task
+
+### Oral test:
+- Explain urlpatterns (It define to specific path route to handle the request)
+- How navigation route is working explain (from urls.py to views.py there request handle the request and fetch the required data to show in the defined html page)
+- Explain models.Model and what will happened if we don't use it (in models.Model module SQL is defined)
+- Explain Database concept (Entity,attribute,default value,primary key, etc.....)
+- How database is configure by settings.py and not models.py (initially everything is configure in settings.py file)
+- What we will find if we break database (answer: table)
+
+### Two annoying error
+The first one is form submit stay in the same page after submitting
+```html
+<div>
+  <form action="{% url 'addstudent' %}" method="POST">
+    {% csrf_token %}
+    <label for="fname">Name</label>
+    <input type="text" id="fname" name="name" placeholder="Your name..">
+
+    <label for="lname">Department</label>
+    <input type="text" id="lname" name="department" placeholder="Your Department">
+    <label for="lname">City</label>
+    <input type="text" id="lname" name="city" placeholder="Your City">
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+```
+- `<form action="{% url 'addstudent' %}" method="POST">` if this line is include comma between `{% url 'addstudent' %}",method="POST"` this cause the page stay in the same page even after submit.
+
+Second one is model return type error
+```python
+ class studentModel(models.Model):
+    Name=models.CharField(max_length=100)
+    Department=models.CharField(max_length=100)
+    City=models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.Name
+```
+- In here `self.Name` return will give error when there is `max_length=100,null=True` it is because when explicitly adding new entity we have to make it `null=True` but by doing this when `return` is trying to access `Name` it get `None` so that causes error. Deleting the value will solved it.
+
+### Delete operation
+Go to table html page and add as below `Action column` and Delete url with id:
+```html
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+```
+Now in `views.py` file add a function named `deleteStudent`
+```python
+def deleteStudent(request,myid):
+    student=studentModel.objects.get(id=myid)
+    student.delete()
+    return redirect('student')
+```
+In `urls.py` file add as below:
+```python
+from django.contrib import admin
+from django.urls import path
+from d10_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteStudent
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+]
+```
+### Special notes
+- When a function is defined but not return or redirect to anything than an error will occur
+  ```python
+  def deleteStudent(request,myid):
+      student=studentModel.objects.get(id=myid)
+      student.delete()
+  ```
+- This will do the delete but after that will show an error page with `deleteStudent didn't return an HttpResponse object it returned None Instead`
+
+## Exam Result
+- **Practical** --> 25/25 (Completed the task in 17 minutes ; time limit was 30 minutes)
+- **Written** --> 21/25 (Short question database configure answer was `settings.py`, Others question need to be answer in more detail way)
+- **Oral** --> 7/10 (Was confuse on database and how navigation works in backend question)
+- **Total** --> `53 marks`
+
+### Task:
+- Create 5 models & perform delete operation from frontend
+    - Create 5 model:
+        - StudentModel
+        - MarkModel
+        - TeacherModel
+        - SubjectModel
+        - UniversityModel
+    - Create 5 page in drop down navbar with table to show the added data
+        - Student Table
+        - Mark Table
+        - Teacher Table
+        - Subject Table
+        - University Table
+    - Create 5 form page for each table pages
+        - Add Student
+        - Add Mark
+        - Add Teacher
+        - Add Subject
+        - Add University
+    - Add an action on each table column to delete data
+
+
+</details>
