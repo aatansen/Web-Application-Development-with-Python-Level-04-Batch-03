@@ -1921,5 +1921,491 @@ While trying to get user data a problem was faced and this [Stack Overflow](http
 - Create Edit Update & View action in table data
 - Saturday (30-03-2024) Exam based on Day 1 to 11 task
 
+</details>
+
+<details>
+<summary>Day-11-Django CRUD Quick recap</summary>
+
+## Django CRUD Quick recap:
+1. setup virtual env and django project
+    - `.\env\Scripts\activate`
+    - `django-admin startproject d11_practise`
+2. Migrate database and create superuser
+    - `py manage.py makemigrations`
+    - `py manage.py migrate`
+    - `py manage.py createsuperuser`
+3. Create an app
+    - `py manage.py startapp studentapp`
+4. Add the app name in `settings.py` file `INSTALLED_APPS`
+    - `'studentapp'`
+5. Add Django static file & template path
+    - Static file (at the end):
+        ```python
+        STATICFILES_DIRS = [
+        BASE_DIR / "static",
+        "/var/www/static/",
+        ]
+        ```
+    - Template path in TEMPLATES:
+        `'DIRS': [BASE_DIR,'template'],`
+6. Create a `template` folder in `manage.py` directory and create some initial pages like `base.html`, `navbar.html` etc.
+7. Get a navbar code from external site and paste it in `base.html`
+8. For template mastering separate navbar from the `base.html` and paste it in `navbar.html` file
+    ```html
+    <ul>
+    <li><a href="#student">Student</a></li>
+    </ul>
+    ```
+9. Now in `base.html` `include` it and create a empty `block content` inside body tag
+    ```html
+    <body>
+
+    {% include 'navbar.html' %}
+
+
+    {% block content %}
+        
+    {% endblock content %}
+
+    </body>
+    ```
+10. Now create a `student.html` page and `extends` the `base.html` with its own `block content`
+    ```html
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <h1>Student page</h1>
+    {% endblock content %}
+    ```
+11. Now to view the `student.html` page we need to create `views.py` file in project directory where `settings.py` exits. In `views.py` we need to define a function where we will render our created `student.html` file
+    ```python
+    from django.shortcuts import render,redirect
+
+    def student(request):
+    return render(request,'student.html')
+    ```
+12. Now in` urls.py` file we have to import our created `student` function set the route
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from d11_practise.views import student
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('student/',student,name='student'),
+    ]
+    ```
+13. Now we have to add the `name` value in `navbar.html` file `href`
+    ```html
+    <ul>
+        <li><a href="{% url 'student' %}">Student</a></li>
+    </ul>
+    ```
+14. Now in `http://127.0.0.1:8000/student/` link we can view our created `student.html` page
+15. Let's add a table in our student page. a table from w3school (fancy table)
+    ```html
+    {% extends 'base.html' %}
+
+
+    {% block content %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+    #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #customers tr:hover {background-color: #ddd;}
+
+    #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+    }
+    </style>
+    </head>
+    <body>
+
+    <h1>A Fancy Table</h1>
+
+    <table id="customers">
+    <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>City</th>
+    </tr>
+    </table>
+
+    </body>
+    </html>
+    {% endblock content %}
+    ```
+16. To add table let's create model in our app `models.py` file
+    ```python
+    from django.db import models
+
+    # Create your models here.
+    class studentModel(models.Model):
+        Name=models.CharField(max_length=100)
+        Department=models.CharField(max_length=100)
+        City=models.CharField(max_length=100)
+        
+        def __str__(self):
+            return self.Name
+    ```
+17. Register this model in `admin.py`
+    ```python
+    from django.contrib import admin
+    from studentapp.models import studentModel
+
+    # Register your models here.
+    admin.site.register(studentModel)
+    ```
+18. Now we have to migrate it
+    - `py manage.py makemigrations`
+    - `py manage.py migrate`
+19. Now go to admin page `http://127.0.0.1:8000/admin/` and add data in student model
+20. To see the data in frontend we have to `READ` it. let's import our model in `views.py` and return the data as `dictionary` in frontend
+    ```python
+    from django.shortcuts import render,redirect
+    from studentapp.models import studentModel
+
+    def student(request):
+        student=studentModel.objects.all()
+        myDict={
+            'student':student
+        }
+        return render(request,'student.html',myDict)
+    ```
+21. Now in our `student.html` file we have to iterate the student data using loop
+    ```python
+    <table id="customers">
+    <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>City</th>
+    </tr>
+    
+    {% for i in student %}
+        <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        </tr>
+    {% endfor %}
+        
+    </table>
+    ```
+    Here `i.Name`, `i.Department`, `i.City` will be same as defined in `models.py` file. Now we can see the data in frontend at `http://127.0.0.1:8000/student/` route.
+22. Now let's add data from frontend not from admin page, to do that we will create a form page named `addstudent.html`
+    ```html
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <!DOCTYPE html>
+    <html>
+    <style>
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+
+    input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+    background-color: #45a049;
+    }
+    </style>
+    <body>
+
+    <h3>Using CSS to style an HTML Form</h3>
+
+    <div>
+    <form action="" method="">
+        {% csrf_token %}
+        <label for="fname">Name</label>
+        <input type="text" id="fname" name="name" placeholder="Your name..">
+
+        <label for="lname">Department</label>
+        <input type="text" id="lname" name="department" placeholder="Your Department">
+        <label for="lname">City</label>
+        <input type="text" id="lname" name="city" placeholder="Your City">
+    
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+    </body>
+    </html>
+    {% endblock content %}
+    ```
+    Here `action`, `method`, `name` attribute is important
+23. To view `addstudent` form page we will similarly create a function in `views.py` to render it
+    ```python
+    def addstudent(request):
+        return render(request,'addstudent.html')
+    ```
+    Add the path in `urls.py` file for routing
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from d11_practise.views import student,addstudent
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('student/',student,name='student'),
+        path('addstudent/',addstudent,name='addstudent'),
+    ]
+    ```
+    To see it in frontend let's add the `name` in `navbar.html` file
+    ```html
+    <ul>
+        <li><a href="{% url 'student' %}">Student</a></li>
+        <li><a href="{% url 'addstudent' %}">Add Student</a></li>
+    </ul>
+    ```
+24. Now to get the data from frontend to backend we will assign the `action`
+    - `action="{% url 'addstudent' %}"` and set the method as POST `method="POST"`
+    - Set the `name` attribute, will be used to get the value
+25. In `views.py` `addstudent` function we will get the value and assign it in our model
+    ```python
+    def addstudent(request):
+        if request.method=='POST':
+            name=request.POST.get('name')
+            department=request.POST.get('department')
+            city=request.POST.get('city')
+            
+            student=studentModel(
+                Name=name,
+                Department=department,
+                City=city,
+            )
+            student.save()
+            return redirect('student')
+        return render(request,'addstudent.html')
+    ```
+    Here we have get the values by `name attribute` then assign those value in our `model` after that we save it and `redirect` to the `student` page. Now in our `http://127.0.0.1:8000/addstudent/` route we can add data in our form and after submitting the data will be shown in `http://127.0.0.1:8000/student/` route
+26. Now Let's create a action for deleting the data, In `student.html` page create a table column `Action` and create a `href link` as `Delete`
+    ```html
+    <table id="customers">
+    <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>City</th>
+        <th>Action</th>
+    </tr>
+    
+    {% for i in student %}
+        <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td><a href="">Delete</a></td>
+        </tr>
+    {% endfor %}
+        
+    </table>
+    ```
+27. Now we have to create a functions in `views.py` with id so that we can `filter` the specific id to delete
+    ```python
+    def deletestudent(request,myid):
+        student=studentModel.objects.filter(id=myid)
+        student.delete()
+        return redirect('student')
+    ```
+    In `urls.py` we have to specify the id also
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from d11_practise.views import student,addstudent,deletestudent
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('student/',student,name='student'),
+        path('addstudent/',addstudent,name='addstudent'),
+        path('deletestudent/<int:myid>',deletestudent,name='deletestudent'),
+    ]
+    ```
+    Now we have to add the `href` url in` Delete`:
+
+    `<td><a href="{% url 'deletestudent' i.id %}">Delete</a></td>`
+
+    Now the `Delete action` will work in our student table
+28. Now let's Edit the table value, add a new Action in table as `Edit`
+    ```html
+      <td>
+        <a href="{% url 'deletestudent' i.id %}">Delete</a>
+        <a href="">Edit</a>
+      </td>
+    ```
+    Create the same form page of add student but as `editstudent.html`
+    ```html
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <!DOCTYPE html>
+    <html>
+    <style>
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+
+    input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+    background-color: #45a049;
+    }
+    </style>
+    <body>
+
+    <h3>Using CSS to style an HTML Form</h3>
+
+    <div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label for="fname">Name</label>
+        <input type="text" id="fname" name="name" placeholder="Your name..">
+
+        <label for="lname">Department</label>
+        <input type="text" id="lname" name="department" placeholder="Your Department">
+        <label for="lname">City</label>
+        <input type="text" id="lname" name="city" placeholder="Your City">
+    
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+    </body>
+    </html>
+    {% endblock content %}
+    ```
+    Create a function in `views.py`
+    ```python
+    def editstudent(request,myid):
+        student=studentModel.objects.filter(id=myid)
+        myDict={
+            'student':student
+        }
+        return render(request,'editstudent.html',myDict)
+    ``` 
+    Here we are reading the data from our model and sending it to form of `editstudent.html` file.
+
+    Add the path in `urls.py`
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from d11_practise.views import student,addstudent,deletestudent,editstudent
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('student/',student,name='student'),
+        path('addstudent/',addstudent,name='addstudent'),
+        path('deletestudent/<int:myid>',deletestudent,name='deletestudent'),
+        path('editstudent/<int:myid>',editstudent,name='editstudent'),
+    ]
+    ```
+    Now add this `name` value in `Edit` action `href`
+
+    `<a href="{% url 'editstudent' i.id %}">Edit</a>`
+
+    Now after clicking on edit it wil show the form of `editstudent.html` file. Let's iterate using loop to show the value also for editing with `value` attribute
+    ```html
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        {% for i in student %}
+        <label for="fname">ID</label>
+        <input type="text" id="fname" value={{i.id}} name="myid" placeholder="Your id.." readonly>
+        <label for="fname">Name</label>
+        <input type="text" id="fname" value={{i.Name}} name="name" placeholder="Your name..">
+
+        <label for="lname">Department</label>
+        <input type="text" id="lname" value={{i.Department}} name="department" placeholder="Your Department">
+        <label for="lname">City</label>
+        <input type="text" id="lname" value={{i.City}} name="city" placeholder="Your City">
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+    ```
+    Here a new attribute added which is `value` also `id` viewing as `readonly`
+
+29. Now to make the edit work we will define a function `views.py` as `updatestudent`
+    ```python
+    def updatestudent(request):
+        if request.method=='POST':
+            myid=request.POST.get('myid')
+            name=request.POST.get('name')
+            department=request.POST.get('department')
+            city=request.POST.get('city')
+            
+            student=studentModel(
+                id=myid,
+                Name=name,
+                Department=department,
+                City=city,
+            )
+            student.save()
+            return redirect('student')
+    ```
+    Now add the path in `urls.py` 
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from d11_practise.views import student,addstudent,deletestudent,editstudent,updatestudent
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('student/',student,name='student'),
+        path('addstudent/',addstudent,name='addstudent'),
+        path('deletestudent/<int:myid>',deletestudent,name='deletestudent'),
+        path('editstudent/<int:myid>',editstudent,name='editstudent'),
+        path('updatestudent',updatestudent,name='updatestudent'),
+    ]
+    ```
+    Now update the `action` in `editstudent.html` file as `action="{% url 'updatestudent' %}"`
+
+    This will make the submit work after editing.
+30. To add `View action` we can do the same as where we define our function with id to view the specific table data.
 
 </details>
