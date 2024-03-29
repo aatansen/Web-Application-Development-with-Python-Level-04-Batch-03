@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from d11_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity
+from d11_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,editstudent,updatestudent,viewstudent
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('student/',student,name='student'),
@@ -18,5 +18,8 @@ urlpatterns = [
     path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
     path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
     path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('editstudent/<int:myid>',editstudent,name='editstudent'),
+    path('updatestudent',updatestudent,name='updatestudent'),
+    path('viewstudent/<int:myid>',viewstudent,name='viewstudent'),
     
 ]

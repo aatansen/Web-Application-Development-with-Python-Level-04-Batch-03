@@ -1424,3 +1424,502 @@ urlpatterns = [
 
 
 </details>
+
+<details>
+<summary>Day-11-Django CRUD Edit Update & View Operation (28-03-2024)</summary>
+
+## Day 11 Topics:
+- Day 10 Recap
+- Edit operation
+- Add view action
+- Get vs Filter QuerySet
+- Task
+
+## Edit operation
+In table page `student.html` add a href link for edit action:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>A Fancy Table</h1>
+
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="">Edit</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+
+</body>
+</html>
+
+
+
+{% endblock content %}
+    
+```
+- Here href is empty so let's add a page for editing then link that page in this `href`
+
+Create `editstudent.html` file and add as below:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1> edit page </h1>
+{% endblock content %}
+    
+```
+Now create a function in `views.py` file to view this page:
+```python
+def editstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'editstudent.html',myDict)
+```
+- Here we have `myid` which is needed to specific data and using `filter QuerySet` as it is iterable. 
+
+Now import this in `urls.py` file and create the route path
+```python
+from django.contrib import admin
+from django.urls import path
+from d11_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,editstudent,
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteMark/<str:myid>',deleteMark,name='deleteMark'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+    path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
+    path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
+    path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('editstudent/<int:myid>',editstudent,name='editstudent'),
+]
+
+```
+- Here `<int:myid>` to get the id in path route
+
+Finally add this url `name` in `student table` page with for loop to iterate the data
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>A Fancy Table</h1>
+
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="{% url 'editstudent' i.id %}">Edit</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+
+</body>
+</html>
+
+{% endblock content %}
+    
+```
+Now we will be able to see the data in `edit page` as below:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+</style>
+<body>
+
+<h3>Using CSS to style an HTML Form</h3>
+
+<div>
+  <form action="" method="POST">
+    {% csrf_token %}
+    
+    {% for i in student %}
+    <label for="fname">ID</label>
+    <input type="text" id="fname" value={{i.id}} name="myid" placeholder="Your ID.." readonly>
+    <label for="fname">Name</label>
+    <input type="text" id="fname" value={{i.Name}} name="name" placeholder="Your name..">
+
+    <label for="lname">Department</label>
+    <input type="text" id="lname" value={{i.Department}} name="department" placeholder="Your Department">
+    <label for="lname">City</label>
+    <input type="text" id="lname" value={{i.City}} name="city" placeholder="Your City">
+    {% endfor %}
+        
+
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>
+{% endblock content %}
+    
+```
+As we are able to see the data which we can edit but we need to implement the submit to work with update functionalities. For that we will create a update function in `views.py`
+```python
+def updatestudent(request):
+    if request.method=="POST":
+        myid=request.POST.get('myid')
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        
+        student=studentModel(
+            id=myid, # this need to be done otherwise new value will be added rather than update
+            Name=name,
+            Department=department,
+            City=city,
+        )
+        student.save()
+        return redirect('student')
+```
+- This is similar as add function only deference is editing it by specific `ID`
+
+Now import and create the path in `urls.py`
+```python
+from django.contrib import admin
+from django.urls import path
+from d11_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,editstudent,updatestudent,viewstudent
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteMark/<str:myid>',deleteMark,name='deleteMark'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+    path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
+    path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
+    path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('editstudent/<int:myid>',editstudent,name='editstudent'),
+    path('updatestudent',updatestudent,name='updatestudent'),
+    
+]
+
+```
+Now the `name` value `'updatestudent'` will be in the action url of the edit page form as: `<form action="{% url 'updatestudent' %}" method="POST">`
+
+
+### Add view action:
+Create a view page `viewstudent.html`:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>View student page</h1>
+
+{% endblock content %}
+    
+```
+It is similar as editing function; add view function in `views.py`:
+```python
+def viewstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'viewstudent.html',myDict)
+```
+
+Add path in `urls.py`:
+```python
+from django.contrib import admin
+from django.urls import path
+from d11_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,editstudent,updatestudent,viewstudent
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteMark/<str:myid>',deleteMark,name='deleteMark'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+    path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
+    path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
+    path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('editstudent/<int:myid>',editstudent,name='editstudent'),
+    path('updatestudent',updatestudent,name='updatestudent'),
+    path('viewstudent/<int:myid>',viewstudent,name='viewstudent'),
+    
+]
+
+```
+Add `viewstudent` in `href` of `student table` view action:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>A Fancy Table</h1>
+
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="{% url 'editstudent' i.id %}">Edit</a>
+          <a href="{% url 'viewstudent' i.id %}">View</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+
+</body>
+</html>
+{% endblock content %}
+
+```
+Now after clicking on `View` it will go to `viewstudent.html` page , Let's add a `CSS card` and loop throw the value we will get to show it in user info format:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
+</head>
+<body>
+
+<h2>Card</h2>
+
+<div class="card">
+  <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+  <div class="container">
+    
+    {% for i in student %}
+    <h4><b>{{i.Name}}</b></h4> 
+    <p>{{i.Department}}</p> 
+    <p>{{i.City}}</p> 
+    {% endfor %}
+        
+
+  </div>
+</div>
+
+</body>
+</html> 
+
+{% endblock content %}
+    
+```
+
+### Get vs Filter QuerySet
+- Get is not iterable
+- Filter is iterable
+
+While trying to get user data a problem was faced and this [Stack Overflow](https://stackoverflow.com/questions/56374741/django-model-object-is-not-iterable) answer helped.
+
+### Task:
+- Create Edit Update & View action in table data
+- Saturday (30-03-2024) Exam based on Day 1 to 11 task
+
+
+</details>

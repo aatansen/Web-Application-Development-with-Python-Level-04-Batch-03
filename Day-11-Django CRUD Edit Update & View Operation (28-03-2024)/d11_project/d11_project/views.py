@@ -137,3 +137,33 @@ def deleteUniversity(request,myid):
     university=universityModel.objects.get(id=myid)
     university.delete()
     return redirect('university')
+
+def editstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'editstudent.html',myDict)
+
+def updatestudent(request):
+    if request.method=="POST":
+        myid=request.POST.get('myid')
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        
+        student=studentModel(
+            id=myid, # this need to be done otherwise new value will be added rather than update
+            Name=name,
+            Department=department,
+            City=city,
+        )
+        student.save()
+        return redirect('student')
+    
+def viewstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'viewstudent.html',myDict)
