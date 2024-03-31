@@ -36,26 +36,31 @@
 
 <table id="customers">
   <tr>
-    <th>Rank</th>
     <th>Name</th>
-    <th>Location</th>
+    <th>Department</th>
+    <th>City</th>
     <th>Action</th>
   </tr>
   
-  {% for i in university %}
+  {% for i in student %}
     <tr>
-        <td>{{i.Rank}}</td>
         <td>{{i.Name}}</td>
-        <td>{{i.Location}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
         <td>
-          <a href="{% url 'deleteUniversity' i.id %}">Delete</a>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="{% url 'viewstudent' i.id %}">View</a>
         </td>
     </tr>
+
   {% endfor %}
     
 </table>
 
 </body>
 </html>
+
+
+
 {% endblock content %}
     

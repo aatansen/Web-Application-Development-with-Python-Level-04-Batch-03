@@ -37,18 +37,19 @@
 <table id="customers">
   <tr>
     <th>Name</th>
-    <th>Department</th>
-    <th>City</th>
+    <th>Category</th>
+    <th>Mark</th>
     <th>Action</th>
   </tr>
   
-  {% for i in teacher %}
+  {% for i in subject %}
     <tr>
         <td>{{i.Name}}</td>
-        <td>{{i.Department}}</td>
-        <td>{{i.City}}</td>
+        <td>{{i.Category}}</td>
+        <td>{{i.Mark}}</td>
         <td>
-          <a href="{% url 'deleteTeacher' i.id %}">Delete</a>
+          <a href="{% url 'deleteSubject' i.id %}">Delete</a>
+          <a href="{% url 'viewsubject' i.id %}">View</a>
         </td>
     </tr>
   {% endfor %}
@@ -58,3 +59,4 @@
 </body>
 </html>
 {% endblock content %}
+    

@@ -2442,3 +2442,397 @@ Question: As a job recruiter, you are tasked with hiring a Django developer for 
 > Total time took for me --> 43 Minutes
 
 </details>
+
+<details>
+<summary>Day-13-View Action & All Model Table Data in Single Page (31-03-2024)</summary>
+
+## Day 13 Topics:-
+- Security & code editor
+- Python Basics
+- Variable
+- View Action 
+- Task
+
+### Security & code editor
+Compiler / Interpreter -->Translator (Python has both)
+
+- Interpreter--> (line by line)
+- Compiler--> (Run at once)
+- Security (csrf,session-hijack,man in the middle attack,vulnerability)
+- Authentication
+
+### Python Basics
+- Variable
+- Operator
+- Condition (increment / decrement)
+    - Nested condition
+- Loop
+    - Nested loop
+- Array (1d,2d,3d)
+    - List
+    - Set
+    - Tuple
+    - Dictionary
+- Function
+    - Recurssion (self call)
+- OOP 
+    - Inheritance
+    - Incapsulation
+    - Polymorphism
+    - Class / Object
+### Variable
+- Changeable (able to vary)
+- It is volatile
+- Assign sign (`=`)
+- Comparison / equal (`==`)
+
+### View Action
+
+To add view action go to the table page `student.html` file and add view action:
+```html
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="">View</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+```
+Now create a page `viewstudent.html` page and use the css card html code there:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center">User Profile Card</h2>
+
+
+{% for i in student %}
+<div class="card">
+    <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+    <h1>{{i.Name}}</h1>
+    <p class="title">{{i.Department}}, {{i.City}}</p>
+  </div>
+{% endfor %}
+    
+
+
+</body>
+</html>
+
+{% endblock content %}
+    
+```
+Now Create function in `views.py` file:
+```python
+def viewstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'viewstudent.html',myDict)
+```
+Add the url path in `urls.py` file
+```python
+from django.contrib import admin
+from django.urls import path
+from d13_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,viewstudent
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteMark/<str:myid>',deleteMark,name='deleteMark'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+    path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
+    path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
+    path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('viewstudent/<int:myid>',viewstudent,name='viewstudent'),
+]
+```
+Now add url in student page view action `<a href="{% url 'viewstudent' i.id %}">View</a>` with id.
+
+Similarly it is done with other pages too.
+
+For viewing all model table in single page. Just create a new page and add a function in `views.py` that return all table data from models  and link the url path 
+
+`alltable.html`:
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>Student Table</h1>
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+    </tr>
+  {% endfor %}
+    
+</table>
+<h1>Mark Table</h1>
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Roll</th>
+    <th>Mark</th>
+  </tr>
+  
+  {% for i in mark %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Roll}}</td>
+        <td>{{i.Mark}}</td>
+    </tr>
+  {% endfor %}
+    
+</table>
+<h1>Teacher Table</h1>
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+  </tr>
+  
+  {% for i in teacher %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+    </tr>
+  {% endfor %}
+    
+</table>
+<h1>Subject Table</h1>
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Mark</th>
+  </tr>
+  
+  {% for i in subject %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Category}}</td>
+        <td>{{i.Mark}}</td>
+    </tr>
+  {% endfor %}
+    
+</table>
+<h1>University Table</h1>
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Rank</th>
+    <th>Location</th>
+  </tr>
+  
+  {% for i in university %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Rank}}</td>
+        <td>{{i.Location}}</td>
+    </tr>
+  {% endfor %}
+    
+</table>
+
+</body>
+</html>
+
+{% endblock content %}
+    
+```
+
+`views.py`:
+```python
+def alltable(request):
+    student=studentModel.objects.all()
+    mark=markModel.objects.all()
+    teacher=teacherModel.objects.all()
+    subject=subjectModel.objects.all()
+    university=universityModel.objects.all()
+    myDict={
+        'student':student,
+        'mark':mark,
+        'teacher':teacher,
+        'subject':subject,
+        'university':university,
+    }
+    return render(request,'alltable.html',myDict)
+```
+
+`urls.py`:
+```python
+from django.contrib import admin
+from django.urls import path
+from d13_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,viewstudent,viewteacher,viewmark,viewsubject,viewuniversity,alltable
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteMark/<str:myid>',deleteMark,name='deleteMark'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+    path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
+    path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
+    path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('viewstudent/<int:myid>',viewstudent,name='viewstudent'),
+    path('viewteacher/<int:myid>',viewteacher,name='viewteacher'),
+    path('viewmark/<int:myid>',viewmark,name='viewmark'),
+    path('viewsubject/<int:myid>',viewsubject,name='viewsubject'),
+    path('viewuniversity/<int:myid>',viewuniversity,name='viewuniversity'),
+    path('alltable/',alltable,name='alltable'),
+    
+]
+```
+Now link the `alltable.html` page in navbar:
+```html
+<div class="navbar">
+    <div class="dropdown">
+      <button class="dropbtn">Add Tables 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="{% url 'addstudent' %}">Add Student</a>
+        <a href="{% url 'addmark' %}">Add Mark</a>
+        <a href="{% url 'addteacher' %}">Add Teacher</a>
+        <a href="{% url 'addsubject' %}">Add Subject</a>
+        <a href="{% url 'adduniversity' %}">Add University</a>
+      </div>
+    </div> 
+    <div class="dropdown">
+      <button class="dropbtn">View Tables 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="{% url 'student' %}">Student Table</a>
+        <a href="{% url 'mark' %}">Mark Table</a>
+        <a href="{% url 'teacher' %}">Teacher Table</a>
+        <a href="{% url 'subject' %}">Subject Table</a>
+        <a href="{% url 'university' %}">University Table</a>
+        <a href="{% url 'alltable' %}">All Table</a>
+      </div>
+    </div> 
+  </div>
+```
+### Task:
+- Practice variable task
+- Add view action
+- Show all model data in single page
+
+</details>

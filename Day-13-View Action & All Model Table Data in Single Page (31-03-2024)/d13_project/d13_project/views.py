@@ -137,3 +137,53 @@ def deleteUniversity(request,myid):
     university=universityModel.objects.get(id=myid)
     university.delete()
     return redirect('university')
+
+def viewstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'viewstudent.html',myDict)
+
+def viewteacher(request,myid):
+    teacher=teacherModel.objects.filter(id=myid)
+    myDict={
+        'teacher':teacher
+    }
+    return render(request,'viewteacher.html',myDict)
+
+def viewmark(request,myid):
+    mark=markModel.objects.filter(id=myid)
+    myDict={
+        'mark':mark
+    }
+    return render(request,'viewmark.html',myDict)
+
+def viewsubject(request,myid):
+    subject=subjectModel.objects.filter(id=myid)
+    myDict={
+        'subject':subject
+    }
+    return render(request,'viewsubject.html',myDict)
+
+def viewuniversity(request,myid):
+    university=universityModel.objects.filter(id=myid)
+    myDict={
+        'university':university
+    }
+    return render(request,'viewuniversity.html',myDict)
+
+def alltable(request):
+    student=studentModel.objects.all()
+    mark=markModel.objects.all()
+    teacher=teacherModel.objects.all()
+    subject=subjectModel.objects.all()
+    university=universityModel.objects.all()
+    myDict={
+        'student':student,
+        'mark':mark,
+        'teacher':teacher,
+        'subject':subject,
+        'university':university,
+    }
+    return render(request,'alltable.html',myDict)
