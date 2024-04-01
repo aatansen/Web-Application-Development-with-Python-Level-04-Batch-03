@@ -2836,3 +2836,407 @@ Now link the `alltable.html` page in navbar:
 - Show all model data in single page
 
 </details>
+
+<details>
+<summary>Day-14-Add Image Option with Delete, Edit, View Action (01-04-2024)</summary>
+
+## Day 14 Topics
+- Day 13 recap
+- Add Image
+- Disscussion on previous batch final assessment
+- Task
+
+### Add Image
+For adding image , first we have to add image field in our model
+```python
+class studentModel(models.Model):
+    Name=models.CharField(max_length=100,null=True)
+    Department=models.CharField(max_length=100,null=True)
+    City=models.CharField(max_length=100,null=True)
+    StudentImage=models.ImageField(upload_to='media/StudentImages',null=True)
+    
+    def __str__(self):
+        return self.Name
+```
+- Here `StudentImage` is added with `ImageField` which include path `media/StudentImages`
+- Setting `null=True` either an error will occur
+
+After changes in model we have to use migrations command: `py manage.py makemigrations` then `py manage.py migrate`
+
+Now we can add image from admin site : `http://127.0.0.1:8000/admin/`
+
+After adding image to view it in frontend table, we have to edit our `student.html` page table 
+```html
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Image</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <img src="/{{i.StudentImage}}" alt="" width="50">
+        </td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="{% url 'viewstudent' i.id %}">View</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+```
+- Here `<img src="/{{i.StudentImage}}" alt="" width="50">` is added ad source of the image. This line can be written like this also: `<img src="{{i.StudentImage.url}}" alt="" width="50">`
+- Now another important things to do otherwise image won't show. which is adding `static media url` in `urls.py` file
+    ```python
+    from django.conf import settings
+    from django.conf.urls.static import static
+
+    urlpatterns = [
+        # ... the rest of URLconf goes here ...
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ```
+- Now we can see the image in table
+
+Now Let's add the image from frontend, modify the `addstudent.html` file as below:
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+</style>
+<body>
+
+<h3>Using CSS to style an HTML Form</h3>
+
+<div>
+  <form action="{% url 'addstudent' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="fname">Name</label>
+    <input type="text" id="fname" name="name" placeholder="Your name..">
+
+    <label for="lname">Department</label>
+    <input type="text" id="lname" name="department" placeholder="Your Department">
+    <label for="lname">City</label>
+    <input type="text" id="lname" name="city" placeholder="Your City">
+    <label for="lname">Image</label>
+    <input type="file" id="lname" name="studentImage" placeholder="Your City">
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>
+
+{% endblock content %}
+    
+```
+- Here Image type is file which is written as `type="file"`
+- `enctype="multipart/form-data"` is important otherwise image won't be added
+
+Now we have to edit our `addstudent` function in `views.py`
+```python
+def addstudent(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        studentImage=request.FILES.get('studentImage')
+        
+        student=studentModel(
+            Name=name,
+            Department=department,
+            City=city,
+            StudentImage=studentImage,
+        )
+        
+        student.save()
+        return redirect('student')
+    return render(request,'addstudent.html')
+```
+- Here `studentImage` is getting the image by `request.FILES.get('studentImage')`
+- After that including it in model `StudentImage=studentImage,` then save and redirected to student table page
+
+Now to make the image to view in `viewstudent.html` page
+```html
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center">User Profile Card</h2>
+
+
+{% for i in student %}
+<div class="card">
+    <img src="/{{i.StudentImage}}" alt="" style="width:100%">
+    <h1>{{i.Name}}</h1>
+    <p class="title">{{i.Department}}, {{i.City}}</p>
+  </div>
+{% endfor %}
+    
+
+
+</body>
+</html>
+
+{% endblock content %}
+    
+```
+- Here same as the way we show the image source in table `<img src="/{{i.StudentImage}}" alt="" style="width:100%">`
+
+Now let's do the edi part, we need the same form as `addstudent.html` page form in `editstudent.html`
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+</style>
+<body>
+
+<h3>Using CSS to style an HTML Form</h3>
+
+<div>
+  <form action="{% url 'updatestudent' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    
+    {% for i in student %}
+               
+    <label for="fname">ID</label>
+    <input type="text" id="fname" value={{i.id}} name="myid" placeholder="Your id.." readonly>
+    <label for="fname">Name</label>
+    <input type="text" id="fname" value={{i.Name}} name="name" placeholder="Your name..">
+
+    <label for="lname">Department</label>
+    <input type="text" id="lname" value={{i.Department}} name="department" placeholder="Your Department">
+    <label for="lname">City</label>
+    <input type="text" id="lname" value={{i.City}} name="city" placeholder="Your City">
+    <label for="lname">Current Image:</label><br>
+    <img src="/{{i.StudentImage}}" alt="" width="50"> <br>
+    
+    <label for="lname">Image</label>
+    <input type="file" id="lname" name="studentImage" placeholder="Your City"> 
+    {% endfor %}
+
+  
+    <input type="submit" value="Update">
+  </form>
+</div>
+
+</body>
+</html>
+
+{% endblock content %}
+    
+```
+- Here for loop is added
+- `value` attribute added
+- To show the current image , image source is added
+- To make the update work the function `updatestudent` is created in `views.py`
+```python
+def updatestudent(request):
+    if request.method=='POST':
+        myid=request.POST.get('myid')
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        studentImage=request.FILES.get('studentImage')
+        
+        student=studentModel(
+            id=myid,
+            Name=name,
+            Department=department,
+            City=city,
+            StudentImage=studentImage,
+        )
+        student.save()
+        return redirect('student')
+```
+- All are similar but image is getting by `FILES`
+
+Finally add the url path in `urls.py`
+```python
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from d14_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,viewstudent,viewteacher,viewmark,viewsubject,viewuniversity,alltable,editstudent,updatestudent
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('mark/',mark,name='mark'),
+    path('addmark/',addmark,name='addmark'),
+    path('teacher/',teacher,name='teacher'),
+    path('addteacher/',addteacher,name='addteacher'),
+    path('subject/',subject,name='subject'),
+    path('addsubject/',addsubject,name='addsubject'),
+    path('university/',university,name='university'),
+    path('adduniversity/',adduniversity,name='adduniversity'),
+    path('deleteMark/<str:myid>',deleteMark,name='deleteMark'),
+    path('deleteStudent/<str:myid>',deleteStudent,name='deleteStudent'),
+    path('deleteSubject/<str:myid>',deleteSubject,name='deleteSubject'),
+    path('deleteTeacher/<str:myid>',deleteTeacher,name='deleteTeacher'),
+    path('deleteUniversity/<str:myid>',deleteUniversity,name='deleteUniversity'),
+    path('viewstudent/<int:myid>',viewstudent,name='viewstudent'),
+    path('viewteacher/<int:myid>',viewteacher,name='viewteacher'),
+    path('viewmark/<int:myid>',viewmark,name='viewmark'),
+    path('viewsubject/<int:myid>',viewsubject,name='viewsubject'),
+    path('viewuniversity/<int:myid>',viewuniversity,name='viewuniversity'),
+    path('alltable/',alltable,name='alltable'),
+    path('editstudent/<int:myid>',editstudent,name='editstudent'),
+    path('updatestudent',updatestudent,name='updatestudent'),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+Now add this `name` in table edit action
+```html
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Image</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+        <td>{{i.Name}}</td>
+        <td>{{i.Department}}</td>
+        <td>{{i.City}}</td>
+        <td>
+          <img src="/{{i.StudentImage}}" alt="" width="50">
+        </td>
+        <td>
+          <a href="{% url 'deleteStudent' i.id %}">Delete</a>
+          <a href="{% url 'viewstudent' i.id %}">View</a>
+          <a href="{% url 'editstudent' i.id %}">Edit</a>
+        </td>
+    </tr>
+
+  {% endfor %}
+    
+</table>
+```
+- Here `<a href="{% url 'editstudent' i.id %}">Edit</a>` is added with specific id to view in editpage for editing.
+
+Now the update will work.
+
+### Disscussion on previous batch final assessment
+- Portfolio Project
+
+### Task:
+- Add image in form
+- Delete, Edit, View action with image 
+
+</details>

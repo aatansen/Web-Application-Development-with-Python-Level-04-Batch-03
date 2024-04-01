@@ -13,11 +13,13 @@ def addstudent(request):
         name=request.POST.get('name')
         department=request.POST.get('department')
         city=request.POST.get('city')
+        studentImage=request.FILES.get('studentImage')
         
         student=studentModel(
             Name=name,
             Department=department,
             City=city,
+            StudentImage=studentImage,
         )
         
         student.save()
@@ -187,3 +189,28 @@ def alltable(request):
         'university':university,
     }
     return render(request,'alltable.html',myDict)
+
+def editstudent(request,myid):
+    student=studentModel.objects.filter(id=myid)
+    myDict={
+        'student':student
+    }
+    return render(request,'editstudent.html',myDict)
+
+def updatestudent(request):
+    if request.method=='POST':
+        myid=request.POST.get('myid')
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        studentImage=request.FILES.get('studentImage')
+        
+        student=studentModel(
+            id=myid,
+            Name=name,
+            Department=department,
+            City=city,
+            StudentImage=studentImage,
+        )
+        student.save()
+        return redirect('student')

@@ -51,7 +51,7 @@ button:hover, a:hover {
 
 {% for i in student %}
 <div class="card">
-    <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+    <img src="/{{i.StudentImage}}" alt="" style="width:100%">
     <h1>{{i.Name}}</h1>
     <p class="title">{{i.Department}}, {{i.City}}</p>
   </div>

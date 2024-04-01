@@ -39,6 +39,7 @@
     <th>Name</th>
     <th>Department</th>
     <th>City</th>
+    <th>Image</th>
     <th>Action</th>
   </tr>
   
@@ -48,8 +49,12 @@
         <td>{{i.Department}}</td>
         <td>{{i.City}}</td>
         <td>
+          <img src="/{{i.StudentImage}}" alt="" width="50">
+        </td>
+        <td>
           <a href="{% url 'deleteStudent' i.id %}">Delete</a>
           <a href="{% url 'viewstudent' i.id %}">View</a>
+          <a href="{% url 'editstudent' i.id %}">Edit</a>
         </td>
     </tr>
 

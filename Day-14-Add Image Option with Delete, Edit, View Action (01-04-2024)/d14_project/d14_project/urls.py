@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from d14_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,viewstudent,viewteacher,viewmark,viewsubject,viewuniversity,alltable
+from django.conf import settings
+from django.conf.urls.static import static
+from d14_project.views import student,addstudent,mark,addmark,teacher,addteacher,subject,addsubject,university,adduniversity,deleteMark,deleteStudent,deleteSubject,deleteTeacher,deleteUniversity,viewstudent,viewteacher,viewmark,viewsubject,viewuniversity,alltable,editstudent,updatestudent
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('student/',student,name='student'),
@@ -24,5 +26,7 @@ urlpatterns = [
     path('viewsubject/<int:myid>',viewsubject,name='viewsubject'),
     path('viewuniversity/<int:myid>',viewuniversity,name='viewuniversity'),
     path('alltable/',alltable,name='alltable'),
+    path('editstudent/<int:myid>',editstudent,name='editstudent'),
+    path('updatestudent',updatestudent,name='updatestudent'),
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
