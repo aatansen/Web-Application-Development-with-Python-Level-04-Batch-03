@@ -3240,3 +3240,60 @@ Now the update will work.
 - Delete, Edit, View action with image 
 
 </details>
+
+<details>
+<summary>Day-15-Image update (02-04-2024)</summary>
+
+## Day 15 Topics
+- Recap old days work
+- Image add problem
+- Two ways to write object class
+- Edit Image
+- Task
+
+### Image add problem
+When User don't update image while editing there will be no image to get and error will occur.To handle this we need to implement condition in update function
+```python
+def updatestudent(request):
+    if request.method=='POST':
+        myid=request.POST.get('myid')
+        name=request.POST.get('name')
+        department=request.POST.get('department')
+        city=request.POST.get('city')
+        studentImage=request.FILES.get('studentImage')
+        print(f"This is image: {studentImage}")
+        if studentImage:
+            student=studentModel(
+                id=myid,
+                Name=name,
+                Department=department,
+                City=city,
+                StudentImage=studentImage,
+            )
+        else:
+            studentbyid=studentModel.objects.get(id=myid)
+            student=studentModel(
+                id=myid,
+                Name=name,
+                Department=department,
+                City=city,
+                StudentImage=studentbyid.StudentImage
+            )
+        student.save()
+        return redirect('student')
+```
+- Here If-Else condition is applied to check if we are getting the image from frontend or not
+- When we don't get the image we will give the model the old image by id `studentbyid=studentModel.objects.get(id=myid)`
+- To handle this properly , after learning user authentication this will be implement in good way.
+
+### Two ways to write object class
+- We can use `.` with model to inherit the class like this: `student.id`, `student.Name`...
+
+### Edit image
+Similar task is repeated for student who failed to complete it. In Day 14 full details is already covered.
+
+### Task
+- No task assigned 
+- Tomorrow (03-04-2024) exam on Django CRUD
+
+</details>
