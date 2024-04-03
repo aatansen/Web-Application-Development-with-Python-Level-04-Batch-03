@@ -3297,3 +3297,28 @@ Similar task is repeated for student who failed to complete it. In Day 14 full d
 - Tomorrow (03-04-2024) exam on Django CRUD
 
 </details>
+
+<details>
+<summary>Day-16-Python Basics Day 02 & PDF Download Test (03-04-2024)</summary>
+
+## Day 16 Topics
+- Previous days recap
+- Python basics day 2
+- PDF Download
+
+### Python basics day 2
+- Variable recap 
+- Code editor
+- first code run
+- sum operation
+- Symbol - Character - Sign - Letters
+    - A - Z
+    - 0 - 9
+    - Special Character
+
+### PDF Download
+- Tested few packages for pdf output of a profile page.
+- [pyhtml2pdf](https://pypi.org/project/pyhtml2pdf/) give good output
+- Need to implement it in future
+
+</details>
