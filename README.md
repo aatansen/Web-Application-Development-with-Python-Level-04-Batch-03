@@ -3322,3 +3322,213 @@ Similar task is repeated for student who failed to complete it. In Day 14 full d
 - Need to implement it in future
 
 </details>
+
+<details>
+<summary>Day-17-Custom Template Setup (04-04-2024)</summary>
+
+## Day 17 Topics
+- Django Framework Disscussion
+- Custom template setup / Customize UI
+- Python Day 03
+- Task
+
+### Custom template setup / Customize UI
+- Download site: [Bootstrapmade](https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/)
+
+- Custom Template setup guide : [Youtube](https://www.youtube.com/watch?v=bFsIXYygsg4)
+
+To setup custom template we have to add the js,images,css files in static folder and in `settings.py` include the static path & template folder path also in template DIR:
+```python
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    "/var/www/static/",
+]
+```
+Now add all the html files in our template folder and set the `index.html` as base html and do the template mastering.
+```html
+  <main id="main">
+
+{% include 'about.html' %}
+
+{% include 'facts.html' %}
+
+{% include 'skills.html' %}
+
+{% include 'resume.html' %}
+
+{% include 'portfolio.html' %}
+
+{% include 'services.html' %}
+
+{% include 'testomonial.html' %}
+
+{% include 'contact.html' %}
+
+  </main><!-- End #main -->
+
+{% include 'footer.html' %}
+```
+To make the static files work, we have to load the static and add the static in each files url with static:
+```html
+<!-- load static at the top line of the base html -->
+{% load static %}
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/typed.js/typed.umd.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+```
+Now create a function in `views.py`
+```python
+def portfolio(request):
+    return render(request,'index.html')
+```
+Add the path route in `urls.py`
+```python
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from d17_project.views import student,addstudent,viewstudent,portfolio
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('student/',student,name='student'),
+    path('addstudent/',addstudent,name='addstudent'),
+    path('viewstudent/<int:myid>',viewstudent,name='viewstudent'),
+    path('portfolio/',portfolio,name='portfolio')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+```
+Now we will be able to see our custom website is working.
+
+To include a model table in this custom template we will create our model as usual and add it in here using block content
+```html
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
+          <li><a href="{% url 'student' %}" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Student Table</span></a></li>
+          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
+          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
+          <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
+          <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+```
+- Here we added the `{% url 'student' %}` student table. to show it in page:
+```html
+{% extends 'index.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>Student Table</h1>
+
+<table id="customers">
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>City</th>
+    <th>Image</th>
+    <th>Action</th>
+  </tr>
+  
+  {% for i in student %}
+    <tr>
+      <td>{{i.Name}}</td>
+      <td>{{i.Department}}</td>
+      <td>{{i.City}}</td>
+      <td>
+        <img src="/{{i.Image}}" alt="" width="50">
+      </td>
+      <td>
+        <a href="{% url 'viewstudent' i.id %}">View</a>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
+
+{% endblock content %}
+```
+- We have extends the base html which is `index.html` then our content is in block
+- Now let's add this after about section just like we did in navbar
+```html
+{% include 'about.html' %}
+
+{% block content %}
+  
+{% endblock content %}
+
+{% include 'facts.html' %}
+
+{% include 'skills.html' %}
+
+{% include 'resume.html' %}
+
+{% include 'portfolio.html' %}
+
+{% include 'services.html' %}
+
+{% include 'testomonial.html' %}
+
+{% include 'contact.html' %}
+
+  </main><!-- End #main -->
+
+{% include 'footer.html' %}
+```
+- Here after about section we added the block content.
+- Now we will be able to see our student table.
+
+### Python Day 03
+- Discussion on `Operator` & `Operand`
+
+### Contingency management
+- Doing same task in variety of way
+- Environment management
+
+### Expression evaluation
+- [Operator Precedence](https://www.google.com/search?q=operator+precedence)
+
+### Task
+- Setup full portfolio custom template in django
+
+</details>
