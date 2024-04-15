@@ -3532,3 +3532,321 @@ To include a model table in this custom template we will create our model as usu
 - Setup full portfolio custom template in django
 
 </details>
+
+<details>
+<summary>Day-17-Portfolio Project</summary>
+
+## Day-17-Portfolio Project
+- Created a portfolio project based on this [template](https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/)
+- Most of the task followed by creating models and showing the data in frontend
+    - First create a project: `django-admin startproject portfolio`
+    - Now create app:
+        - `cd portfolio`
+        - `py manage.py startapp portfolioapp`
+    - Add the app in `INSTALLED_APPS` list
+        ```python
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'portfolioapp',
+        ]
+        ```
+    - Add static directory `STATICFILES_DIRS` at the end of `settings.py` file
+        ```python
+        STATICFILES_DIRS = [
+            BASE_DIR / "static",
+        ]
+        ```
+    - Add `DIRS` of tamplates folder directory in `TEMPLATES`
+        > 'DIRS': [BASE_DIR, 'templates']
+    - Add downloaded `.html` content file in `templates` folder which will be created in `manage.py` directory
+        ```python 
+        project_name/ # Which is portfolio
+        │
+        ├── manage.py
+        ├── project_name/ # portfolio
+        │   ├── __init__.py
+        │   ├── settings.py
+        │   ├── asgi.py
+        │   ├── urls.py
+        │   └── wsgi.py
+        │   └── views.py # This is created manually
+        │
+        └── templates # This folder is created manually
+        │
+        └── static # This folder is created manually
+        │
+        └── app_name/ # Which is portfolioapp
+            ├── migrations/
+            │   └── __init__.py
+            ├── __init__.py
+            ├── admin.py
+            ├── apps.py
+            ├── models.py
+            ├── tests.py
+            └── views.py
+        ```
+    - Now Create static folder and paste all the static files here from the downloaded template
+    - Now create `views.py` in project directory and create a function to render it:
+        ```python
+        from django.shortcuts import redirect,render
+
+        def portfolio(request):
+
+            return render(request,'index.html',myDict)
+        ```
+    - Now add url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from portfolio.views import portfolio
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',portfolio,name='portfolio'),
+        ]
+        ```
+    - Now if we visit `http://127.0.0.1:8000/admin/` we won't see any static file effect on our html page.
+    - We have to load the static file in html to see the effect.
+    - Add `{% load static %}` at the top in `index.html` file
+    - And change each `src` & `href` that include files from `assets/static` like this: `  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">`
+    - If everything done correctly we will be able to see the html page with all the static files loaded perfectly.
+    - Now let's make the `index.html` base html and separate other section.
+    - Now include those separated section:
+        ```html
+        <main id="main">
+
+        {% include 'about.html' %}
+
+        {% include 'facts.html' %}
+
+        {% include 'skills.html' %}
+
+        {% include 'resume.html' %}
+
+        {% include 'portfolio.html' %}
+
+        {% include 'services.html' %}
+
+        {% include 'testimonials.html' %}
+
+        {% include 'contact.html' %}
+
+        </main><!-- End #main -->
+        ```
+    - Now let's create necessary models 
+        ```python
+        from django.db import models
+
+        # Create your models here.
+        class SocialMediaModel(models.Model):
+            twitter=models.CharField(max_length=100)
+            facebook=models.CharField(max_length=100)
+            Instagram=models.CharField(max_length=100)
+            skype=models.CharField(max_length=100)
+            linkedin=models.CharField(max_length=100)
+
+            def __str__(self):
+                return self.twitter
+
+        class AboutModel(models.Model):
+            Profile_img = models.ImageField(upload_to='media/ProfileImg')
+            Name=models.CharField(max_length=100)
+            Profession1=models.CharField(max_length=100)
+            Profession2=models.CharField(max_length=100)
+            Profession3=models.CharField(max_length=100)
+            About_details=models.CharField(max_length=500)
+            Profession_title1=models.CharField(max_length=100)
+            Profession_title2=models.CharField(max_length=100)
+            Profession_details=models.CharField(max_length=500)
+            Profession_para=models.CharField(max_length=500)
+            Birthday=models.CharField(max_length=100)
+            Website=models.CharField(max_length=100)
+            Phone=models.CharField(max_length=100)
+            City=models.CharField(max_length=100)
+            Age=models.CharField(max_length=100)
+            Email=models.CharField(max_length=100)
+            Freelance_status=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Name
+            
+        class factModel(models.Model):
+            Fact_para=models.CharField(max_length=500)
+            Happy_clients=models.CharField(max_length=100)
+            Projects=models.CharField(max_length=100)
+            Hours_of_support=models.CharField(max_length=100)
+            Hard_workers=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Happy_clients
+            
+        class SkillsModel(models.Model):
+            Skill_para=models.CharField(max_length=500)
+            
+            def __str__(self):
+                return self.Skill_para
+            
+        class SkillMatricesModel(models.Model):
+            Skill_name=models.CharField(max_length=100)
+            Skill_progressbar=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Skill_name
+            
+        class ResumeModel(models.Model):
+            Resume_para=models.CharField(max_length=500)
+            Name=models.CharField(max_length=100)
+            About=models.CharField(max_length=100)
+            Address=models.CharField(max_length=100)
+            Mobile=models.CharField(max_length=100)
+            Email=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Name  
+
+        class ResumeEducationModel(models.Model):
+            Education_name=models.CharField(max_length=100)
+            Education_year=models.CharField(max_length=100)
+            Education_institute=models.CharField(max_length=100)
+            Education_details=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Education_name
+            
+        class ResumeProfessionalModel(models.Model):
+            Professional_experience=models.CharField(max_length=100)
+            Professional_experience_year=models.CharField(max_length=100)
+            Professional_experience_location=models.CharField(max_length=100)
+            Professional_responsibilities=models.CharField(max_length=100)
+
+            def __str__(self):
+                return self.Professional_experience
+
+        class PortfolioModel(models.Model):
+            Portfolio_para=models.CharField(max_length=500)
+            
+            def __str__(self):
+                return self.Portfolio_para
+            
+        class ServicesModel(models.Model):
+            Services_para=models.CharField(max_length=500)
+
+            def __str__(self):
+                return self.Services_para
+
+        class ServicesSectionModel(models.Model):
+            Service_icon=models.CharField(max_length=100)
+            Service_name=models.CharField(max_length=100)
+            Service_details=models.CharField(max_length=500)
+            
+            def __str__(self):
+                return self.Service_name
+            
+        class TestimonialModel(models.Model):
+            Testimonial_para=models.CharField(max_length=500)
+            
+            def __str__(self):
+                return self.Testimonial_para
+
+        class ClientTestimonialModel(models.Model):
+            Client_name=models.CharField(max_length=100)
+            Client_img=models.ImageField(upload_to='media/ClientImg')
+            Client_profession=models.CharField(max_length=100)
+            Client_quote=models.CharField(max_length=500)
+
+            def __str__(self):
+                return self.Client_name
+
+        class ContactModel(models.Model):
+            Contact_para=models.CharField(max_length=500)
+            Contact_location=models.CharField(max_length=100)
+            Contact_Email=models.CharField(max_length=100)
+            Contact_Call=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Contact_para
+        ```
+    - Register it in `admin.py`
+        ```python
+        from django.contrib import admin
+        from portfolioapp.models import SocialMediaModel,AboutModel,factModel,SkillsModel,SkillMatricesModel,ResumeModel,ResumeEducationModel,ResumeProfessionalModel,PortfolioModel,ServicesModel,ServicesSectionModel,TestimonialModel,ContactModel,ClientTestimonialModel
+        # Register your models here.
+        admin.site.register(SocialMediaModel)
+        admin.site.register(AboutModel)
+        admin.site.register(factModel)
+        admin.site.register(SkillsModel)
+        admin.site.register(SkillMatricesModel)
+        admin.site.register(ResumeModel)
+        admin.site.register(ResumeEducationModel)
+        admin.site.register(ResumeProfessionalModel)
+        admin.site.register(PortfolioModel)
+        admin.site.register(ServicesModel)
+        admin.site.register(ServicesSectionModel)
+        admin.site.register(TestimonialModel)
+        admin.site.register(ClientTestimonialModel)
+        admin.site.register(ContactModel)
+        ```
+    - As we can see there will be image too. In order to show the image we have to set the media static:
+        ```python 
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from portfolio.views import portfolio
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',portfolio,name='portfolio'),
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Now let's migrate and create our superuser to input data in our model:
+        - `py manage.py makemigrations`
+        - `py manage.py migrate`
+        - `py manage.py createsuperuser`
+    - Now to show those data , we have to import it in our `views.py` and return it in `dictionary`
+        ```python
+        from django.shortcuts import redirect,render
+        from portfolioapp.models import SocialMediaModel,AboutModel,factModel,SkillsModel,SkillMatricesModel,ResumeModel,ResumeEducationModel,ResumeProfessionalModel,PortfolioModel,ServicesModel,ServicesSectionModel,TestimonialModel,ClientTestimonialModel,ContactModel
+
+        def portfolio(request):
+            socialmedia = SocialMediaModel.objects.get()
+            about = AboutModel.objects.get()
+            fact = factModel.objects.get()
+            skills = SkillsModel.objects.get()
+            skills_matrices = SkillMatricesModel.objects.all()
+            resume = ResumeModel.objects.get()
+            resume_edu = ResumeEducationModel.objects.all()
+            resume_pro = ResumeProfessionalModel.objects.all()
+            portfolio_des = PortfolioModel.objects.get()
+            services_des = ServicesModel.objects.get()
+            services_section = ServicesSectionModel.objects.all()
+            testimonial_des = TestimonialModel.objects.get()
+            client_testimonial = ClientTestimonialModel.objects.all()
+            contact = ContactModel.objects.get()
+            myDict={
+                'socialmedia':socialmedia,
+                'about':about,
+                'fact':fact,
+                'skills':skills,
+                'skills_matrices':skills_matrices,
+                'resume':resume,
+                'resume_edu':resume_edu,
+                'resume_pro':resume_pro,
+                'portfolio_des':portfolio_des,
+                'services_des':services_des,
+                'services_section':services_section,
+                'testimonial_des':testimonial_des,
+                'client_testimonial':client_testimonial,
+                'contact':contact,
+                
+            }
+            return render(request,'index.html',myDict)
+        ```
+    - Everything is set , now all we have to do is to view the models in html file iterate in for loop for those model which are `.objects.all()` and for others which are `.objects.get()` can be directly accessible.
+
+</details>
