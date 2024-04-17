@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <form action="{% url 'updateabout' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">ID</label>
+            <input type="text" class="form-control" name= "myid" value="{{about.id}}" id="exampleInput" aria-describedby="emailHelp" readonly>
+          </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Current Image</label><br>
+            <img src="/{{about.Profile_img}}" alt="" width="50"><br>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlFile1">Update Image</label>
+            <input type="file" name="profile_img" class="form-control-file" id="exampleFormControlFile1">
+          </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Name</label>
+          <input type="text" class="form-control" name= "name" value="{{about.Name}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession 1</label>
+          <input type="text" class="form-control" name="profession1" value="{{about.Profession1}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession 2</label>
+          <input type="text" class="form-control" name="profession2" value="{{about.Profession2}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession 3</label>
+          <input type="text" class="form-control" name="profession3" value="{{about.Profession3}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">About details</label>
+          <textarea class="form-control" name="about_details" name="about_details" id="exampleFormControlTextarea1" rows="3">{{about.About_details}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession title 1</label>
+          <input type="text" class="form-control" name="profession_title1" value="{{about.Profession_title1}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession title 2</label>
+          <input type="text" class="form-control" name="profession_title2" value="{{about.Profession_title2}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession details</label>
+          <textarea class="form-control" name="profession_details" name="profession_details" id="exampleFormControlTextarea1" rows="3">{{about.Profession_details}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Profession Paragraph</label>
+          <textarea class="form-control" name="profession_para"  id="exampleFormControlTextarea1" rows="3">{{about.Profession_para}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Birthday</label>
+          <input type="text" class="form-control" name="birthday" value="{{about.Birthday}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Website</label>
+          <input type="text" class="form-control" name="website" value="{{about.Website}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Phone</label>
+          <input type="text" class="form-control" name="phone" value="{{about.Phone}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">City</label>
+          <input type="text" class="form-control" name="city" value="{{about.City}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Age</label>
+          <input type="text" class="form-control" name="age" value="{{about.Age}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email</label>
+          <input type="email" class="form-control" name="email" value="{{about.Email}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Freelance status</label>
+          <input type="text" class="form-control" name="freelance_status" value="{{about.Freelance_status}}" id="exampleInput" aria-describedby="emailHelp">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+{% endblock content %}
+

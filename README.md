@@ -3850,3 +3850,210 @@ To include a model table in this custom template we will create our model as usu
     - Everything is set , now all we have to do is to view the models in html file iterate in for loop for those model which are `.objects.all()` and for others which are `.objects.get()` can be directly accessible.
 
 </details>
+
+<details>
+<summary>Day-18-Custom Template CRUD Update Operation (16-04-2024)</summary>
+
+## Day 18 Topic
+- Custom template setup recap
+- CRUD Operation on Custom Template
+- Task
+
+  > Note:- The update option should be on separated admin page but as a practise I did it on the same page. Which will be changed in future.
+
+### CRUD Operation on Custom Template
+- It follow up the Day-17 portfolio project
+- Today added the `edit option` in about section
+    - Get a bootstrap form from [bootstrap site](https://getbootstrap.com/docs/4.0/components/forms/#:~:text=%3Cform%3E%0A%20%20%3Cdiv%20class%3D%22form%2Dgroup,primary%22%3ESubmit%3C/button%3E%0A%3C/form%3E)
+    - Create `editabout.html`
+        ```html
+        {% extends 'index.html' %}
+
+        {% block content %}
+        <div class="container mt-5">
+            <form action="{% url 'updateabout' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">ID</label>
+                    <input type="text" class="form-control" name= "myid" value="{{about.id}}" id="exampleInput" aria-describedby="emailHelp" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Current Image</label><br>
+                    <img src="/{{about.Profile_img}}" alt="" width="50"><br>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Update Image</label>
+                    <input type="file" name="profile_img" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Name</label>
+                <input type="text" class="form-control" name= "name" value="{{about.Name}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession 1</label>
+                <input type="text" class="form-control" name="profession1" value="{{about.Profession1}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession 2</label>
+                <input type="text" class="form-control" name="profession2" value="{{about.Profession2}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession 3</label>
+                <input type="text" class="form-control" name="profession3" value="{{about.Profession3}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">About details</label>
+                <textarea class="form-control" name="about_details" name="about_details" id="exampleFormControlTextarea1" rows="3">{{about.About_details}}</textarea>
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession title 1</label>
+                <input type="text" class="form-control" name="profession_title1" value="{{about.Profession_title1}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession title 2</label>
+                <input type="text" class="form-control" name="profession_title2" value="{{about.Profession_title2}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession details</label>
+                <textarea class="form-control" name="profession_details" name="profession_details" id="exampleFormControlTextarea1" rows="3">{{about.Profession_details}}</textarea>
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profession Paragraph</label>
+                <textarea class="form-control" name="profession_para"  id="exampleFormControlTextarea1" rows="3">{{about.Profession_para}}</textarea>
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Birthday</label>
+                <input type="text" class="form-control" name="birthday" value="{{about.Birthday}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Website</label>
+                <input type="text" class="form-control" name="website" value="{{about.Website}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Phone</label>
+                <input type="text" class="form-control" name="phone" value="{{about.Phone}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">City</label>
+                <input type="text" class="form-control" name="city" value="{{about.City}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Age</label>
+                <input type="text" class="form-control" name="age" value="{{about.Age}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" value="{{about.Email}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Freelance status</label>
+                <input type="text" class="form-control" name="freelance_status" value="{{about.Freelance_status}}" id="exampleInput" aria-describedby="emailHelp">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        {% endblock content %}
+        ```
+        - Here `action`, `method`, `enctype`, `name` & `value` must be included
+    - Now render this html page in `views.py`
+        ```python
+        def editabout(request, myid):
+            about = AboutModel.objects.get(id=myid)
+            myDict={
+                'about':about
+            }
+            return render(request,'editabout.html',myDict)
+        ```
+    - Set the path url in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from portfolio.views import portfolio,editabout,updateabout
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',portfolio,name='portfolio'),
+            path('editabout/<str:myid>',editabout,name='editabout'),
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Now to make it work create a button under edit section of html page so after clicking it the form will be open
+        ```html
+        <a href="{% url 'editabout' about.id %}" type="button" class="btn mt-2" style="background-color: #173b6c; color: #fff;">Edit About</a>
+        ```
+    - Create a `updateabout` function in `views.py`
+        ```python
+        def updateabout(request):
+            if request.method=="POST":
+                myid = request.POST.get('myid')
+                profile_img = request.FILES.get('profile_img')
+                name=request.POST.get('name')
+                profession1=request.POST.get('profession1')
+                profession2=request.POST.get('profession2')
+                profession3=request.POST.get('profession3')
+                about_details=request.POST.get('about_details')
+                profession_title1=request.POST.get('profession_title1')
+                profession_title2=request.POST.get('profession_title2')
+                profession_details=request.POST.get('profession_details')
+                profession_para=request.POST.get('profession_para')
+                birthday=request.POST.get('birthday')
+                website=request.POST.get('website')
+                phone=request.POST.get('phone')
+                city=request.POST.get('city')
+                age=request.POST.get('age')
+                email=request.POST.get('email')
+                freelance_status=request.POST.get('freelance_status')
+                if profile_img:  
+                    about = AboutModel(
+                        id = myid,
+                        Profile_img = profile_img,
+                        Name=name,
+                        Profession1=profession1,
+                        Profession2=profession2,
+                        Profession3=profession3,
+                        About_details=about_details,
+                        Profession_title1=profession_title1,
+                        Profession_title2=profession_title2,
+                        Profession_details=profession_details,
+                        Profession_para=profession_para,
+                        Birthday=birthday,
+                        Website=website,
+                        Phone=phone,
+                        City=city,
+                        Age=age,
+                        Email=email,
+                        Freelance_status=freelance_status,
+                    )
+                else:
+                    aboutbyid=AboutModel.objects.get(id=myid)
+                    about = AboutModel(
+                        id = myid,
+                        Profile_img = aboutbyid.Profile_img,
+                        Name=name,
+                        Profession1=profession1,
+                        Profession2=profession2,
+                        Profession3=profession3,
+                        About_details=about_details,
+                        Profession_title1=profession_title1,
+                        Profession_title2=profession_title2,
+                        Profession_details=profession_details,
+                        Profession_para=profession_para,
+                        Birthday=birthday,
+                        Website=website,
+                        Phone=phone,
+                        City=city,
+                        Age=age,
+                        Email=email,
+                        Freelance_status=freelance_status,
+                    )
+                about.save()
+                return redirect('/')
+        ```
+        - Here image also handle when user don't update image
+        - after updating it will redirect to homepage
+        - This function will be trigger after clicking on submit button which is in form page action
+### Task
+- Complete remaining CRUD operation in Custom Template
+
+</details>
