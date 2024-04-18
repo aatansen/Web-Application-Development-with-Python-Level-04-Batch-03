@@ -4057,3 +4057,148 @@ To include a model table in this custom template we will create our model as usu
 - Complete remaining CRUD operation in Custom Template
 
 </details>
+
+<details>
+<summary>Day-19-Lab Exam 03 (18-04-2024)</summary>
+
+## Day 19 Topics
+- Lab Exam 03
+- PDF download using js (Test code)
+- Bonus task: PDF download implementation
+
+### Lab Exam 03
+> Question: Building a Resume Builder Web Application with Django You are tasked with creating a simple Resume Builder web application using Django.The application should allow users to cease, view, update, and delete their resumes, Including various fields such as profile picture, address, phone number, career objective, and others. Your task is to Implement the CRUD (Create, Read, Update, Delete) operations for managing resumes.
+
+Resume Creation:
+- Profile picture
+- Full name
+- Address
+- Phone number
+- Email address
+- Career objective
+- Education history (e.g., degree, Institution, graduation year)
+- Work experience (e.g., company, position, start and end dates)
+- Skills (Hard Skills, Soft Skills)
+- Certifications
+- Projects
+- References, etc.
+
+Listing Resumes:
+- Display a list of all resumes
+
+Viewing and Editing Resumes:
+- View the details of a specific resume.
+Provide options to edit and update the information within the resume.
+
+Deleting Resumes:
+- Implement functionality to delete resumes when required.
+
+Bonus (optional):
+- Add the ability for users to upload and manage multiple profile pictures.
+- Implement search and filtering functionality for resumes.
+- Allow users to download their resumes in PDF format.
+- Implement rich text editors for fields like career objective and project descriptions. 
+
+Requirements: 
+- Use Django models to define the resume structure.
+- Create clean and responsive templates for the user Interface.
+
+Submission: 
+- Submit the project as a zip file or provide a link to a version control repository GitHub. Include a README file with instructions and any necessary dependencies. 
+
+> Total time took by me 1 Hour 40 Minutes.
+
+### PDF download using js (Test code)
+- Below code was done to test how to generate pdf with js
+    ```html
+    <!--CDN:--> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+
+    <script>
+        document.getElementById("downloadPDF").addEventListener("click", function() {
+            // Create a new instance of jsPDF
+            const doc = new jsPDF();
+        
+            // Add profile section
+            doc.text("Profile", 10, 10);
+            doc.text("Name: " + "{{ resume.Full_name }}", 10, 20);
+            doc.text("Address: " + "{{ resume.Address }}", 10, 30);
+            doc.text("Phone: " + "{{ resume.Phone_number }}", 10, 40);
+            doc.text("Email: " + "{{ resume.Email_address }}", 10, 50);
+        
+            // Add career objective section
+            doc.text("Career Objective", 10, 70);
+            doc.text("{{ resume.Career_objective }}", 10, 80);
+            
+            // Add education section
+            doc.text("Education", 10, 100);
+            doc.text("{{ education.Degree }} - {{ education.Institution }}, {{ education.Graduation_year }}", 10, 110);
+            
+            // Add work experience section
+            doc.text("Work Experience", 10, 130);
+            doc.text("{{ work.Position }} at {{ work.Company }}, {{ work.Start_date }} - {{ work.End_date }}", 10, 140);
+            
+            // Add skills section
+            doc.text("Skills", 10, 160);
+            doc.text("Hard Skills: {{ resume.Hard_skills }}", 10, 170);
+            doc.text("Soft Skills: {{ resume.Soft_skills }}", 10, 180);
+            
+            // Add certifications section
+            doc.text("Certifications", 10, 200);
+            doc.text("{{ resume.Certifications }}", 10, 210);
+            
+            // Add projects section
+            doc.text("Projects", 10, 230);
+            doc.text("{{ resume.Projects }}", 10, 240);
+            
+            // Add references section
+            doc.text("References", 10, 260);
+            doc.text("{{ resume.References }}", 10, 270);
+        
+            // Save the PDF
+            doc.save("resume.pdf");
+        });
+    </script>
+    ```
+
+### Bonus task: PDF download implementation
+- I found a package in python which is `pyhtml2pdf` which i used to convert the created resume in pdf. Below function was implemented to download the generated pdf file:
+    ```python
+    def downloadresume(request, myid):
+        # Run the converter function to generate/update the PDF file
+        username=ResumeModel.objects.get(id=myid)
+        print(username.Full_name)
+        pdf_file = converter.convert(f'http://127.0.0.1:8000/viewresume/{myid}', 'resume.pdf')
+        print(f"PDF file path from converter: {pdf_file}")
+
+        # Get the root path of the project
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        print(f"Project root path: {project_root}")
+
+        # If the converter returns a valid file path, use it
+        if pdf_file:
+            pdf_file_path = pdf_file
+        else:
+            # Otherwise, construct the file path relative to the project root
+            pdf_file_path = os.path.join(project_root, 'resume.pdf')
+            print(f"PDF file path: {pdf_file_path}")
+
+        if not os.path.exists(pdf_file_path):
+            # Handle the case where the file doesn't exist
+            print("Error: PDF file not found.")
+            return HttpResponse("Error: Unable to find PDF file.")
+
+        try:
+            with open(pdf_file_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type='application/pdf')
+                # response['Content-Disposition'] = 'attachment; filename=resume.pdf'
+                response['Content-Disposition'] = f'attachment; filename={username}-Resume.pdf'
+        except Exception as e:
+            print(f"Error opening PDF file: {e}")
+            return HttpResponse("Error: Unable to open PDF file.")
+
+        return response
+    ```
+
+</details>
+
