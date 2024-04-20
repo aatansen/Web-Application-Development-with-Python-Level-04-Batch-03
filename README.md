@@ -332,7 +332,7 @@ urlpatterns = [
     path('homePage/',homePage,name='homePage'),
 ]
 ```
-### Show table data dinamically using dictionary
+### Show table data dynamically using dictionary
 In `views.py` file:
 ```python
 from django.shortcuts import render,redirect,HttpResponse
@@ -4199,6 +4199,937 @@ Submission:
 
         return response
     ```
+
+</details>
+
+<details>
+<summary>Day-20-Python Basic Day 04 & Lab Exam 03 Portfolio Project Recap (20-04-2024)</summary>
+
+## Day 20 Topics
+
+- Arithmetic operators
+- Assignment Operators
+- Comparison Operators
+- Logical Operators
+- Conditions and If statements
+- Lab exam 03 portfolio project recap
+- Task
+
+### Arithmetic operators
+
+|Operator|	Name|	Example|
+|-       | -    |      -   |
+|+	|Addition	| $ x + y$ |	
+|-	|Subtraction|	$ x - y$ |	
+|*	|Multiplication	| $ x * y $ |	
+|/	|Division|	$ x / y $ |	
+|%	|Modulus	| $ x % y $	|
+|**	|Exponentiation|	$ x ** y $ |	
+|//	|Floor division|	$ x // y $ |
+
+
+### Assignment Operators
+- Task
+    - $ a/=10 $
+        > $ a=a/10 $
+    - $ a+=b+10 $
+        > $ a=a/10 $
+    - $ a**=3+c $
+        > $ a=a**(3+c) $
+    - $ a//=x+y**4 $
+        > $ a=a//(x+(y**4)) $
+    - $ b-=x**y $
+        > $ b=b-(x**y) $
+
+### Comparison Operators
+
+|Operator	|Name|	Example|
+|    -      |  - |     -    |        
+|==	|Equal|	 $ x == y $ |	
+|!=	|Not equal	| $ x != y $	|
+|>	|Greater than|	$ x > y $ |	
+|<	|Less than	| $ x < y $ |	
+|>=	|Greater than or equal to|	$ x >= y $ |	
+|<=	|Less than or equal to	| $ x <= y $ |
+
+- Task
+    - x= 5
+    - y = 3
+    - print(x==y)
+        > z =(x==y) </br>
+        > print(z)
+
+### Logical Operators
+
+|Operator	|Description	|Example|
+|-|-|-|
+|and 	|Returns True if both statements are true	|x < 5 and  x < 10	|
+|or	|Returns True if one of the statements is true|	x < 5 or x < 4	|
+|not	|Reverse the result, returns False if the result is true	|not(x < 5 and x < 10)|
+
+### Conditions and If statements
+
+- Equals: `a == b`
+- Not Equals: `a != b`
+- Less than: `a < b`
+- Less than or equal to: `a <= b`
+- Greater than: `a > b`
+- Greater than or equal to: `a >= b`
+
+### Lab exam 03 portfolio project recap
+> Question: Building a Resume Builder Web Application with Django You are tasked with creating a simple Resume Builder web application using Django.The application should allow users to cease, view, update, and delete their resumes, Including various fields such as profile picture, address, phone number, career objective, and others. Your task is to Implement the CRUD (Create, Read, Update, Delete) operations for managing resumes.
+
+Resume Creation:
+- Profile picture
+- Full name
+- Address
+- Phone number
+- Email address
+- Career objective
+- Education history (e.g., degree, Institution, graduation year)
+- Work experience (e.g., company, position, start and end dates)
+- Skills (Hard Skills, Soft Skills)
+- Certifications
+- Projects
+- References, etc.
+
+Listing Resumes:
+- Display a list of all resumes
+
+Viewing and Editing Resumes:
+- View the details of a specific resume.
+Provide options to edit and update the information within the resume.
+
+Deleting Resumes:
+- Implement functionality to delete resumes when required.
+
+Bonus (optional):
+- Add the ability for users to upload and manage multiple profile pictures.
+- Implement search and filtering functionality for resumes.
+- Allow users to download their resumes in PDF format.
+- Implement rich text editors for fields like career objective and project descriptions. 
+
+Requirements: 
+- Use Django models to define the resume structure.
+- Create clean and responsive templates for the user Interface.
+
+Submission: 
+- Submit the project as a zip file or provide a link to a version control repository GitHub. Include a README file with instructions and any necessary dependencies.
+
+### Solution
+- Initial setup:
+    - Create Project : `django-admin startproject resumeProject`
+    - Create App: `py manage.py startapp resumeApp`
+    - Migrate Database: `py manage.py migrate`
+    - Modification in `settings.py`:
+        - Add app name `resumeApp` in `settings.py`'s `INSTALLED_APPS`:
+            ```python
+            INSTALLED_APPS = [
+                'django.contrib.admin',
+                'django.contrib.auth',
+                'django.contrib.contenttypes',
+                'django.contrib.sessions',
+                'django.contrib.messages',
+                'django.contrib.staticfiles',
+                'resumeApp',
+            ]
+            ```
+        - Add static file path at the end of the `settings.py` file:
+            ```python
+            STATICFILES_DIRS = [
+                BASE_DIR / "static",
+            ]
+            ```
+        - Add template path in `TEMPLATES`
+            ```python
+            'DIRS': [BASE_DIR,'templates'],
+            ```
+    - Now create a folder and name it exactly as added in `TEMPLATES`'s `DIRS` which is `templates` In project directory:
+        ```text
+        project_name/ # Which is resumeProject
+        │
+        ├── manage.py
+        ├── project_name/ # resumeProject
+        │   ├── __init__.py
+        │   ├── settings.py
+        │   ├── asgi.py
+        │   ├── urls.py
+        │   └── wsgi.py
+        │   └── views.py # This is created manually
+        │
+        └── templates # This folder is created manually
+        │
+        └── static # This folder is created manually
+        │
+        └── app_name/ # Which is resumeApp
+            ├── migrations/
+            │   └── __init__.py
+            ├── __init__.py
+            ├── admin.py
+            ├── apps.py
+            ├── models.py
+            ├── tests.py
+            └── views.py
+        ```
+- Now let's begin with first task which is **Listing Resumes**
+    - To do this let's create our `base.html`, `navbar.html`, `home.html`,  files. 
+    - Here: 
+        - `base.html` :- For our base structure of the template 
+        - `navbar.html` :- This will be included in `base.html`
+        - `home.html` :-  Now this will extends `base.html` and show it's own content in block; As per requirement we will list all the resume in table data list in the block content of `home.html`
+    - Let's create the required models in our app directory `models.py`
+        ```python
+        from django.db import models
+
+        # Create your models here.
+        class ResumeModel(models.Model):
+            Profile_picture=models.ImageField(upload_to='media/ProfilePic')
+            Full_name=models.CharField(max_length=100)
+            Address=models.CharField(max_length=100)
+            Phone_number=models.CharField(max_length=100)
+            Email_address=models.CharField(max_length=100)
+            Career_objective=models.TextField()
+            Hard_Skills=models.CharField(max_length=100)
+            Soft_Skills=models.CharField(max_length=100)
+            Certifications=models.CharField(max_length=100)
+            Projects=models.CharField(max_length=100)
+            References=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Full_name
+            
+        class ResumeEducationModel(models.Model):
+            Degree=models.CharField(max_length=100)
+            Institution=models.CharField(max_length=100)
+            Graduation_year=models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Institution
+            
+        class ResumeWorkModel(models.Model):
+            Company=models.CharField(max_length=100)
+            Position=models.CharField(max_length=100)
+            Start_dates=models.CharField(max_length=100)
+            End_dates =models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.Company
+        ```
+    - In `admin.py` we have to register it
+        ```python
+        from django.contrib import admin
+        from resumeApp.models import ResumeModel,ResumeEducationModel,ResumeWorkModel
+        # Register your models here.
+
+        admin.site.register(ResumeModel)
+        admin.site.register(ResumeEducationModel)
+        admin.site.register(ResumeWorkModel)
+        ```
+    - Now as we have done changes in model so we have to migrate it;
+        - `py manage.py makemigrations`
+        - `py manage.py migrate`
+    - Run the server `py manage.py runserver`
+    - Now add some data from admin page so that we can show it in frontend
+    -  Let's setup our template pages
+    - `base.html`:
+        ```html
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Resume Builder</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        </head>
+        <body>
+            {% include 'navbar.html' %}
+            
+            {% block content %}
+                
+            {% endblock content %}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        </body>
+        </html>
+        ```
+        - Here we can see we have also added bootstrap cdn as we are using bootstrap to build our project.
+    - `navbar.html`:
+        ```html
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">Resume Builder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">All Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'addresume' %}">Add Resume</a>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        ```
+        - Here we have two navigation `All Resume`,  `Add Resume` & a default one which is navigating to home page `Resume Builder`.
+    - Now the page we are going to show the list of all resumes which is `home.html`
+        ```html
+        {% extends 'base.html' %}
+
+        {% block content %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Profile picture</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                
+                {% for i in resumedata %}
+                <tbody>
+                <tr>
+                    <td>
+                    <img src="/{{i.Profile_picture}}" width="50px" alt="">
+                    </td>
+                    <td>{{i.Full_name}}</td>
+                    <td>{{i.Address}}</td>
+                    <td>{{i.Phone_number}}</td>
+                    <td>
+                    <a href="{% url 'deleteresume' i.id %}">Delete</a>
+                    <a href="{% url 'editresume' i.id %}">Edit</a>
+                    <a href="{% url 'viewresume' i.id %}">View</a>
+                    </td>
+                </tr>
+                </tbody>
+                {% endfor %}
+                
+            </table>
+        {% endblock content %}
+        ```
+        - We can see there is a for loop, which is working because we have done some work in `views.py` which we have to create in project directory manually:
+            ```python
+            from django.shortcuts import render,redirect
+            from resumeApp.models import ResumeModel,ResumeEducationModel,ResumeWorkModel
+
+            def home(request):
+                resumedata=ResumeModel.objects.all()
+                educationdata=ResumeEducationModel.objects.all()
+                workdata=ResumeWorkModel.objects.all()
+                
+                resume={
+                    'resumedata':resumedata,
+                    'educationdata':educationdata,
+                    'workdata':workdata,
+                }
+                return render(request,'home.html',resume)
+            ```
+        - In `urls.py` we have to add the path route
+            ```python
+            from django.contrib import admin
+            from django.urls import path
+            from resumeProject.views import home,addresume,deleteresume,editresume,updateresume,viewresume
+
+            urlpatterns = [
+                path('admin/', admin.site.urls),
+                path('',home,name='home'),
+            ]
+            ```
+- We added the data from django admin page , So now let's add it from frontend
+    - First create a html page `addresume.html` and add bootstrap form 
+        ```html
+        {% extends 'base.html' %}
+
+
+        {% block content %}
+        <div class="container">
+            <form action="{% url 'addresume' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Profile Picture</label>
+                <input type="file" class="form-control" id="exampleInputEmail1" name="profile_picture" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Full name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="full_name" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="address" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Phone number</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="phone_number" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="email_address" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Career objective</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="career_objective" aria-describedby="emailHelp">
+                </div>
+                <h4>Education history:</h4>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Degree</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="degree" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Institution</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="institution" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Graduation_year</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="graduation_year" aria-describedby="emailHelp">
+                </div>
+                <h4>Work experience:</h4>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Company</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="company" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Position</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="position" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Start dates</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="start_dates" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">End dates</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="end_dates" aria-describedby="emailHelp">
+                </div>
+                <h4>Skills:</h4>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Hard Skills</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="hard_Skills" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Soft Skills</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="soft_Skills" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Certifications</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="certifications" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Projects</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="projects" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">References</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="references" aria-describedby="emailHelp">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+        {% endblock content %}
+        ```
+        - Here `action`,`method`,`enctype` and the html `name` attribute is important
+    - Now create a function which we included in action
+        ```python
+        def addresume(request):
+            if request.method=="POST":
+                profile_picture=request.FILES.get('profile_picture')
+                full_name=request.POST.get('full_name')
+                address=request.POST.get('address')
+                phone_number=request.POST.get('phone_number')
+                email_address=request.POST.get('email_address')
+                career_objective=request.POST.get('career_objective')
+                hard_Skills=request.POST.get('hard_Skills')
+                soft_Skills=request.POST.get('soft_Skills')
+                certifications=request.POST.get('certifications')
+                projects=request.POST.get('projects')
+                references=request.POST.get('references')
+                degree=request.POST.get('degree')
+                institution=request.POST.get('institution')
+                graduation_year=request.POST.get('graduation_year')
+                company=request.POST.get('company')
+                position=request.POST.get('position')
+                start_dates=request.POST.get('start_dates')
+                end_dates=request.POST.get('end_dates')
+                
+                resume=ResumeModel(
+                    Profile_picture=profile_picture,
+                    Full_name=full_name,
+                    Address=address,
+                    Phone_number=phone_number,
+                    Email_address=email_address,
+                    Career_objective=career_objective,
+                    Hard_Skills=hard_Skills,
+                    Soft_Skills=soft_Skills,
+                    Certifications=certifications,
+                    Projects=projects,
+                    References=references,
+                )
+                education=ResumeEducationModel(
+                    Degree=degree,
+                    Institution=institution,
+                    Graduation_year=graduation_year,
+                )
+                work=ResumeWorkModel(
+                    Company=company,
+                    Position=position,
+                    Start_dates=start_dates,
+                    End_dates=end_dates,
+                    
+                )
+                resume.save()
+                education.save()
+                work.save()
+                
+                return redirect('home')
+                
+            return render(request,'addresume.html')
+        ```
+    - Now add the url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from resumeProject.views import home,addresume,deleteresume,editresume,updateresume,viewresume
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',home,name='home'),
+            path('addresume/',addresume,name='addresume'),
+            
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+        - Here MEDIA static url added so that image related task work properly
+    - Now in `navbar.html` url will be added in `href`
+        ```html
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'addresume' %}">Add Resume</a>
+          </li>
+        ```
+- Now let's do the delete action
+    - First create a function with id in parameter as we need specific id to delete it
+        ```python
+        def deleteresume(request,myid):
+            resumedata=ResumeModel.objects.get(id=myid)
+            educationdata=ResumeEducationModel.objects.get(id=myid)
+            workdata=ResumeWorkModel.objects.get(id=myid)
+            
+            resumedata.delete()
+            educationdata.delete()
+            workdata.delete()
+            return redirect('home')
+        ```
+    - Create url route path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from resumeProject.views import home,addresume,deleteresume,editresume,updateresume,viewresume
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',home,name='home'),
+            path('addresume/',addresume,name='addresume'),
+            path('deleteresume/<str:myid>',deleteresume,name='deleteresume'),
+            
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Now in table :
+        ```html
+            <td>
+              <a href="{% url 'deleteresume' i.id %}">Delete</a>
+            </td>
+        ```
+- Now let's edit and update the data
+    - first create a form as same as `addresume.html` page which is `editresume.html`
+        ```html
+        {% extends 'base.html' %}
+
+
+        {% block content %}
+        <div class="container">
+            <form action="{% url 'updateresume' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">ID</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.id}}" name="myid" aria-describedby="emailHelp" readonly>
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Current Profile Picture:</label> <br>
+                <img src="/{{resumedata.Profile_picture}}" width="50px" alt=""><br>
+                <input type="file" class="form-control" id="exampleInputEmail1" name="profile_picture" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Full name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Full_name}}" name="full_name" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Address}}" name="address" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Phone number</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Phone_number}}" name="phone_number" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Email_address}}" name="email_address" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Career objective</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Career_objective}}" name="career_objective" aria-describedby="emailHelp">
+                </div>
+                <h4>Education history:</h4>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Degree</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{educationdata.Degree}}" name="degree" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Institution</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{educationdata.Institution}}" name="institution" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Graduation_year</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{educationdata.Graduation_year}}" name="graduation_year" aria-describedby="emailHelp">
+                </div>
+                <h4>Work experience:</h4>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Company</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{workdata.Company}}" name="company" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Position</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{workdata.Position}}" name="position" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Start dates</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{workdata.Start_dates}}" name="start_dates" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">End dates</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{workdata.End_dates}}" name="end_dates" aria-describedby="emailHelp">
+                </div>
+                <h4>Skills:</h4>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Hard Skills</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Hard_Skills}}" name="hard_Skills" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Soft Skills</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Soft_Skills}}" name="soft_Skills" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Certifications</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Certifications}}" name="certifications" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Projects</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.Projects}}" name="projects" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">References</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="{{resumedata.References}}" name="references" aria-describedby="emailHelp">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+
+        </div>
+        {% endblock content %}
+        ```
+        - Here difference between add page is the action which is for updating after clicking on update.
+        - Value attribute for seeing the current data 
+    - Now create a function for this page to show
+        ```python
+        def editresume(request,myid):
+            resumedata=ResumeModel.objects.get(id=myid)
+            educationdata=ResumeEducationModel.objects.get(id=myid)
+            workdata=ResumeWorkModel.objects.get(id=myid)
+            
+            resume={
+                'resumedata':resumedata,
+                'educationdata':educationdata,
+                'workdata':workdata,
+            }
+            return render(request,'editresume.html',resume)
+        ```
+        - Here we first the created `editresume.html` page 
+        - As we need id so that we can show the current data of that specific person
+        - and finally we return the model data as dictionary
+    - Now in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from resumeProject.views import home,addresume,deleteresume,editresume,updateresume,viewresume
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',home,name='home'),
+            path('addresume/',addresume,name='addresume'),
+            path('deleteresume/<str:myid>',deleteresume,name='deleteresume'),
+            path('editresume/<str:myid>',editresume,name='editresume'),
+            
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+        - As we can see there is the id 
+    - Now in action 
+        ```html
+            <td>
+              <a href="{% url 'editresume' i.id %}">Edit</a>
+            </td>
+        ```
+        - So after clicking on it it will open that specific id's data for editing
+    - Now to make the update button work we have to create a update function as below:
+        ```python
+        def updateresume(request):
+            if request.method=="POST":
+                myid=request.POST.get('myid')
+                profile_picture=request.FILES.get('profile_picture')
+                full_name=request.POST.get('full_name')
+                address=request.POST.get('address')
+                phone_number=request.POST.get('phone_number')
+                email_address=request.POST.get('email_address')
+                career_objective=request.POST.get('career_objective')
+                hard_Skills=request.POST.get('hard_Skills')
+                soft_Skills=request.POST.get('soft_Skills')
+                certifications=request.POST.get('certifications')
+                projects=request.POST.get('projects')
+                references=request.POST.get('references')
+                degree=request.POST.get('degree')
+                institution=request.POST.get('institution')
+                graduation_year=request.POST.get('graduation_year')
+                company=request.POST.get('company')
+                position=request.POST.get('position')
+                start_dates=request.POST.get('start_dates')
+                end_dates=request.POST.get('end_dates')
+                
+                if profile_picture:
+                    resume=ResumeModel(
+                        id=myid,
+                        Profile_picture=profile_picture,
+                        Full_name=full_name,
+                        Address=address,
+                        Phone_number=phone_number,
+                        Email_address=email_address,
+                        Career_objective=career_objective,
+                        Hard_Skills=hard_Skills,
+                        Soft_Skills=soft_Skills,
+                        Certifications=certifications,
+                        Projects=projects,
+                        References=references,
+                    )
+                    education=ResumeEducationModel(
+                        id=myid,
+                        Degree=degree,
+                        Institution=institution,
+                        Graduation_year=graduation_year,
+                    )
+                    work=ResumeWorkModel(
+                        id=myid,
+                        Company=company,
+                        Position=position,
+                        Start_dates=start_dates,
+                        End_dates=end_dates,
+                        
+                    )
+                else:
+                    resumebyid=ResumeModel.objects.get(id=myid)
+                    resume=ResumeModel(
+                        id=myid,
+                        Profile_picture=resumebyid.Profile_picture,
+                        Full_name=full_name,
+                        Address=address,
+                        Phone_number=phone_number,
+                        Email_address=email_address,
+                        Career_objective=career_objective,
+                        Hard_Skills=hard_Skills,
+                        Soft_Skills=soft_Skills,
+                        Certifications=certifications,
+                        Projects=projects,
+                        References=references,
+                    )
+                    education=ResumeEducationModel(
+                        id=myid,
+                        Degree=degree,
+                        Institution=institution,
+                        Graduation_year=graduation_year,
+                    )
+                    work=ResumeWorkModel(
+                        id=myid,
+                        Company=company,
+                        Position=position,
+                        Start_dates=start_dates,
+                        End_dates=end_dates,
+                        
+                    )
+                resume.save()
+                education.save()
+                work.save()
+            return redirect('home')
+        ```
+        - This function also handle the `None` image 
+        - As we are updating the values withing a model so id is playing very important role here, if we don't do that we will create a new table data rather than updating.
+        - finally we save it and redirect to home page.
+    - Add the url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from resumeProject.views import home,addresume,deleteresume,editresume,updateresume,viewresume
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',home,name='home'),
+            path('addresume/',addresume,name='addresume'),
+            path('deleteresume/<str:myid>',deleteresume,name='deleteresume'),
+            path('editresume/<str:myid>',editresume,name='editresume'),
+            path('updateresume/',updateresume,name='updateresume'),
+            
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+- Now let's view the resume we created 
+    - We will need a good template for that , gpt will be very helpful in this part. Create a `viewresume.html`
+        ```html
+        {% extends 'base.html' %}
+
+        {% block content %}
+        <style>
+            /* Custom styles */
+            body {
+                background-color: #f8f9fa;
+                color: #343a40;
+            }
+            .section-title {
+                color: #007bff;
+            }
+            .section-heading {
+                color: #28a745;
+            }
+            .profile-picture {
+                border-radius: 50%;
+                border: 5px solid #17a2b8;
+                max-width: 200px;
+                height: auto;
+            }
+            .list-group-item {
+                background-color: #f1f1f1;
+                border-color: #dee2e6;
+            }
+        </style>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="/{{ resumedata.Profile_picture }}" class="img-fluid profile-picture" alt="Profile Picture">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="section-heading">{{ resumedata.Full_name }}</h1>
+                    <p><strong>Address:</strong> {{ resumedata.Address }}</p>
+                    <p><strong>Phone:</strong> {{ resumedata.Phone_number }}</p>
+                    <p><strong>Email:</strong> {{ resumedata.Email_address }}</p>
+                    <hr>
+                    <h3 class="section-title">Career Objective</h3>
+                    <p>{{ resumedata.Career_objective }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h3 class="section-title">Education</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">{{ educationdata.Degree }} - {{ educationdata.Institution }} ({{ educationdata.Graduation_year }})</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="section-title">Work Experience</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">{{ workdata.Position }} at {{ workdata.Company }} ({{ workdata.Start_dates }} - {{ workdata.End_dates }})</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h3 class="section-title">Hard Skills</h3>
+                    <p>{{ resumedata.Hard_Skills }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="section-title">Soft Skills</h3>
+                    <p>{{ resumedata.Soft_Skills }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h3 class="section-title">Certifications</h3>
+                    <p>{{ resumedata.Certifications }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="section-title">Projects</h3>
+                    <p>{{ resumedata.Projects }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h3 class="section-title">References</h3>
+                    <p>{{ resumedata.References }}</p>
+                </div>
+            </div>
+        </div>
+        {% endblock content %}
+        ```
+    - Now create a function for this html page to view
+        ```python
+        def viewresume(request,myid):
+            resumedata=ResumeModel.objects.get(id=myid)
+            educationdata=ResumeEducationModel.objects.get(id=myid)
+            workdata=ResumeWorkModel.objects.get(id=myid)
+            
+            resume={
+                'resumedata':resumedata,
+                'educationdata':educationdata,
+                'workdata':workdata,
+            }
+            return render(request,'viewresume.html',resume)
+        ```
+    - Create url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from resumeProject.views import home,addresume,deleteresume,editresume,updateresume,viewresume
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('',home,name='home'),
+            path('addresume/',addresume,name='addresume'),
+            path('deleteresume/<str:myid>',deleteresume,name='deleteresume'),
+            path('editresume/<str:myid>',editresume,name='editresume'),
+            path('updateresume/',updateresume,name='updateresume'),
+            path('viewresume/<str:myid>',viewresume,name='viewresume'),
+            
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Now in action 
+        ```html
+            <td>
+              <a href="{% url 'viewresume' i.id %}">View</a>
+            </td>
+        ```
+- We have done all the required CRUD operation in this Portfolio project
+
+> Bonus Task solution not included here
+### Task
+- Do full lab-3 project video and submit
 
 </details>
 
