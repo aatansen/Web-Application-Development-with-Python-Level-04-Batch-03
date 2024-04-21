@@ -2444,11 +2444,11 @@ Question: As a job recruiter, you are tasked with hiring a Django developer for 
 </details>
 
 <details>
-<summary>Day-13-View Action & All Model Table Data in Single Page (31-03-2024)</summary>
+<summary>Day-13-Python Basic Day 01, View Action & All Model Table Data in Single Page (31-03-2024)</summary>
 
 ## Day 13 Topics:-
 - Security & code editor
-- Python Basics
+- Python Basic Day 01
 - Variable
 - View Action 
 - Task
@@ -2461,7 +2461,7 @@ Compiler / Interpreter -->Translator (Python has both)
 - Security (csrf,session-hijack,man in the middle attack,vulnerability)
 - Authentication
 
-### Python Basics
+### Python Basic
 - Variable
 - Operator
 - Condition (increment / decrement)
@@ -3324,7 +3324,7 @@ Similar task is repeated for student who failed to complete it. In Day 14 full d
 </details>
 
 <details>
-<summary>Day-17-Custom Template Setup (04-04-2024)</summary>
+<summary>Day-17-Python Day 03 & Custom Template Setup (04-04-2024)</summary>
 
 ## Day 17 Topics
 - Django Framework Disscussion
