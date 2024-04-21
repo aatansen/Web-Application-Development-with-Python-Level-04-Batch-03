@@ -5133,3 +5133,346 @@ Submission:
 
 </details>
 
+<details>
+<summary>Day-21-Python Basic Day 05 & Job Portal Project Part 01 (21-04-2024)</summary>
+    
+## Day 21 Topics
+- Python Basics Day 04 recap
+- Nested If else
+- Simple problem solving using only if..else
+- Job Portal Project Part 01 (Using AbstractUser)
+
+### Simple problem solving using only if..else
+> Problem-01: x,y,z who is greater
+```python
+x=10
+y=20
+z=30
+
+if x>y:
+    if x>z:
+        print("x is greater")
+    else:
+        print("z is greater")
+else:
+    if y>x:
+        if y>z:
+            print("y is greater")
+        else:
+            print("z is greater")
+```
+> Problem-02: w,x,y,z who is greater
+```python
+w=10
+x=20
+y=30
+z=40
+
+if w>x:
+    if w>y:
+        if w>z:
+            print("w is greater")
+        else:
+            print("z is greater")
+    else:
+        if y>z:
+            print("y is greater")
+        else:
+            print("z is greater")
+else:
+    if x>y:
+        if x>z:
+            print("x is greater")
+        else:
+            print("z is greater")
+    else:
+        if y>z:
+            print("y is greater")
+        else:
+            print("z is greater")
+```
+> Problem-03: write the output of below code
+```python
+a=100
+b=300
+c=0
+c=a
+a=b
+b=c
+c=0
+if c:
+    print("Hello")
+else:
+    print(f"Value of a = {a} and value of b = {b}")
+```
+
+### Job Portal Project Part 01 (Using AbstractUser)
+- Create project and app as usual way
+- Create a signup page `signuppage.html`:
+    ```html
+    {% extends 'base.html' %}
+    {% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signup Page</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                max-width: 400px;
+                margin: 50px auto;
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            h2 {
+                text-align: center;
+            }
+            
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+            
+            input[type="submit"] {
+                width: 100%;
+                background-color: #4caf50;
+                color: #fff;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Signup</h2>
+            <form action="#" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                
+                <label for="user_type">User Type:</label>
+                <select id="user_type" name="user_type" required>
+                    <option value="" disabled selected>Select User Type</option>
+                    <option value="job_seeker">Job Seeker</option>
+                    <option value="job_recruiter">Job Recruiter</option>
+                </select>
+                
+                <input type="submit" value="Sign Up">
+            </br>
+            </br>
+                <a href="{% url 'signinpage' %}">Already have an account?</a>
+            </form>
+        </div>
+    </body>
+    </html>
+    {% endblock content %}
+    ```
+    - Create function for signin:
+        ```python
+        from django.shortcuts import render, redirect
+
+        def signuppage(request):
+            return render(request,'signuppage.html')
+
+        ```
+    - Create url path
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from jobportalProject.views import signuppage
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('signuppage/',signuppage,name='signuppage'),
+        ]
+        ```
+- Now create a signin page `signinpage.html`
+    ```html
+    {% extends 'base.html' %}
+    {% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signup Page</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                max-width: 400px;
+                margin: 50px auto;
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            h2 {
+                text-align: center;
+            }
+            
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            select {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+            
+            input[type="submit"] {
+                width: 100%;
+                background-color: #4caf50;
+                color: #fff;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Signup</h2>
+            <form action="#" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input type="submit" value="Sign In">
+            </br>
+            </br>
+                <a href="{% url 'signuppage' %}">Don't have an account?</a>
+            </form>
+        </div>
+    </body>
+    </html>
+    {% endblock content %}
+
+    ```
+    - Create function for the singinpage
+        ```python
+        from django.shortcuts import render, redirect
+
+        def signinpage(request):
+            return render(request,'signinpage.html')
+        ```
+    - Add url path:
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from jobportalProject.views import signuppage,signinpage
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('signuppage/',signuppage,name='signuppage'),
+            path('',signinpage,name='signinpage'),
+        ]
+        ```
+- Now new changes:
+    - Create class of `AbstractUser` in `models.py`
+        ```python
+        from django.db import models
+        from django.contrib.auth.models import AbstractUser
+
+        # Create your models here.
+        class CustomUserModel(AbstractUser):
+            USER=[
+                ('recruiter','Recruiter'),
+                ('jobseeker','JobSeeker'),
+            ]
+            user_type=models.CharField(choices=USER,max_length=100)
+            user_name = models.CharField(max_length=100)
+            display_name=models.CharField(max_length=100)
+            email=models.CharField(max_length=100)
+            password=models.EmailField(max_length=100)
+            confirm_password=models.CharField(max_length=100)
+
+            def __str__(self):
+                return self.user_name
+        ```
+        - Here `CustomUserModel(AbstractUser)` is new, where we created the model.
+    - In `admin.py`
+        ```python
+        from django.contrib import admin
+        from jobportalApp.models import CustomUserModel
+
+        # Register your models here.
+        class Custom_User_Display(admin.ModelAdmin):
+            list_display=['display_name','user_name','email']
+
+        admin.site.register(CustomUserModel,Custom_User_Display)
+        ```
+        - Here we did some modification before registering the model.
+        - The modification is done to display the model data properly in custom way
+    - Changes in `settings.py` where we have to include the Auth user model in end line
+        ```python
+        AUTH_USER_MODEL='jobportalApp.CustomUserModel' # here appname.created_model_name
+        ```
+    - Now we will migrate our database and create the sueruser:
+        - `py manage.py makemigrations jobportalApp`
+        - `py manage.py migrate jobportalApp`
+        - `py manage.py migrate`
+        - `py manage.py makemigrations`
+        - `py manage.py createsuperuser`
+    - Now we will be able to add new data in our created model
+
+</details>
