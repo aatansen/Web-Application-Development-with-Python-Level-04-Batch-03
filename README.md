@@ -5476,3 +5476,187 @@ else:
     - Now we will be able to add new data in our created model
 
 </details>
+
+<details>
+<summary>Day-22-Job Portal Project Part 02 (22-04-2024)</summary>
+
+## Day 22 Topics
+- Day 21 recap
+- Job Portal Project Part 02
+
+### Job Portal Project Part 02
+- Modify in `settings.py`
+    - Add app in installed app
+    - Add template path
+    - Add static path
+    - Add `AUTH_USER_MODEL`
+- Creating model:
+    - As we are creating custom model from AbstractUser where many common thing already defined, So we will add only things that are uncommon are not include in AbstractUser:
+        ```python
+        from django.db import models
+        from django.contrib.auth.models import AbstractUser
+        # Create your models here.
+        class CustomUserModel(AbstractUser):
+            USER=[
+                ('recruiter','Recruiter'),
+                ('seeker','Seeker'),
+            ]
+            BLOOD_GROUP=[
+                ('A+', 'A positive'),
+                ('A-', 'A negative'),
+                ('B+', 'B positive'),
+                ('B-', 'B negative'),
+                ('AB+', 'AB positive'),
+                ('AB-', 'AB negative'),
+                ('O+', 'O positive'),
+                ('O-', 'O negative'),
+            ]
+
+            fname=models.CharField(max_length=100)
+            lname=models.CharField(max_length=100)
+            profile_picture=models.ImageField(upload_to='media/profilePic')
+            # date_of_birth=models.DateField(auto_now=True)
+            date_of_birth=models.DateField(auto_now_add=True)
+            address=models.CharField(max_length=100)
+            blood_group=models.CharField(choices=BLOOD_GROUP,max_length=100)
+            usertype=models.CharField(choices=USER,max_length=100)
+
+            def __str__(self):
+                return self.fname
+        ```
+        - Here `DateField` field is `auto_now_add=True` which will take the date and save it, if it is set as `auto_now=True` then it will save the current date
+    - Register the Model
+        ```python
+        from django.contrib import admin
+        from jobportalApp.models import CustomUserModel
+        # Register your models here.
+
+        class Custom_User_Display(admin.ModelAdmin):
+            list_display=['fname','usertype','blood_group','date_of_birth']
+
+        admin.site.register(CustomUserModel,Custom_User_Display)
+        ```
+        - Here `Custom_User_Display` class is used to show some of the selected column in admin page in table structure
+    - Now let's do the database migrate
+        > Execute below command one by one
+        - `py manage.py makemigrations jobportalApp`
+        - `py manage.py migrate jobportalApp`
+        - `py manage.py migrate`
+        - `py manage.py makemigrations`
+        - `py manage.py createsuperuser`
+    - Now we can add model data 
+- To add it from frontend page we will create a `signup.html` page
+    ```html
+    {% extends 'base.html' %}
+
+
+    {% block content %}
+    <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        <label for="name">First Name:</label><br>
+        <input type="text" id="name" name="fname" required><br><br>
+        <label for="name">Last Name:</label><br>
+        <input type="text" id="name" name="lname" required><br><br>
+        <label for="name">User Name:</label><br>
+        <input type="text" id="name" name="username" required><br><br>
+    
+        <label for="username">Profile Picture:</label><br>
+        <input type="file" id="username" name="profile_picture" required><br><br>
+        <label for="date_of_birth">Date of Birth:</label><br>
+        <input type="date" id="date_of_birth" name="date_of_birth" required><br><br>
+        
+
+        <label for="usertype">Blood Group:</label><br>
+        <select id="usertype" name="blood_group" required>
+        <option value="" disabled selected>Please select an option</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+    </select><br><br>
+    
+        <label for="email">Address:</label><br>
+        <input type="text" id="email" name="address" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+    
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+    
+        <label for="confirm_password">Confirm Password:</label><br>
+        <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+    
+        <label for="usertype">User Type:</label><br>
+        <select id="usertype" name="usertype" required>
+            <option value="" disabled selected>Please select an option</option>
+        <option value="seeker">Job Seeker</option>
+        <option value="recruiter">Job Recruiter</option>
+        </select><br><br>
+    
+        <input type="submit" value="Sign Up">
+    </form>
+    
+    {% endblock content %}
+    ```
+    - Create a function to render it
+        ```python
+        from django.shortcuts import render,redirect
+        from jobportalApp.models import CustomUserModel
+
+        def signup(request):
+            if request.method=="POST":
+                fname=request.POST.get('fname')
+                lname=request.POST.get('lname')
+                profile_picture=request.FILES.get('profile_picture')
+                date_of_birth=request.POST.get('date_of_birth')
+                blood_group=request.POST.get('blood_group')
+                address=request.POST.get('address')
+                username=request.POST.get('username')
+                email=request.POST.get('email')
+                password=request.POST.get('password')
+                confirm_password=request.POST.get('confirm_password')
+                usertype=request.POST.get('usertype')
+
+                if password==confirm_password:
+                    user=CustomUserModel.objects.create_user(
+                        username=username,
+                        password=confirm_password,
+                    )
+                    user.fname=fname
+                    user.lname=lname
+                    user.profile_picture=profile_picture
+                    user.date_of_birth=date_of_birth
+                    user.blood_group=blood_group
+                    user.address=address
+                    user.email=email
+                    user.usertype=usertype
+                    user.save()
+                    return redirect('signin')
+
+                else:
+                    return redirect('signup')
+
+            return render(request,'signup.html')
+        ```
+    - Add url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from jobportalProject.views import signin,signup
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('signup/',signup,name='signup'),
+        ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Now we will be able to add it from this frontend form
+
+
+</details>
