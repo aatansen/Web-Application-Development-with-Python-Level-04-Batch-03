@@ -5658,5 +5658,93 @@ else:
         ```
     - Now we will be able to add it from this frontend form
 
+</details>
+
+<details>
+<summary>Day-23-Job Portal Project Part 01 to 03 (23-04-2024)</summary>
+
+## Day 23 Topics
+
+- Day 22 recap
+- Job Portal Part 03 (Authentication)
+- Task
+
+### Job Portal Part 03 (Authentication)
+- For authenticate user login `authenticate`,`login` is used 
+    ```python 
+    from django.contrib.auth import authenticate,login,logout
+    def signin(request):
+        if request.method=="POST":
+            uname=request.POST.get('uname')
+            password=request.POST.get('password')
+            
+            user = authenticate(
+                username=uname,
+                password=password,
+            )
+            print(f'Logged in user: {user}')
+            if user:
+                login(request,user)
+                return redirect('dashboard')
+            else:
+                return redirect('signin')
+        return render(request,'signin.html')
+    ```
+    - For log out
+        ```python
+        def logoutpage(request):
+            logout(request)
+            return redirect('signin')
+        ```
+- Other task are similar to previous CRUD operation
+### Task
+- Job Portal Project Part 01 - 03
+    - Create user model using `AbstractUser` Model
+    - Create `SignUp` / `SignIn` page using below field
+        - **First Name**
+        - **Last name**
+        - **Username**
+        - **Email**
+        - **Password**
+        - **Confirm Password**
+        - **Profile Picture**
+        - **Date of Birth**
+        - **Address**
+        - **Blood Group**
+        - **User Type** 
+    - After Login user will be in a `Dashboard` with `navbar` where:
+        - **Dashboard**
+        - **View Job**
+        - **Add Job**
+        - **Applied Job**
+        - **Recent Job**
+        - **Profile**
+        - **Log out**
+
+            - If user is `Job Recruiter` below navigation will be present
+                - **Dashboard**
+                - **View Job**
+                - **Add Job**
+                - **Profile**
+                - **Log out**
+            - If user is `Job Seeker` below navigation will be present
+                - **Dashboard**
+                - **View Job**
+                - **Applied Job**
+                - **Recent Job**
+                - **Profile**
+                - **Log out**
+            > Create all those above mentioned individual navigation pages including CRUD Operation
+        - `Add Job` page will have these field:
+            - **Job title**
+            - **Company name**
+            - **Address**
+            - **Company description**
+            - **Job description**
+            - **Qualification**
+            - **Salary information**
+            - **Deadline**
+            - **Designation**
+            - **Experience**
 
 </details>
