@@ -5783,7 +5783,12 @@ else:
         }
         return render(request,'dashboard.html',jobDict)
     ```
+    - Now in `settings.py` we have to include the `LOGIN_URL`
+        ```python
+        LOGIN_URL='signin'
+        ```
     - Now the `dashboard.html` is being restricted from accessing without login
+
 - Now what if according to our project there is two type of person can login `recruiter` and `seeker` where `seeker` want to access `addjob` page, so we can restrict it by using below method:
     ```python
     @login_required
