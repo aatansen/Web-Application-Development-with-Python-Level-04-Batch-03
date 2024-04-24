@@ -5748,3 +5748,225 @@ else:
             - **Experience**
 
 </details>
+
+<details>
+<summary>Day-24-Job Portal Project Part 04 (24-04-2024)</summary>
+
+## Day 24 Topics
+- Day 23 recap
+- Job Portal Project Part 04
+    - Organize Templates
+    - Login Required
+    - In Dashboard/view job page Only Recruiter can edit/update, delete job post where seeker can only view
+    - Recruiter can see their post only which they posted but Job seeker will be able to see all the job
+
+### Organize Templates
+- Create individual folder in template folder
+    ```text
+    |----templates
+         |
+         |--recruiter
+             |
+             |--addjob.html
+    ```
+- Now edit the edit the path in `views.py` function `'recruiter/addjob.html'`
+
+### Login Required
+- It is used to restrict an user from access some pages which required login
+    ```python
+    from django.contrib.auth.decorators import login_required
+    @login_required
+    def dashboard(request):
+        job=JobModel.objects.all()
+        jobDict={
+            'job':job
+        }
+        return render(request,'dashboard.html',jobDict)
+    ```
+    - Now the `dashboard.html` is being restricted from accessing without login
+- Now what if according to our project there is two type of person can login `recruiter` and `seeker` where `seeker` want to access `addjob` page, so we can restrict it by using below method:
+    ```python
+    @login_required
+    def addjob(request):
+        if request.user.user_type == 'recruiter':
+            if request.method=="POST":
+                Job_title=request.POST.get('Job_title')
+                Company_name=request.POST.get('Company_name')
+                Address=request.POST.get('Address')
+                Company_description=request.POST.get('Company_description')
+                Job_description=request.POST.get('Job_description')
+                Qualification=request.POST.get('Qualification')
+                Salary_information=request.POST.get('Salary_information')
+                Deadline=request.POST.get('Deadline')
+                Designation=request.POST.get('Designation')
+                Experience=request.POST.get('Experience')
+                
+                job=JobModel(
+                    Recruiter=request.user.username,
+                    Job_title=Job_title,
+                    Company_name=Company_name,
+                    Address=Address,
+                    Company_description=Company_description,
+                    Job_description=Job_description,
+                    Qualification=Qualification,
+                    Salary_information=Salary_information,
+                    Deadline=Deadline,
+                    Designation=Designation,
+                    Experience=Experience,
+                )
+                job.save()
+                return redirect('viewjob')
+            return render(request,'recruiter/addjob.html')
+        else:
+            logout(request)
+            return redirect('signin')
+    ```
+    > Also we can use is_authenticated to authenticate an user before accessing
+
+### In Dashboard/view job page Only Recruiter can edit/update, delete job post where seeker can only view
+- To do this we will use condition
+    ```python
+    @login_required
+    def dashboard(request):
+        job=JobModel.objects.all()
+        jobDict={
+            'job':job
+        }
+        return render(request,'dashboard.html',jobDict)
+    ```
+- Now `dashboard.html` page
+    ```html
+    <table id="customers">
+    <tr>
+        <th>Recruiter</th>
+        <th>Job title</th>
+        <th>Company name</th>
+        <th>Address</th>
+        <th>Company description</th>
+        <th>Job description</th>
+        <th>Qualification</th>
+        <th>Salary information</th>
+        <th>Deadline</th>
+        <th>Designation</th>
+        <th>Experience</th>
+        <th>Action</th>
+    </tr>
+    {% for i in job %}
+    {% if user.username == i.Recruiter %}
+        <tr>
+            <td>{{i.Recruiter}}</td>
+            <td>{{i.Job_title}}</td>
+            <td>{{i.Company_name}}</td>
+            <td>{{i.Address}}</td>
+            <td>{{i.Company_description}}</td>
+            <td>{{i.Job_description}}</td>
+            <td>{{i.Qualification}}</td>
+            <td>{{i.Salary_information}}</td>
+            <td>{{i.Deadline}}</td>
+            <td>{{i.Designation}}</td>
+            <td>{{i.Experience}}</td>
+            <td>
+            
+            {% if user.user_type == 'recruiter' %}
+            <a href="{% url 'editjob' i.id %}">Edit</a>
+            <a href="{% url 'deletejob' i.id %}">Delete</a>
+            {% endif %}
+            <a href="{% url 'viewjob' %}">View</a>
+
+            </td>
+        </tr>
+        {% elif user.user_type == 'seeker' %}
+        <tr>
+        <td>{{i.Recruiter}}</td>
+        <td>{{i.Job_title}}</td>
+        <td>{{i.Company_name}}</td>
+        <td>{{i.Address}}</td>
+        <td>{{i.Company_description}}</td>
+        <td>{{i.Job_description}}</td>
+        <td>{{i.Qualification}}</td>
+        <td>{{i.Salary_information}}</td>
+        <td>{{i.Deadline}}</td>
+        <td>{{i.Designation}}</td>
+        <td>{{i.Experience}}</td>
+        <td>
+            
+            {% if user.user_type == 'recruiter' %}
+            <a href="{% url 'editjob' i.id %}">Edit</a>
+            <a href="{% url 'deletejob' i.id %}">Delete</a>
+            {% endif %}
+            <a href="{% url 'viewjob' %}">View</a>
+
+        </td>
+        {% endif %}
+    {% endfor %}
+        
+    </table>
+    ```
+### Recruiter can see their post only which they posted but Job seeker will be able to see all the job
+- To do this we can use condition 
+    ```python
+    @login_required
+    def viewjob(request):
+        job=JobModel.objects.all()
+        jobDict={
+            'jobs':job
+        }
+        return render(request,'viewjob.html',jobDict)
+    ```
+- Now the `viewjob.html` page
+    ```html
+    <body>
+        <h1>Job Listings</h1>
+        <div class="job-listings">
+            
+            {% for job in jobs %}
+            
+            {% if user.username == job.Recruiter %}
+            <div class="job">
+                <h2>{{ job.Job_title }}</h2>
+                <p><strong>Company:</strong> {{ job.Company_name }}</p>
+                <p><strong>Location:</strong> {{ job.Address }}</p>
+                <p><strong>Company Description:</strong> {{ job.Company_description }}</p>
+                <p><strong>Job Description:</strong> {{ job.Job_description }}</p>
+                <p><strong>Qualification:</strong> {{ job.Qualification }}</p>
+                <p><strong>Salary Information:</strong> {{ job.Salary_information }}</p>
+                <p><strong>Deadline:</strong> {{ job.Deadline }}</p>
+                <p><strong>Designation:</strong> {{ job.Designation }}</p>
+                <p><strong>Experience:</strong> {{ job.Experience }}</p>
+                <div class="actions">
+                    {% if user.user_type == 'recruiter' %}
+                    <button class="update"> <a href="{% url 'editjob' job.id %}" >Update</a></button>
+                    <button class="delete"><a href="{% url 'deletejob' job.id %}" >Delete</a></button> 
+                    {% endif %}
+                </div>
+            </div>
+            {% elif user.user_type == 'seeker' %}
+            <div class="job">
+                <h2>{{ job.Job_title }}</h2>
+                <p><strong>Recruiter:</strong> {{ job.Recruiter }}</p>
+                <p><strong>Company:</strong> {{ job.Company_name }}</p>
+                <p><strong>Location:</strong> {{ job.Address }}</p>
+                <p><strong>Company Description:</strong> {{ job.Company_description }}</p>
+                <p><strong>Job Description:</strong> {{ job.Job_description }}</p>
+                <p><strong>Qualification:</strong> {{ job.Qualification }}</p>
+                <p><strong>Salary Information:</strong> {{ job.Salary_information }}</p>
+                <p><strong>Deadline:</strong> {{ job.Deadline }}</p>
+                <p><strong>Designation:</strong> {{ job.Designation }}</p>
+                <p><strong>Experience:</strong> {{ job.Experience }}</p>
+                <div class="actions">
+                    {% if user.user_type == 'recruiter' %}
+                    <button class="update"> <a href="{% url 'editjob' job.id %}" >Update</a></button>
+                    <button class="delete"><a href="{% url 'deletejob' job.id %}" >Delete</a></button> 
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </body>
+    {% endblock content %}
+    ```
+    - Here `username` of the recruiter is checked to show their posting job only
+    - As job seeker can view all jobs so only the type is checked which showed all the job
+
+</details>
