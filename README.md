@@ -5976,3 +5976,67 @@ else:
     - As job seeker can view all jobs so only the type is checked which showed all the job
 
 </details>
+
+<details>
+<summary>Day-25-Job Portal Project (ForeignKey) (25-04-2024)</summary>
+
+## Day 25 Topics
+- Job Portal Project Day 01 to 04 Recap
+- Using ForeignKey
+
+### Using ForeignKey
+- To make sure the recruiter who posted the job we can use `ForeignKey` in `JobModel` to make a relationship with `CustomUserModel`
+    ```python
+    from django.db import models
+    from django.contrib.auth.models import AbstractUser
+
+    # Create your models here.
+
+    class CustomUserModel(AbstractUser):
+        fname=models.CharField(max_length=100)
+        lname=models.CharField(max_length=100)
+        profile_picture=models.ImageField(upload_to='media/profile_pic')
+        date_of_birth=models.DateField(auto_now_add=True)
+        address=models.CharField(max_length=100)
+        BLOOD_GROUP=[
+            ('a+','A Positive'),
+            ('a-','A Negative'),
+            ('b+','B Positive'),
+            ('b-','B Negative'),
+            ('ab+','AB Positive'),
+            ('ab-','AB Negative'),
+            ('o+','O Positive'),
+            ('o-','O Negative'),
+        ]
+        blood_group=models.CharField(choices=BLOOD_GROUP,max_length=100)
+        USER_TYPE=[
+            ('recruiter','Job Recruiter'),
+            ('seeker','Job Seeker'),
+        ]
+        user_type=models.CharField(choices=USER_TYPE,max_length=100)
+        
+        def __str__(self):
+            return self.fname
+        
+    class JobModel(models.Model):
+        Job_title=models.CharField(max_length=100)
+        Company_name=models.CharField(max_length=100)
+        Address=models.CharField(max_length=100)
+        Company_description=models.TextField()
+        Job_description=models.TextField()
+        Qualification=models.CharField(max_length=100)
+        Salary_information=models.CharField(max_length=100)
+        Deadline=models.DateField(auto_now_add=True)
+        Designation=models.CharField(max_length=100)
+        Experience=models.CharField(max_length=100)
+        Recruiter=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)
+        
+        def __str__(self):
+            return self.Job_title
+    ```
+    - Here in `JobModel` we used `Recruiter=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)` 
+    - Now the argument we are passing are:
+        - First one is our `CustomUserModel`
+        - Second one is `on_delete=models.CASCADE`
+        > First one is used for creating the relationship and the Second one is used when we gonna delete a recruiter it will also delete the jobs created by that user
+</details>
