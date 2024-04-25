@@ -4219,44 +4219,45 @@ Submission:
 
 |Operator|	Name|	Example|
 |-       | -    |      -   |
-|+	|Addition	| $ x + y$ |	
-|-	|Subtraction|	$ x - y$ |	
-|*	|Multiplication	| $ x * y $ |	
-|/	|Division|	$ x / y $ |	
-|%	|Modulus	| $ x % y $	|
-|**	|Exponentiation|	$ x ** y $ |	
-|//	|Floor division|	$ x // y $ |
+|+	|Addition	| $x + y$ |	
+|-	|Subtraction|	$x - y$ |	
+|*	|Multiplication	| $x * y$ |	
+|/	|Division|	$x / y$ |	
+|%	|Modulus	| $x % y$	|
+|**	|Exponentiation|	$x ** y$ |	
+|//	|Floor division|	$x // y$ |
 
 
 ### Assignment Operators
 - Task
-    - $ a/=10 $
-        > $ a=a/10 $
-    - $ a+=b+10 $
-        > $ a=a/10 $
-    - $ a**=3+c $
-        > $ a=a**(3+c) $
-    - $ a//=x+y**4 $
-        > $ a=a//(x+(y**4)) $
-    - $ b-=x**y $
-        > $ b=b-(x**y) $
+    - $a/=10$
+        > $a=a/10$
+    - $a+=b+10$
+        > $a=a/10$
+    - $a**=3+c$
+        > $a=a**(3+c)$
+    - $a//=x+y**4$
+        > $a=a//(x+(y**4))$
+    - $b-=x**y$
+        > $b=b-(x**y)$
 
 ### Comparison Operators
 
 |Operator	|Name|	Example|
 |    -      |  - |     -    |        
-|==	|Equal|	 $ x == y $ |	
-|!=	|Not equal	| $ x != y $	|
-|>	|Greater than|	$ x > y $ |	
-|<	|Less than	| $ x < y $ |	
-|>=	|Greater than or equal to|	$ x >= y $ |	
-|<=	|Less than or equal to	| $ x <= y $ |
+|==	|Equal|	 $x == y$ |	
+|!=	|Not equal	| $x != y$	|
+|>	|Greater than|	$x > y$ |	
+|<	|Less than	| $x < y$ |	
+|>=	|Greater than or equal to|	$x >= y$ |	
+|<=	|Less than or equal to	| $x <= y$ |
 
 - Task
     - x= 5
     - y = 3
     - print(x==y)
-        > z =(x==y) </br>
+        > z =(x==y)
+        
         > print(z)
 
 ### Logical Operators
@@ -4357,9 +4358,9 @@ Submission:
         │   └── wsgi.py
         │   └── views.py # This is created manually
         │
-        └── templates # This folder is created manually
+        ├── templates # This folder is created manually
         │
-        └── static # This folder is created manually
+        ├── static # This folder is created manually
         │
         └── app_name/ # Which is resumeApp
             ├── migrations/
@@ -5482,9 +5483,9 @@ else:
 
 ## Day 22 Topics
 - Day 21 recap
-- Job Portal Project Part 02
+- Job Portal Project Part 02 (Signup)
 
-### Job Portal Project Part 02
+### Job Portal Project Part 02 (Signup)
 - Modify in `settings.py`
     - Add app in installed app
     - Add template path
@@ -5666,10 +5667,10 @@ else:
 ## Day 23 Topics
 
 - Day 22 recap
-- Job Portal Part 03 (Authentication)
+- Job Portal Part 03 (Sign-In Authentication)
 - Task
 
-### Job Portal Part 03 (Authentication)
+### Job Portal Part 03 (Sign-In Authentication)
 - For authenticate user login `authenticate`,`login` is used 
     ```python 
     from django.contrib.auth import authenticate,login,logout
