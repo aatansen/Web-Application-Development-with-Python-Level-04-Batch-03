@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from jobportalApp.models import CustomUserModel
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 
 def signup(request):
     if request.method=="POST":
@@ -53,8 +54,16 @@ def signin(request):
             return redirect('signin')
     return render(request,'signin.html')
 
+def logoutpage(request):
+    logout(request)
+    return redirect('signin')
+
+@login_required
 def dashboard(request):
     return render(request,'dashboard.html')
+
+def addjob(request):
+    return render(request,'addjob.html')
 
 
 

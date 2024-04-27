@@ -127,3 +127,5 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 AUTH_USER_MODEL='jobportalApp.CustomUserModel'
+
+LOGIN_URL='signin'
