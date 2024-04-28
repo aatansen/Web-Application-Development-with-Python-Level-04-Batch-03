@@ -6040,3 +6040,614 @@ else:
         - Second one is `on_delete=models.CASCADE`
         > First one is used for creating the relationship and the Second one is used when we gonna delete a recruiter it will also delete the jobs created by that user
 </details>
+
+<details>
+<summary>Day-26-Job Portal Project Part 01 to 04 Recap (27-04-2024)</summary>
+
+## Job portal Part 01 to 04 recap
+1. Create project: `django-admin startproject jobportalProject`
+2. Create app: 
+    - `cd jobportalProject`
+    - `py manage.py startapp jobportalApp`
+3. Initial modification in `settings.py`
+    - Add app name in `INSTALLED_APPS`
+        ```python
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'jobportalApp',
+        ]
+        ```
+    - Static file directory
+        ```python
+        STATICFILES_DIRS = [
+            BASE_DIR / "static",
+        ]
+        ```
+    - Add the value of `'DIRS'` in `TEMPLATES` for templates directory path
+        ```python
+        TEMPLATES = [
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'DIRS': [BASE_DIR, 'templates'],
+                'APP_DIRS': True,
+                'OPTIONS': {
+                    'context_processors': [
+                        'django.template.context_processors.debug',
+                        'django.template.context_processors.request',
+                        'django.contrib.auth.context_processors.auth',
+                        'django.contrib.messages.context_processors.messages',
+                    ],
+                },
+            },
+        ]
+        ```
+4. Now Create a folder `templates` which we have added in `TEMPLATES`'s in `'DIRS'` project directory where `manage.py` present
+    ```text
+    jobportalProject/ # this is project name
+    │
+    ├── manage.py
+    ├── jobportalProject/ # this is project name
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    │
+    ├─── jobportalApp/ # this is app name
+    │    ├── migrations/
+    │    ├── __init__.py
+    │    ├── admin.py
+    │    ├── apps.py
+    │    ├── models.py
+    │    ├── tests.py
+    │    └── views.py
+    │
+    └──── templates/  # this is created manually
+    ```
+5. Create a `signup.html` in `templates` directory
+    - Get a simple `css form` from [w3school](https://www.w3schools.com/css/css_form.asp)
+    - Now let's render it; Create a file `views.py` in project directory
+        ```text
+        jobportalProject/ # this is project name
+        │
+        └── jobportalProject/ # this is project name
+            ├── __init__.py
+            ├── settings.py
+            ├── urls.py
+            ├── wsgi.py
+            └── views.py # manually created
+        ```
+    - Create a function in `views.py`
+        ```python
+        from django.shortcuts import render,redirect
+
+        def signup(request):
+            return render(request,'signup.html')
+        ```
+    - Add url path in url pattern 
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from jobportalProject.views import signup
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('signup/',signup,name='signup'),
+        ]
+        ```
+    - Now we can view the page in `http://127.0.0.1:8000/signup/` path
+    - Modify the `signup.html` page with those below field
+        - **First Name**
+        - **Last name**
+        - **Username**
+        - **Email**
+        - **Password**
+        - **Confirm Password**
+        - **Profile Picture**
+        - **Date of Birth**
+        - **Address**
+        - **Blood Group**
+        - **User Type**
+    - As there is image in `signup`, So we need to add the media url in our `urls.py`
+        ```python
+        from django.conf import settings
+        from django.conf.urls.static import static
+
+        urlpatterns = [
+            # ... the rest of your URLconf goes here ...
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Now create `AbstractUser` model in `models.py` which is in app directory
+        ```python
+        from django.db import models
+        from django.contrib.auth.models import AbstractUser
+        # Create your models here.
+        class CustomUserModel(AbstractUser):
+            picture=models.ImageField(upload_to='static/profilepics')
+            dob=models.DateField(auto_now_add=True)
+            address=models.TextField()
+            BLOOD_GROUP=[
+                ('a+','A Positive'),
+                ('a-','A Negative'),
+                ('b+','B Positive'),
+                ('b-','B Negative'),
+                ('ab+','AB Positive'),
+                ('ab-','AB Negative'),
+                ('o+','O Positive'),
+                ('o-','O Negative'),
+            ]
+            blood_group=models.CharField(choices=BLOOD_GROUP,max_length=100)
+            USER_TYPE=[
+                ('recruiter','Job Recruiter'),
+                ('seeker','Job Seeker'),
+            ]
+            user_type=models.CharField(choices=USER_TYPE,max_length=100)
+            
+            def __str__(self):
+                return self.username
+        ````
+        - Here missing `first_name`,`last_name`,`username`,`email`,`password` are already defined in `AbstractUser`
+    - Now register the model in `admin.py`
+        ```python
+        from django.contrib import admin
+        from jobportalApp.models import CustomUserModel
+
+        # Register your models here.
+
+        class CustomUserModelDisplay(admin.ModelAdmin):
+            list_display=['username','blood_group','user_type']
+
+        admin.site.register(CustomUserModel)
+        ```
+        - Here `CustomUserModelDisplay` is created to display the model data in admin page in more detailed.
+    - Add `CustomUserModel` in `settings.py` 
+        ```python
+        AUTH_USER_MODEL='jobportalApp.CustomUserModel'
+        ```
+    - Run those command in order
+        ```bash
+        py manage.py makemigrations jobportalApp
+        py manage.py migrate jobportalApp
+        py manage.py makemigrations
+        py manage.py migrate
+        ```
+    - Now let's modify our `signup` function in `views.py`
+        ```python
+        from django.shortcuts import render,redirect
+        from jobportalApp.models import CustomUserModel
+        def signup(request):
+            if request.method=="POST":
+                fname=request.POST.get('fname')
+                lname=request.POST.get('lname')
+                uname=request.POST.get('uname')
+                email=request.POST.get('email')
+                password=request.POST.get('password')
+                cpassword=request.POST.get('cpassword')
+                picture=request.FILES.get('picture')
+                dob=request.POST.get('dob')
+                address=request.POST.get('address')
+                blood_group=request.POST.get('blood_group')
+                user_type=request.POST.get('user_type')
+                
+                if password==cpassword:
+                    
+                    user = CustomUserModel.objects.create_user(
+                        first_name=fname,
+                        last_name=lname,
+                        username=uname,
+                        email=email,
+                        password=password,
+                        picture=picture,
+                        dob=dob,
+                        address=address,
+                        blood_group=blood_group,
+                        user_type=user_type,
+                    )
+                    user.save()
+                    return redirect('signin')
+                else:
+                    return redirect('signup')
+                
+            return render(request,'signup.html')
+
+        def signin(request):
+            return render(request,'signin.html')
+        ```
+        - Here after we get the data from form we checked if password and confirm password is same or not
+        - We created another page in `templates` which is `signin.html` so that after signup user will be redirected to `signin.html` page
+6. Now let's modify `signin.html`
+    - `signin.html` page will have those field
+        - **Username**
+        - **Password**
+    - Modify `signin` function
+        ```python
+        def signin(request):
+            if request.method=="POST":
+                uname=request.POST.get('uname')
+                password=request.POST.get('password')
+                
+                user=authenticate(
+                    username=uname,
+                    password=password,
+                )
+                if user:
+                    login(request,user)
+                    return redirect('dashboard')
+                else:
+                    return redirect('signin')
+            return render(request,'signin.html')
+
+        def dashboard(request):
+            return render(request,'dashboard.html')
+        ```
+        - Here we have imported `from django.contrib.auth import authenticate,login,logout` where 
+            - `authenticate` is used to authenticate an user
+            - `login` is used to login an user with session
+            - `logout` which will be used in separate function to logout an user
+        - After authentication is successful user will be redirected to `dashboard.html` page
+7. Now we have to do the template mastering while creating `dashboard.html`
+    - Get a navbar from [w3school](https://www.w3schools.com/css/css_navbar_horizontal.asp)
+    - Create `base.html`, `navbar.html`, `dashboard.html`
+        - `base.html` - This is the base structure of the page
+        - `navbar.html` - This will only contain the navbar content and include it in `base.html`
+        - `dashboard.html` - This will extends the `base.html` and it's content will be inside block content
+8. Let's implement logout function
+    - Create a `logoutpage` function in `views.py` 
+        ```python
+        def logoutpage(request):
+            logout(request)
+            return redirect('signin')
+        ```
+    - Add url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from django.conf import settings
+        from django.conf.urls.static import static
+        from jobportalProject.views import signup,signin,dashboard,logoutpage
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('signup/',signup,name='signup'),
+            path('',signin,name='signin'),
+            path('dashboard/',dashboard,name='dashboard'),
+            path('logoutpage/',logoutpage,name='logoutpage'),
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    - Add the `logoutpage` name in navbar url 
+        ```html
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li style="float:right"><a class="active" href="{% url 'logoutpage' %}">Log Out</a></li>
+        </ul>
+        ```
+9. Now after logout we can still visit the dashboard url which should not.
+    - Let's add login required functionality
+        ```python
+        from django.contrib.auth.decorators import login_required
+        @login_required
+        def dashboard(request):
+            return render(request,'dashboard.html')
+        ```
+        Now we have to add `LOGIN_URL` in `settings.py`
+        ```python
+        LOGIN_URL='signin'
+        ```
+        - Now without login dashboard can't be access
+        - As we have added `LOGIN_URL` so whenever user try to access dashboard page without login , user will be redirected in login page
+10. Now we have to add those pages in our `navbar.html` where we already created `dashboard` and `logout`
+    - **Dashboard**
+    - **View Job**
+    - **Add Job**
+    - **Applied Job**
+    - **Recent Job**
+    - **Profile**
+    - **Log out**
+        - First let's create add job page; In `addjob.html` form page below field will be present and the template file will be in `recuiter/addjob.html` of templates directory
+            - **Job title**
+            - **Company name**
+            - **Address**
+            - **Company description**
+            - **Job description**
+            - **Qualification**
+            - **Salary information**
+            - **Deadline**
+            - **Designation**
+            - **Experience**
+        - After creating form we will create the `addjob` function 
+            ```python
+            def addjob(request):
+                return render(request,'addjob.html')
+            ```
+        - Add this in `urls.py` and `navbar` and proceed to create the model in `models.py`
+            ```python
+            class JobModel(models.Model):
+                Job_title=models.CharField(max_length=100)
+                Company_name=models.CharField(max_length=100)
+                Address=models.CharField(max_length=100)
+                Company_description=models.TextField()
+                Job_description=models.TextField()
+                Qualification=models.CharField(max_length=100)
+                Salary_information=models.CharField(max_length=100)
+                Deadline=models.DateField(auto_now_add=True)
+                Designation=models.CharField(max_length=100)
+                Experience=models.CharField(max_length=100)
+                Created_by=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)
+                
+                def __str__(self):
+                    return f"{self.Job_title} created by {self.Created_by}"
+            ```
+            - Here `Created_by` is creating a relationship with our `CustomUserModel` model and when a user is deleted it will delete all the job created by that user too which is done by using `on_delete=models.CASCADE`
+        - Register the model in `admin.py`
+            ```python
+            admin.site.register(JobModel)
+            ```
+        - Now we can modify our `addjob` function to get the user input and save it in our `JobModel`
+            ```python
+            @login_required
+            def addjob(request):
+                if request.method=="POST":
+                    Job_title=request.POST.get('Job_title')
+                    Company_name=request.POST.get('Company_name')
+                    Address=request.POST.get('Address')
+                    Company_description=request.POST.get('Company_description')
+                    Job_description=request.POST.get('Job_description')
+                    Qualification=request.POST.get('Qualification')
+                    Salary_information=request.POST.get('Salary_information')
+                    Deadline=request.POST.get('Deadline')
+                    Designation=request.POST.get('Designation')
+                    Experience=request.POST.get('Experience')
+                    
+                    job=JobModel(
+                        Job_title=Job_title,
+                        Company_name=Company_name,
+                        Address=Address,
+                        Company_description=Company_description,
+                        Job_description=Job_description,
+                        Qualification=Qualification,
+                        Salary_information=Salary_information,
+                        Deadline=Deadline,
+                        Designation=Designation,
+                        Experience=Experience,
+                        Created_by=request.user
+                    )
+                    job.save()
+                    return redirect('dashboard')
+                return render(request,'addjob.html')
+            ```
+        - Now let's create `viewjob.html` page to view the job which we have added; where below function will pass all the job data
+            ```python
+            @login_required
+            def viewjob(request):
+                jobs=JobModel.objects.all()
+                jobDict={
+                    'jobs':jobs
+                }
+                return render(request,'viewjob.html',jobDict)
+            ```
+        - Now let's create the dashboard where all the job will be present in table with three action: `edit`,`delete`,`view`; get the table from [w3school](https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy)
+            ```python
+            @login_required
+            def dashboard(request):
+                jobs=JobModel.objects.all()
+                jobDict={
+                    'jobs':jobs
+                }
+                return render(request,'dashboard.html',jobDict)
+            ```
+            Where the table will be as below
+            ```html
+            <table id="customers">
+            <tr>
+                <th>Job title</th>
+                <th>Company name</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+
+            {% for i in jobs %}
+                <tr>
+                    <td>{{i.Job_title}}</td>
+                    <td>{{i.Company_name}}</td>
+                    <td>{{i.Address}}</td>
+                    <td>
+                        <a href="">View</a>
+                        <a href="">Edit</a>
+                        <a href="">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+                
+            </table>
+            ```
+            - Here we will implement the delete action first
+                ```python
+                @login_required
+                def deletejob(request,myid):
+                    job=JobModel.objects.get(id=myid)
+                    job.delete()
+                    return redirect('dashboard')
+                ```
+                Now add the function in `urls.py` pattern and add the name in dashboard delete action url
+            - Now let's implement the edit action; Where we will create the `editjob.html` page same as `addjob.html` in recruiter directory of our templates folder with different action function; Below we implement the `editjob function`
+                ```python
+                @login_required
+                def editjob(request,myid):
+                    job=JobModel.objects.get(id=myid)
+                    jodDict={
+                        'job':job
+                    }
+                    return render(request,'recruiter/editjob.html',jodDict)
+                ```
+                Now the update function which will be the action of the `editjob.html` page
+                ```python
+                @login_required
+                def updatejob(request):
+                    if request.method=="POST":
+                        myid=request.POST.get('myid')
+                        Job_title=request.POST.get('Job_title')
+                        Company_name=request.POST.get('Company_name')
+                        Address=request.POST.get('Address')
+                        Company_description=request.POST.get('Company_description')
+                        Job_description=request.POST.get('Job_description')
+                        Qualification=request.POST.get('Qualification')
+                        Salary_information=request.POST.get('Salary_information')
+                        Deadline=request.POST.get('Deadline')
+                        Designation=request.POST.get('Designation')
+                        Experience=request.POST.get('Experience')
+                        
+                        if Deadline:
+                            job=JobModel(
+                                id=myid,
+                                Job_title=Job_title,
+                                Company_name=Company_name,
+                                Address=Address,
+                                Company_description=Company_description,
+                                Job_description=Job_description,
+                                Qualification=Qualification,
+                                Salary_information=Salary_information,
+                                Deadline=Deadline,
+                                Designation=Designation,
+                                Experience=Experience,
+                                Created_by=request.user
+                            )
+                        else:
+                            jobbyid=JobModel.objects.get(id=myid)
+                            job=JobModel(
+                            id=myid,
+                            Job_title=Job_title,
+                            Company_name=Company_name,
+                            Address=Address,
+                            Company_description=Company_description,
+                            Job_description=Job_description,
+                            Qualification=Qualification,
+                            Salary_information=Salary_information,
+                            Deadline=jobbyid.Deadline,
+                            Designation=Designation,
+                            Experience=Experience,
+                            Created_by=request.user
+                            )
+                        job.save()
+                        return redirect('dashboard')
+                ```
+                - Here `Deadline` is checked if it is not updated by user it will take the currently available deadline from the model
+            - Now we will implement the `viewsinglejob.html` page where user will view the specific single job from dashboard
+                ```python
+                @login_required
+                def viewsinglejob(request,myid):
+                    job=JobModel.objects.get(id=myid)
+                    jodDict={
+                        'job':job
+                    }
+                    return render(request,'viewsinglejob.html',jodDict)
+                ```
+        - As we haven't complete the profile page yet, so let's do it by adding a `profile.html` in templates directory and implement the below function
+            ```python
+            @login_required
+            def profile(request):
+                return render(request,'profile.html')
+            ```
+            Now the `profile.html` page which already have the `user` data after login, so we can access the model data using `{{user.variable_name_in_model}}`
+            ```html
+            <div class="user-info">
+                <label>First Name:</label>
+                <p>{{ user.first_name }}</p>
+
+                <label>Last Name:</label>
+                <p>{{ user.last_name }}</p>
+
+                <label>Username:</label>
+                <p>{{ user.username }}</p>
+
+                <label>Email:</label>
+                <p>{{ user.email }}</p>
+
+                <label>Date of Birth:</label>
+                <p>{{ user.dob }}</p>
+
+                <label>Address:</label>
+                <p>{{ user.address }}</p>
+
+                <label>Blood Group:</label>
+                <p>{{ user.blood_group }}</p>
+
+                <label>User Type:</label>
+                <p>{{ user.user_type }}</p>
+            </div>
+            ```
+11. Now we have completed the project but there is something which we can notice, like Job seeker can 
+    - Add job
+    - Delete job
+    - Edit job
+    
+    To solve this we have to use condition to verify the `usertype`
+    - First we will solve the add job where only recruiter can add job; For now we can simply check it in frontend if usertype is recruiter or not. Let's edit the `navbar.html`
+        ```html
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            
+            {% if user.user_type == 'recruiter' %}
+            <li><a href="{% url 'addjob' %}">Add Job</a></li>
+            {% endif %}
+            <li><a href="{% url 'viewjob' %}">View Job</a></li>
+            <li style="float:right"><a class="active" href="{% url 'logoutpage' %}">Log Out</a></li>
+            <li style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
+        </ul>
+        ```
+        - Here we checked the user type `user.user_type == 'recruiter'`
+    - Now the delete and edit action in `dashboard.html` page; Here similarly we will checked the user type
+        ```html
+        {% for i in jobs %}
+            <tr>
+                <td>{{i.Job_title}}</td>
+                <td>{{i.Company_name}}</td>
+                <td>{{i.Address}}</td>
+                <td>
+                {% if user.user_type == 'recruiter' %}
+                <a href="{% url 'editjob' i.id %}">Edit</a>
+                <a href="{% url 'deletejob' i.id %}">Delete</a>
+                {% endif %}
+                <a href="{% url 'viewsinglejob' i.id %}">View</a>
+                </td>
+            </tr>
+        {% endfor %}
+        ```
+        - Here we also checked the user type `user.user_type == 'recruiter'`
+12. Now a recruiter can only see their posted job and edit those only not the others 
+    - To do this we have to modify our `viewjob` function
+        ```python
+        @login_required
+        def viewjob(request):
+            current_user=request.user
+            if current_user.user_type == 'recruiter':
+                jobs=JobModel.objects.filter(Created_by=request.user)
+            else:
+                jobs=JobModel.objects.all()
+            jobDict={
+                'jobs':jobs
+            }
+            return render(request,'viewjob.html',jobDict)
+        ```
+    - Now let's fix the `dashboard.html` page also by modifying the dashboard function
+        ```python
+        @login_required
+        def dashboard(request):
+            current_user=request.user
+            if current_user.user_type == 'recruiter':
+                jobs=JobModel.objects.filter(Created_by=request.user)
+            else:
+                jobs=JobModel.objects.all()
+            jobDict={
+                'jobs':jobs
+            }
+            return render(request,'dashboard.html',jobDict)
+        ```
+        ```diff
+        - The old viewjob & dashboard function was passing the whole job model data in dictionary
+        + We changes that by checking the user type if it is recruiter then who created that job by filtering that we pass the data in dictionary otherwise if user type is job seeker we pass whole job model data
+        ```
+</details>

@@ -44,7 +44,8 @@ input[type=text], select, textarea {
 </style>
 <body>
 <div>
-  <form action="">
+  <form action="{% url 'addjob' %}" method="POST">
+    {% csrf_token %}
     <label for="fname">Job title</label>
     <input type="text" id="fname" name="Job_title" placeholder="Your Job title..">
 
@@ -54,13 +55,21 @@ input[type=text], select, textarea {
     <input type="text" id="lname" name="Address" placeholder="Your Address..">
     <label for="lname">Company description</label>
     <textarea type="text" id="lname" style="height:100px" name="Company_description" placeholder="Your Company description.."></textarea>
+    <label for="lname">Job description</label>
+    <textarea type="text" id="lname" style="height:100px" name="Job_description" placeholder="Your Job description.."></textarea>
+    <label for="lname">Qualification</label>
+    <input type="text" id="lname" name="Qualification" placeholder="Your Qualification..">
+    <label for="lname">Salary information</label>
+    <input type="text" id="lname" name="Salary_information" placeholder="Your Salary information..">
+    
+    <label for="lname">Deadline</label>
+    <input type="date" id="lname" name="Deadline" placeholder="Your Deadline.."><br><br>
 
-    <label for="country">Country</label>
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select>
+    <label for="lname">Designation</label>
+    <input type="text" id="lname" name="Designation" placeholder="Your Designation..">
+
+    <label for="lname">Experience</label>
+    <input type="text" id="lname" name="Experience" placeholder="Your Experience..">
   
     <input type="submit" value="Submit">
   </form>
