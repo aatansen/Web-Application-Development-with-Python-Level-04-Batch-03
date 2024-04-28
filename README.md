@@ -6651,3 +6651,23 @@ else:
         + We changes that by checking the user type if it is recruiter then who created that job by filtering that we pass the data in dictionary otherwise if user type is job seeker we pass whole job model data
         ```
 </details>
+
+<details>
+<summary>Day-27-Lab Exam 04 (28-04-2024)</summary>
+
+## Lab Exam 04 Recipe Manager Project
+
+> Recipe Manager Project Overview: The Recipe Manager is a web application built with using Django. allowing users to manage their recipes. It provides features for user authentication, recipe management. The application utilizes Django's built-in authentication system, SQLite for the database, and Django templates for rendering HTML pages. Two types of users: chef (or owners) who can create, edit, delete, and update recipes. and viewers who can only view recipes.
+
+User Authentication: 
+- **Sign up**: Users can create a new account by providing a Username, E-mail. and Password, Gender, Age, City, Country. **(15 Marks)**
+- **Log in**: Registered users can log in using their Username and Password. **(10 Marks)**
+- **Log out**: Users can log out of their accounts. **(5 Marks)**
+- **Recipe**: Recipe Title, Ingredients, Instructions, Preparation Time, Cooking Time, Total Time. Difficulty Level, Nutritional Information, Sample Recipe image, Recipe Category, Tags (vegetarian, non-vegetarian), Total Calorie. **(20 Marks)**
+- Viewers will view all Recipe which is created by Chef **(25 Marks)**
+- Create a Profile for both users **(15 Marks)**
+- When a chef login the website only he/she can view his/her created recipe. **(10 Marks)**
+
+> It took 2 hour 50 minutes for me which placed me 2nd position; total given time was 4 hours
+
+</details>
