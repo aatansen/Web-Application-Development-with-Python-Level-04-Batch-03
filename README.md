@@ -6671,3 +6671,74 @@ User Authentication:
 > It took 2 hour 50 minutes for me which placed me 2nd position; total given time was 4 hours
 
 </details>
+
+<details>
+<summary>Day-28-Profile Model (OneToOneField) (29-04-2024)</summary>
+
+## Day 28 Topics
+- Lab Exam 04 : Recipe Manager Project Recap
+- Profile Model
+
+### Profile Model
+- To create profile we will use `OneToOneField`
+    ```python
+    from django.db import models
+    from django.contrib.auth.models import AbstractUser
+    # Create your models here.
+
+    class CustomUserModel(AbstractUser):
+        GENDER=[
+            ('male','Male'),
+            ('female','Female'),
+        ]
+        gender=models.CharField(choices=GENDER,max_length=50)
+        age=models.CharField(max_length=100)
+        city=models.CharField(max_length=100)
+        country=models.CharField(max_length=100)
+        USER_TYPE=[
+            ('chef','Chef'),
+            ('viewer','Viewer'),
+        ]
+        user_type=models.CharField(choices=USER_TYPE,max_length=50)
+
+        def __str__(self):
+            return self.username
+        
+    class ChefProfileModel(models.Model):
+        myuser = models.OneToOneField(CustomUserModel,on_delete=models.CASCADE)
+        experience=models.CharField(max_length=100)
+        skill=models.CharField(max_length=100)
+        resume_latter=models.CharField(max_length=100)
+        profile_pic=models.ImageField(upload_to='static/profile_pic')
+
+        def __str__(self):
+            return self.myuser.username
+
+    class ViewerProfileModel(models.Model):
+        myuser = models.OneToOneField(CustomUserModel,on_delete=models.CASCADE)
+        favourite=models.CharField(max_length=100)
+        profile_pic=models.ImageField(upload_to='static/profile_pic')
+
+        def __str__(self):
+            return self.myuser.username
+    ```
+    - Here we  created two profile `ChefProfileModel` and `ViewerProfileModel`
+    - Both has `OneToOneField` relationship with `CustomUserModel` model
+- Register both model in `admin.py`
+    ```python
+    from django.contrib import admin
+    from recipeApp.models import CustomUserModel,RecipeModel,ChefProfileModel,ViewerProfileModel
+    # Register your models here.
+
+    class CustomUserModelDisplay(admin.ModelAdmin):
+        list_display=['username','user_type','gender']
+
+    admin.site.register(CustomUserModel,CustomUserModelDisplay)
+    admin.site.register(RecipeModel)
+    admin.site.register(ChefProfileModel)
+    admin.site.register(ViewerProfileModel)
+    ```
+
+
+
+</details>
