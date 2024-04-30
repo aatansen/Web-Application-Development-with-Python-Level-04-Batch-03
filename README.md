@@ -6739,6 +6739,220 @@ User Authentication:
     admin.site.register(ViewerProfileModel)
     ```
 
+</details>
 
+<details>
+<summary>Day-29-Recipe Management Project recap Day 02 & Python Day 06 (30-04-2024)</summary>
+
+## Day 29 Topics
+- Lab Exam 04 : Recipe Manager Project Recap Day 02
+- Python Day 06
+
+### Python Day 06
+- Nested if...else recap
+- Test exam on previous day's class
+- if...elif
+
+### Nested if...else recap
+- Problem 01: which one is the greater number among 4 using nested `if..else`
+    ```python
+    w=10
+    x=20
+    y=30
+    z=40
+
+    if w>x:
+        if w>y:
+            if w>z:
+                print('w is greater')
+            else:
+                print('z is greater')
+        else:
+            if y>z:
+                print('y is greater')
+            else:
+                print('z is greater')
+    else:
+        if x>y:
+            if x>z:
+                print('x is greater')
+            else:
+                print('z is greater')
+        else:
+            if y>z:
+                print('y is greater')
+            else:
+                print('z is greater')
+    ```
+
+### Test exam on previous day's class
+Which of the following is not a valid comparison operator in Python?
+ - [ ] ==
+ - [ ] !=
+ - [ ] <=
+ - [ ] ><
+
+What is the output of the following code snippet?
+```python
+x = 5
+y = 2
+print(x ** y)
+```
+ - [ ] 10
+ - [ ] 25
+ - [ ] 7
+ - [ ] 32
+
+What is the output of the following code snippet?
+```python
+print(2 ** 3)
+```
+ - [ ] 6
+ - [ ] 7
+ - [ ] 8
+ - [ ] 16
+
+Which of the following is not a valid variable name in Python?
+ - [ ] my_var
+ - [ ] 2var
+ - [ ] _var
+ - [ ] var2
+
+What is the output of the following code snippet?
+```python
+print("Hello" * 3)
+```
+ - [ ] HelloHelloHello
+ - [ ] Hello3
+ - [ ] HelloHello
+ - [ ] 3Hello
+
+What is the output of the following code snippet?
+```python
+print(10 / 3)
+```
+ - [ ] Error
+ - [ ] 3.0
+ - [ ] 3
+ - [ ] 3.3333
+
+What function can be used to convert a string to an integer in Python?
+ - [ ] str()
+ - [ ] int()
+ - [ ] float()
+ - [ ] bool(
+
+What is the result of the expression $10 / 2$ ?
+ - [ ] 5.0
+ - [ ] 5
+ - [ ] 2.5
+ - [ ] 2
+
+
+What is the output of the following code snippet?
+```python
+x = 5
+x += 2
+print(x)
+```
+ - [ ] Error
+ - [ ] 10
+ - [ ] 7
+ - [ ] 5
+
+Which of the following is the correct way to assign a value to a variable in Python?
+ - [ ] x := 5
+ - [ ] x == 5
+ - [ ] 5 = x
+ - [ ] x = 5
+
+What is the output of the following code snippet?
+```python
+print(5 == 5.0)
+```
+ - [ ] 1
+ - [ ] Error
+ - [ ] False
+ - [ ] True
+
+What symbol is used to denote comments in Python?
+ - [ ] //
+ - [ ] #
+ - [ ] /*
+ - [ ] %
+
+What is the output of the following code snippet?
+```python
+x = 10
+y = 3
+print(x // y)
+```
+ - [ ] 4
+ - [ ] 3.0
+ - [ ] 3
+ - [ ] 3.3333
+
+What is the result of the expression `3 * "2"`?
+ - [ ] Error
+ - [ ] 32
+ - [ ] "222"
+ - [ ] 6
+
+### if...elif
+- Problem 02: which one is the greater number among 5 using `elif`
+    ```python
+    v=10
+    w=20
+    x=30
+    y=40
+    z=50
+
+    if (v>=w and v>=x and v>=y and v>=z):
+        print('v is greater')
+    elif (w>=x and w>=y and w>=z):
+        print('w is greater')
+    elif (x>=y and x>=z):
+        print('x is greater')
+    elif (y>=z):
+        print('y is greater')
+    else:
+        print('z is greater')
+    ```
+- Creating a simple application (Bkash) using condition
+    ```python
+    bkash_menu = '''
+    1. Send Money
+    2. Send Money to Non-Bkash User
+    3. Mobile Recharge
+    4. Payment
+    5. Cash Out
+    6. Pay Bill
+    7. Microfinance
+    8. Download Bkash App
+    9. My Bkash
+    10. Reset Pin
+    '''
+    print(bkash_menu)
+
+    choice = int(input("Enter your choice: "))
+
+    print(f'You choose: {choice}')
+
+    if choice==1:
+        receiver_number = int(input("Enter receiver number: "))
+        if receiver_number:
+            amount = int(input("Enter amount: "))
+            if amount:
+                pin = int(input("Enter pin: "))
+                if pin:
+                    print(f"{amount} BDT Sent Successful to {receiver_number}")
+                else:
+                    print("Please enter valid number")
+            else:
+                print("Please enter valid pin")
+        else:
+            print("please enter valid number")
+    ```
+    > Only option 1 implemented
 
 </details>
