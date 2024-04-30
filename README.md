@@ -6842,7 +6842,7 @@ What function can be used to convert a string to an integer in Python?
  - [ ] float()
  - [ ] bool(
 
-What is the result of the expression $10 / 2$ ?
+What is the result of the expression `10 / 2` ?
  - [ ] 5.0
  - [ ] 5
  - [ ] 2.5
