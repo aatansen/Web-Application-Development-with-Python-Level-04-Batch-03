@@ -7106,3 +7106,162 @@ What is the result of the expression `3 * "2"`?
     > Only option 1 to 6 implemented
 
 </details>
+
+<details>
+<summary>Day-30-Job Portal Project User Profile (02-05-2024)</summary>
+
+## Day 30 Topics
+- Job Portal Project recap
+- User Profile Model
+- User Profile Update
+- Task
+
+### User Profile Model
+- In job portal project app directory `models.py`
+    ```python
+    class CustomUserModel(AbstractUser):
+        picture = models.ImageField(upload_to='static/profilePic')
+        dob = models.DateField(auto_now_add=True)
+        address = models.CharField(max_length=100)
+        BLOOD_GROUP=[
+            ('a+','A Positive'),
+            ('a-','A Negative'),
+            ('b+','B Positive'),
+            ('b-','B Negative'),
+            ('c+','C Positive'),
+            ('c-','C Negative'),
+            ('ab+','AB Positive'),
+            ('ab-','AB Negative'),
+            ('o+','O Positive'),
+            ('o-','O Negative'),
+        ]
+        blood_group = models.CharField(choices=BLOOD_GROUP,max_length=100)
+        USER_TYPE=[
+            ('recruiter','Job Recruiter'),
+            ('seeker','Job Seeker'),
+        ]
+        user_type=models.CharField(choices=USER_TYPE,max_length=100)
+
+        def __str__(self):
+            return self.username
+
+    class JobSeekerProfile(models.Model):
+        user = models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='jobseekerprofile')
+        skills=models.CharField(max_length=100)
+        work_experience=models.CharField(max_length=100)
+
+        def __str__(self):
+            return self.user.user_type
+
+    class JobRecruiterProfile(models.Model):
+        user = models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='jobrecruiterprofile')
+        Skills_Required = models.CharField(max_length=200)
+        Work_Schedule = models.CharField(max_length=50)
+        def __str__(self):
+            return self.user.user_type
+    ```
+    - Here `JobSeekerProfile` and `JobRecruiterProfile` models has `One to One` relationship with `CustomUserModel`
+    - In `JobSeekerProfile` and `JobRecruiterProfile`
+        - `CustomUserModel` is the model name of the custom user model to make the `One to One` relationship
+        - `on_delete=models.CASCADE` is used so that when a user is deleted other info will also deleted
+        - `related_name='jobrecruiterprofile'` which will be used in html page to get access; e.g: `{{ user.jobrecruiterprofile.Skills_Required }}`
+
+### User Profile Update
+- To update the user profile we will add the `updateprofile` function in `views.py`
+    ```python
+    @login_required
+    def updateprofile(request):
+        if request.method == "POST":
+            myid = request.POST.get('myid')
+            picture = request.FILES.get('picture')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            dob = request.POST.get('dob')
+            address = request.POST.get('address')
+            blood_group = request.POST.get('blood_group')
+            user_type = request.POST.get('user_type')
+            
+            # seeker info
+            seeker_id = request.POST.get('seeker_id')
+            skills = request.POST.get('skills')
+            work_experience = request.POST.get('work_experience')
+            
+            # recruiter info
+            recruiter_id = request.POST.get('recruiter_id')
+            Skills_Required = request.POST.get('Skills_Required')
+            Work_Schedule = request.POST.get('Work_Schedule')
+            
+            print('myid:', myid)
+            print('picture:', picture)
+            print('first_name:', first_name)
+            print('last_name:', last_name)
+            print('username:', username)
+            print('email:', email)
+            print('dob:', dob)
+            print('address:', address)
+            print('blood_group:', blood_group)
+            print('user_type:', user_type)
+            print('seeker_id:', seeker_id)
+            print('skills:', skills)
+            print('work_experience:', work_experience)
+            print('recruiter_id:', recruiter_id)
+            print('Skills_Required:', Skills_Required)
+            print('Work_Schedule:', Work_Schedule)
+
+            if dob and picture:
+                user = CustomUserModel(
+                    id=myid,
+                    picture=picture,
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    email=email,
+                    dob=dob,
+                    address=address,
+                    blood_group=blood_group,
+                    user_type=user_type,
+                    password = CustomUserModel.objects.get(id=myid).password,
+                )
+            else:
+                user = CustomUserModel(
+                id=myid,
+                picture=CustomUserModel.objects.get(id=myid).picture,
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                dob=CustomUserModel.objects.get(id=myid).dob,
+                address=address,
+                blood_group=blood_group,
+                user_type=user_type,
+                password = CustomUserModel.objects.get(id=myid).password,
+            )
+            if request.user.user_type == "seeker":
+                seeker = JobSeekerProfile.objects.get(id=seeker_id)
+                seeker.skills=skills
+                seeker.work_experience=work_experience
+                seeker.save()
+            else:
+                recruiter = JobRecruiterProfile.objects.get(id=recruiter_id)
+                recruiter.Skills_Required=Skills_Required
+                recruiter.Work_Schedule=Work_Schedule
+                recruiter.save()
+
+            user.save()
+            return redirect('profile')
+    ```
+    - Here We take all the info from the edit page form
+    - Then we checked if `dob` and `picture` is present in user edited one
+    - If `dob` and `picture` is present then we update it otherwise we take those value from previously saved one which we get by `id`
+        > We can check it separately but for now we are checking both at once
+    - Another tricky one is `password`, We have to give the model password otherwise it will store empty in password field in the model; So we assign the user password which we get by `id`
+    - Now according to our application there are two types and both type has separate model, to update those we checked the `user_type` then we update it by `id`
+
+### Task
+- Complete User Profile
+- Add Edit action button in user profile
+- Complete Recruiter Job posted action button to view all the posted job by that recruiter
+
+</details>
