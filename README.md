@@ -7211,7 +7211,7 @@ What is the result of the expression `3 * "2"`?
             print('Skills_Required:', Skills_Required)
             print('Work_Schedule:', Work_Schedule)
 
-            if dob and picture:
+            if picture:
                 user = CustomUserModel(
                     id=myid,
                     picture=picture,
@@ -7219,7 +7219,7 @@ What is the result of the expression `3 * "2"`?
                     last_name=last_name,
                     username=username,
                     email=email,
-                    dob=dob,
+                    dob=CustomUserModel.objects.get(id=myid).dob,
                     address=address,
                     blood_group=blood_group,
                     user_type=user_type,
@@ -7254,9 +7254,9 @@ What is the result of the expression `3 * "2"`?
             return redirect('profile')
     ```
     - Here We take all the info from the edit page form
-    - Then we checked if `dob` and `picture` is present in user edited one
-    - If `dob` and `picture` is present then we update it otherwise we take those value from previously saved one which we get by `id`
-        > We can check it separately but for now we are checking both at once
+    - Then we checked if `picture` is present in user edited one
+    - If `picture` is present then we update it otherwise we take those value from previously saved one which we get by `id`
+        > We can check it separately for `dob` also but for now we are checking only once
     - Another tricky one is `password`, We have to give the model password otherwise it will store empty in password field in the model; So we assign the user password which we get by `id`
     - Now according to our application there are two types and both type has separate model, to update those we checked the `user_type` then we update it by `id`
 

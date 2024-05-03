@@ -238,7 +238,7 @@ def updateprofile(request):
         print('Skills_Required:', Skills_Required)
         print('Work_Schedule:', Work_Schedule)
 
-        if dob and picture:
+        if picture:
             user = CustomUserModel(
                 id=myid,
                 picture=picture,
@@ -246,7 +246,7 @@ def updateprofile(request):
                 last_name=last_name,
                 username=username,
                 email=email,
-                dob=dob,
+                dob=CustomUserModel.objects.get(id=myid).dob,
                 address=address,
                 blood_group=blood_group,
                 user_type=user_type,
@@ -279,7 +279,7 @@ def updateprofile(request):
 
         user.save()
         return redirect('profile')
-    
+
 def postedjob(request):
     current_user=request.user
     posted_job=JobModel.objects.filter(Created_by=current_user)

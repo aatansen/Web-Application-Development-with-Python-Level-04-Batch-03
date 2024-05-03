@@ -76,13 +76,8 @@ div {
         <option value="o-">O Negative</option>
     </select>
     
-    <label for="country">Current User Type</label>
-    <input type="text" id="lname" value="{{user.user_type}}" placeholder="Your Address.." readonly>
-    <label for="country">Update User Type</label>
-    <select id="country" name="user_type">
-      <option value="recruiter">Job Recruiter</option>
-      <option value="seeker">Job Seeker</option>
-    </select>
+    <label for="country">User Type</label>
+    <input type="text" id="lname" value="{{user.user_type}}" name="user_type" placeholder="Your Address.." readonly>
     
     {% if user.user_type == 'seeker' %}
     <label for="lname">Seeker ID</label>
