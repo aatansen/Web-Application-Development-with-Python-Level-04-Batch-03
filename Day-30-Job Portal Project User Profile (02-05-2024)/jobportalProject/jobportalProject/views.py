@@ -279,3 +279,11 @@ def updateprofile(request):
 
         user.save()
         return redirect('profile')
+    
+def postedjob(request):
+    current_user=request.user
+    posted_job=JobModel.objects.filter(Created_by=current_user)
+    postjobDict={
+        'posted_job':posted_job
+    }
+    return render(request,'postedjob.html',postjobDict)

@@ -7114,6 +7114,7 @@ What is the result of the expression `3 * "2"`?
 - Job Portal Project recap
 - User Profile Model
 - User Profile Update
+- Recruiter posted job
 - Task
 
 ### User Profile Model
@@ -7258,6 +7259,20 @@ What is the result of the expression `3 * "2"`?
         > We can check it separately but for now we are checking both at once
     - Another tricky one is `password`, We have to give the model password otherwise it will store empty in password field in the model; So we assign the user password which we get by `id`
     - Now according to our application there are two types and both type has separate model, to update those we checked the `user_type` then we update it by `id`
+
+### Recruiter posted job
+- First create a function to filterout who created the job then we will sent that as dictionary in frontend
+    ```python
+    def postedjob(request):
+        current_user=request.user
+        posted_job=JobModel.objects.filter(Created_by=current_user)
+        postjobDict={
+            'posted_job':posted_job
+        }
+        return render(request,'postedjob.html',postjobDict)
+    ```
+- Now in `postedjob` html a for loop will do the rest
+- Make sure to add the url name in posted job action button
 
 ### Task
 - Complete User Profile

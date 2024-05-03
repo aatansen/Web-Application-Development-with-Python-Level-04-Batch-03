@@ -69,7 +69,7 @@
                 {% if user.user_type == 'seeker' %}
                 <a href="" class="button">Applied Job</a>
                 {% else %}
-                <a href="" class="button">Posted Job</a>
+                <a href="{% url 'postedjob' %}" class="button">Posted Job</a>
                 {% endif %}
 
             </div>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from jobportalProject.views import signup,signin,dashboard,logoutpage,profile,addjob,editjob,updatejob,deletejob,viewsinglejob,viewalljob,editprofile,updateprofile
+from jobportalProject.views import signup,signin,dashboard,logoutpage,profile,addjob,editjob,updatejob,deletejob,viewsinglejob,viewalljob,editprofile,updateprofile,postedjob
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/',signup,name='signup'),
@@ -16,4 +16,5 @@ urlpatterns = [
     path('viewalljob/',viewalljob,name='viewalljob'),
     path('editprofile/',editprofile,name='editprofile'),
     path('updateprofile/',updateprofile,name='updateprofile'),
+    path('postedjob/',postedjob,name='postedjob'),
 ]
