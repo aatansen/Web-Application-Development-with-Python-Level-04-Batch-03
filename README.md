@@ -7280,3 +7280,58 @@ What is the result of the expression `3 * "2"`?
 - Complete Recruiter Job posted action button to view all the posted job by that recruiter
 
 </details>
+
+<details>
+<summary>Day-31-Job Portal Project Time Challenge (04-05-2024)</summary>
+
+## Day 31 Topics
+- Job Portal Project Time Challenge
+    - Field Requirement
+- Model hidden field/attribute notes
+
+### Job Portal Project Time Challenge
+- Challenge: Finish the project within 2 Hours
+    > It took around 2 hours for me
+- Field Requirement
+    - Signup (12 field)
+        - Profile Photo
+        - First Name
+        - Last Name
+        - Username
+        - Password
+        - Confirm Password
+        - Age
+        - Gender
+        - City
+        - Country
+        - Blood Group (4 types)
+        - User types (Recruiter,Seeker)
+    - Add Job (11 field)
+        - Company logo
+        - Job title
+        - Job description
+        - Job location
+        - Requirements
+        - Qualifications
+        - Job types (Full time, Part time)
+        - Workplace (Remote, On-site)
+        - Salary
+        - Experience
+        - Deadline
+    - Recruiter Profile (3 field)
+        - Company name
+        - Company location
+        - Recruiter Name
+    - Seeker Profile (3 field)
+        - Qualification
+        - Experience
+        - Skills
+
+### Model hidden field/attribute notes
+- While working on signup, we have to create the `CustomUserModel` using `AbstractUser`
+- While working on Add Job, we have to create the `JobModel` with an extra field `Created_by` which will create relationship with `CustomUserModel` using `ForeignKey`; Make sure to add `on_delete` so that when that user is deleted , it's created job will also get deleted
+- While working on Recruiter Profile, we have to create the `RecruiterProfileModel` with an extra field `user` which will create relationship with `CustomUserModel` using `OneToOneField`; In here we also have to add `on_delete` with `related_name`
+- Similarly in Seeker Profile, `SeekerProfileModel` will also have `user` field with `OneToOneField` relationship with `CustomUserModel` including `on_delete` and `related_name`
+- Now while accessing user data from `CustomUserModel` in html pages, we can use `{{user.field_name_in_model}}`; But while accessing `RecruiterProfileModel` or `SeekerProfileModel` we have to access it through `related_name`: `{{user.related_name.field_name_in_model}}`
+
+</details>

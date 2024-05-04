@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h3>Profile Photo</h3>    
+    <img src="/{{user.profile_photo}}" width="100px" alt="">
+    <button><a href="{% url 'editprofile' %}">Edit profile</a></button>
+    {% if user.user_types == 'recruiter' %}
+    <button><a href="{% url 'postedjob' %}">Posted Job</a></button>
+    {% elif user.user_types == 'seeker' %}
+    <button><a href="{% url 'appliedjob' %}">Applied Job</a></button>
+    {% endif %}
+    <h3>First Name</h3>   
+    <p>{{request.user.first_name}}</p>
+    <h3>Last Name</h3>   
+    <p>{{request.user.last_name}}</p>
+    <h3>Username</h3>   
+    <p>{{request.user.username}}</p>
+    <h3>age</h3>   
+    <p>{{request.user.age}}</p>
+    <h3>gender</h3>   
+    <p>{{request.user.gender}}</p>
+    <h3>city</h3>   
+    <p>{{request.user.city}}</p>
+    <h3>country</h3>   
+    <p>{{request.user.country}}</p>
+    <h3>blood_group</h3>   
+    <p>{{request.user.blood_group}}</p>
+    <h3>user_types</h3>   
+    <p>{{request.user.user_types}}</p>
+
+    {% if user.user_types == 'seeker' %}
+    <h3>Qualification</h3>   
+    <p>{{request.user.seekerprofilemodel.Qualification}}</p>
+    <h3>Experience</h3>   
+    <p>{{request.user.seekerprofilemodel.Experience}}</p>
+    <h3>Skills</h3>   
+    <p>{{request.user.seekerprofilemodel.Skills}}</p>
+    
+
+    {% elif user.user_types == 'recruiter' %}
+    <h3>Company_name</h3>   
+    <p>{{request.user.recruiterprofilemodel.Company_name}}</p>
+    <h3>Company_location</h3>   
+    <p>{{request.user.recruiterprofilemodel.Company_location}}</p>
+    <h3>Recruiter_Name</h3>   
+    <p>{{request.user.recruiterprofilemodel.Recruiter_Name}}</p>
+
+    {% endif %}
+    
+{% endblock content %}
