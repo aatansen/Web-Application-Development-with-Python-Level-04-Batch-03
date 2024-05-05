@@ -7335,3 +7335,102 @@ What is the result of the expression `3 * "2"`?
 - Now while accessing user data from `CustomUserModel` in html pages, we can use `{{user.field_name_in_model}}`; But while accessing `RecruiterProfileModel` or `SeekerProfileModel` we have to access it through `related_name`: `{{user.related_name.field_name_in_model}}`
 
 </details>
+
+<details>
+<summary>Day-32-Job Portal More Profile Info & Template Mastering (05-05-2024)</summary>
+
+## Day 32 Topics
+- Job Portal Project Profile
+    - More model in profile
+    - Connect the Custom user data to other created model while signup
+    - Template Mastering in Profile page
+
+### More model in profile
+- We will add more model which will be displayed in our profile page, and those model will have `OneToOneField` relationship
+
+- Model for Recruiter
+    - `RecruiterBasicInfoModel`
+    - `RecruiterContactModel`
+- Model for Seeker
+    - `SeekerBasicInfoModel`
+    - `SeekerContactModel`
+    - `SeekerEducationModel`
+    - `SeekerWorkExModel`
+    > Each model has `OneToOneField` relationship with `CustomUserModel`
+
+### Connect the Custom user data to other created model while signup
+- Modify the `signup` function in `views.py` 
+    ```python
+    def signup(request):
+        if request.method=="POST":
+            profile_photo = request.FILES.get('profile_photo')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            cpassword = request.POST.get('cpassword')
+            age = request.POST.get('age')
+            gender = request.POST.get('gender')
+            city = request.POST.get('city')
+            country = request.POST.get('country')
+            blood_group = request.POST.get('blood_group')
+            user_types = request.POST.get('user_types')
+
+            if password==cpassword:
+                user = CustomUserModel.objects.create_user(
+                    profile_photo=profile_photo,
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    password=password,
+                    age=age,
+                    gender=gender,
+                    city=city,
+                    country=country,
+                    blood_group=blood_group,
+                    user_types=user_types,
+                )
+                if user_types == 'recruiter':
+                    RecruiterProfileModel.objects.create(user = user)
+                    RecruiterBasicInfoModel.objects.create(user = user)
+                    RecruiterContactModel.objects.create(user = user)
+                elif user_types == 'seeker':
+                    SeekerProfileModel.objects.create(user = user)
+                    SeekerBasicInfoModel.objects.create(user = user)
+                    SeekerContactModel.objects.create(user = user)
+                    SeekerEducationModel.objects.create(user = user)
+                    SeekerWorkExModel.objects.create(user = user)
+                user.save()
+                return redirect('signin')
+            else:
+                return redirect('signup')
+        return render(request,'signup.html')
+    ```
+    - Here after checking the user type we pass the `user` in `user` of other created model; e.g: `RecruiterProfileModel.objects.create(user = user)`
+
+### Template Mastering in Profile page
+- To show the newly created model data we will do template mastering in profile page
+    - First separate the current content in a div in another html file
+    - `profile.html`
+        ```html
+        <div class="profile-container">
+                <h3>Profile Photo</h3>    
+                <div class="profile-photo">
+                    <img src="/{{user.profile_photo}}" width="100px" alt="">
+                </div>
+
+                {% include 'info_button.html' %}
+                
+                {% block info %}
+
+                {% endblock info %}
+        </div>
+        ```
+        - Here we also separate the button too 
+            > which is not mandatory
+        - As it will be our master template for profile so the block content is empty ; now the name of block content is `block info` because we already used the `block content`
+    - Now Extend the `profile.html` in the newly created `profiles_info.html` page
+    - Make sure to create the `function` and `url` too for this `profiles_info.html`
+    - Similarly we created other html pages for showing other model info in a specific block on the `profile.html` page
+
+</details>
