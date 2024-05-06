@@ -41,9 +41,9 @@ div {
   <form action="{% url 'signin' %}" method="POST">
     {% csrf_token %}
     <label for="lname">Username</label>
-    <input type="text" id="lname" name="username" placeholder="Your Username..">
+    <input type="text" id="lname" value="{{username}}" name="username" placeholder="Your Username..">
     <label for="lname">Password</label>
-    <input type="password" id="lname" name="password" placeholder="Your Password..">
+    <input type="password" id="lname" value="{{password}}" name="password" placeholder="Your Password..">
 
     <input type="submit" value="Submit">
   </form>

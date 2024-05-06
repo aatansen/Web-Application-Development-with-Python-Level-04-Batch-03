@@ -7434,3 +7434,124 @@ What is the result of the expression `3 * "2"`?
     - Similarly we created other html pages for showing other model info in a specific block on the `profile.html` page
 
 </details>
+
+<details>
+<summary>Day-33-Django Messages (06-05-2024)</summary>
+
+## Day 33 Topics
+- Job Portal Project Profile Edit
+    - Auto selected of the current one (In select option edit)
+- Django Messages
+- Task
+
+### Auto selected of the current one (In select option edit)
+- We can use the condition inside option tag to auto select the current on in edit page
+    ```html
+    <label for="lname">Gender</label>
+    <select id="country" name="gender">
+        <option value="male" {% if user.gender == "male" %} selected {% endif %}>Male</option>
+        <option value="female"{% if user.gender == "female" %} selected {% endif %} >Female</option>
+    </select> <br> <br>
+    ```
+### Django Messages
+- We can show the user messages after an operation is passed or failed
+- Django available messages:
+    | Constant | Purpose                                                                                   | Tag     |
+    |----------|-------------------------------------------------------------------------------------------|---------|
+    | DEBUG    | Development-related messages that will be ignored (or removed) in a production deployment | debug   |
+    | INFO     | Informational messages for the user                                                       | info    |
+    | SUCCESS  | An action was successful, e.g. “Your profile was updated successfully”                    | success |
+    | WARNING  | A failure did not occur but may be imminent                                               | warning |
+    | ERROR    | An action was not successful or some other failure occurred                               | error   |
+
+    - Usages:
+        ```python
+        messages.debug(request, "%s SQL statements were executed." % count)
+        messages.info(request, "Three credits remain in your account.")
+        messages.success(request, "Profile details updated.")
+        messages.warning(request, "Your account expires in three days.")
+        messages.error(request, "Document deleted.")
+        ```
+    - Or we can define a dictionary to organize all the messages
+        ```python
+        all_messages = {
+            ('debug_message' : '%s SQL statements were executed.'),
+            ('info_message' : 'Three credits remain in your account.'),
+            ('success_message' : 'Profile details updated.'),
+            ('warning_message' : 'Your account expires in three days.'),
+            ('error_message' : 'Document deleted.'),
+        }
+        # Now we can use those like this:
+        messages.debug(request, all_messages['debug_message'])
+        messages.info(request, all_messages['info_message'])
+        messages.success(request, all_messages['success_message'])
+        messages.warning(request, all_messages['warning_message'])
+        messages.error(request, all_messages['error_message'])
+        ```
+    - Now to show this in html pages, we can create a `messages.html`
+        ```jinja
+        {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+            <p class="message success">{{ message }}</p>
+            {% elif message.tags == 'warning' %}
+            <p class="message warning">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+        ```
+    - Include this `messages.html` in the place where we want to show the message
+### Task
+- Show the required messages in signup / signin form
+
+### Show the required messages in signup form
+- We created a dictionary
+    ```python
+    all_messages={
+        'account_success':'Account create successful!',
+        'password_warning':'Password not match',
+        'credential_warning':'Account credential not match',
+        'age_warning':'age is not valid',
+        'first_name_warning':'First Name should only contain letters.',
+        'last_name_warning':'Last Name should only contain letters.',
+        'username_warning':'Username Already exists',
+        'age_warning':'Please put your age in number; e.g: 19',
+        'age_warning2':'Your age must be between 18 and 150.',
+        'city_name_warning':'City Name not valid',
+        'country_name_warning':'Country Name not valid',
+        'user_not_found_warning':'Cant find the username',
+    }
+    ```
+    - Now to show any warning from this we can access it like this: `messages.warning(request, all_messages['first_name_warning'])`
+- Everytime page get redirect it refreshed and all data erased, so we are rendering it with the preserve data which we get from the form and send it back as dictionary data and showing it in `value attribute` below `signin` function we send the `context` which is preserving the data we get from the form
+    ```python
+    def signin(request):
+        if request.method=="POST":
+            username=request.POST.get('username')
+            password=request.POST.get('password')
+
+            # Preserve form data in the template
+            context={
+                'username':username,
+                'password':password,
+            }
+            # Check username exist or not
+            existing_user = CustomUserModel.objects.filter(username=username).exists()
+            if not existing_user:
+                messages.warning(request,all_messages['user_not_found_warning'])
+            
+            user = authenticate(
+                username=username,
+                password=password,
+                )
+            if user:
+                login(request,user)
+                return redirect('dashboard')
+            else:
+                messages.warning(request, all_messages['credential_warning'])
+                return render(request,'signin.html',context)
+        
+        return render(request,'signin.html')
+    ```
+
+</details>

@@ -3,6 +3,22 @@ from JobApp.models import CustomUserModel,JobModel,RecruiterProfileModel,SeekerP
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import re
+
+all_messages={
+    'account_success':'Account create successful!',
+    'password_warning':'Password not match',
+    'credential_warning':'Account credential not match',
+    'age_warning':'age is not valid',
+    'first_name_warning':'First Name should only contain letters.',
+    'last_name_warning':'Last Name should only contain letters.',
+    'username_warning':'Username Already exists',
+    'age_warning':'Please put your age in number; e.g: 19',
+    'age_warning2':'Your age must be between 18 and 150.',
+    'city_name_warning':'City Name not valid',
+    'country_name_warning':'Country Name not valid',
+    'user_not_found_warning':'Cant find the username',
+}
 
 def signup(request):
     if request.method=="POST":
@@ -18,6 +34,56 @@ def signup(request):
         country = request.POST.get('country')
         blood_group = request.POST.get('blood_group')
         user_types = request.POST.get('user_types')
+            
+        # Preserve form data in the template
+        context = {
+            'first_name' : first_name,
+            'last_name' : last_name,
+            'username' : username,
+            'password' : password,
+            'cpassword' : cpassword,
+            'age' : age,
+            'gender' : gender,
+            'city' : city,
+            'country' : country,
+            'blood_group' : blood_group,
+            'user_types' : user_types,
+        }
+        # first name check
+        if not re.match(r'^[a-zA-Z\s]+$', first_name):
+            messages.warning(request, all_messages['first_name_warning'])
+            return render(request,'signup.html',context)
+        
+        # last name check
+        if not re.match(r'^[a-zA-Z\s]+$', last_name):
+            messages.warning(request, all_messages['last_name_warning'])  
+            return render(request,'signup.html',context)
+        
+        # Existing user check
+        existing_user = CustomUserModel.objects.filter(username=username).exists()
+        print(existing_user)
+        if existing_user:
+            messages.warning(request, all_messages['username_warning'])  
+            return render(request,'signup.html',context)
+        
+        # age check
+        if not age.isdigit():
+            messages.warning(request, all_messages['age_warning'])  
+            return render(request,'signup.html',context)
+        
+        if not (18<int(age)<150):
+                messages.warning(request, all_messages['age_warning2'])  
+                return render(request,'signup.html',context)
+        
+        # City name check
+        if not re.match(r'^[a-zA-Z\s]+$', city):
+            messages.warning(request, all_messages['city_name_warning'])  
+            return render(request,'signup.html',context)
+        
+        # Country name check
+        if not re.match(r'^[a-zA-Z\s]+$', country):
+            messages.warning(request, all_messages['country_name_warning'])  
+            return render(request,'signup.html',context)
 
         if password==cpassword:
             user = CustomUserModel.objects.create_user(
@@ -44,11 +110,12 @@ def signup(request):
                 SeekerEducationModel.objects.create(user = user)
                 SeekerWorkExModel.objects.create(user = user)
             user.save()
-            messages.success(request, "Account create successful!")
+            messages.success(request, all_messages['account_success'])
             return redirect('signin')
         else:
-            messages.warning(request, "Password not match")
-            return redirect('signup')
+            messages.warning(request, all_messages['password_warning'])
+            return render(request,'signup.html',context)
+
     return render(request,'signup.html')
 
 def signin(request):
@@ -56,6 +123,16 @@ def signin(request):
         username=request.POST.get('username')
         password=request.POST.get('password')
 
+        # Preserve form data in the template
+        context={
+            'username':username,
+            'password':password,
+        }
+        # Check username exist or not
+        existing_user = CustomUserModel.objects.filter(username=username).exists()
+        if not existing_user:
+            messages.warning(request,all_messages['user_not_found_warning'])
+        
         user = authenticate(
             username=username,
             password=password,
@@ -64,8 +141,8 @@ def signin(request):
             login(request,user)
             return redirect('dashboard')
         else:
-            messages.warning(request, "Account credential not match")
-            return redirect('signin')
+            messages.warning(request, all_messages['credential_warning'])
+            return render(request,'signin.html',context)
     
 
     return render(request,'signin.html')
