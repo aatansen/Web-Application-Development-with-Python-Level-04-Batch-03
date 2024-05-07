@@ -4219,38 +4219,38 @@ Submission:
 
 |Operator|	Name|	Example|
 |-       | -    |      -   |
-|+	|Addition	| $x + y$ |	
-|-	|Subtraction|	$x - y$ |	
-|*	|Multiplication	| $x * y$ |	
-|/	|Division|	$x / y$ |	
-|%	|Modulus	| $x % y$	|
-|**	|Exponentiation|	$x ** y$ |	
-|//	|Floor division|	$x // y$ |
+|+	|Addition	| x + y |	
+|-	|Subtraction|	x - y |	
+|*	|Multiplication	| x * y |	
+|/	|Division|	x / y |	
+|%	|Modulus	| x % y	|
+|**	|Exponentiation|	x ** y |	
+|//	|Floor division|	x // y |
 
 
 ### Assignment Operators
 - Task
-    - $a/=10$
-        > $a=a/10$
-    - $a+=b+10$
-        > $a=a/10$
-    - $a**=3+c$
-        > $a=a**(3+c)$
-    - $a//=x+y**4$
-        > $a=a//(x+(y**4))$
-    - $b-=x**y$
-        > $b=b-(x**y)$
+    - a/=10
+        > a=a/10
+    - a+=b+10
+        > a=a/10
+    - a**=3+c
+        > a=a**(3+c)
+    - a//=x+y**4
+        > a=a//(x+(y**4))
+    - b-=x**y
+        > b=b-(x**y)
 
 ### Comparison Operators
 
 |Operator	|Name|	Example|
 |    -      |  - |     -    |        
-|==	|Equal|	 $x == y$ |	
-|!=	|Not equal	| $x != y$	|
-|>	|Greater than|	$x > y$ |	
-|<	|Less than	| $x < y$ |	
-|>=	|Greater than or equal to|	$x >= y$ |	
-|<=	|Less than or equal to	| $x <= y$ |
+|==	|Equal|	 x == y |	
+|!=	|Not equal	| x != y	|
+|>	|Greater than|	x > y |	
+|<	|Less than	| x < y |	
+|>=	|Greater than or equal to|	x >= y |	
+|<=	|Less than or equal to	| x <= y |
 
 - Task
     - x= 5
@@ -7618,7 +7618,7 @@ else:
  - [ ] Nothing, it's an error
  - [ ] Both A and B
 
-Which condition will be true when $x = 3$ and $y = 5?$
+Which condition will be true when x = 3 and y = 5?
 ```python
 if x > y:
     print("X")
@@ -7651,7 +7651,7 @@ print(x % y)
  - [ ] 3
  - [ ] 0
 
-What is the output of the following code if $a = 10$ and $b = 20?$
+What is the output of the following code if a = 10 and b = 20?
 ```python
 if a > b:
     print("A is greater")
@@ -7703,7 +7703,7 @@ print(a + b)
  - [ ] 84
  - [ ] Error
 
-If $a = 10$, what is the value of a after $a //= 3?$
+If a = 10, what is the value of a after a //= 3?
  - [ ] 3
  - [ ] 3.33
  - [ ] 7
