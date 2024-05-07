@@ -7555,3 +7555,232 @@ What is the result of the expression `3 * "2"`?
     ```
 
 </details>
+
+<details>
+<summary>Day-34-Python Day 07 & Database Discussion (07-05-2024)</summary>
+
+## Day 33 Topics
+- Python Day 7
+- Database discussion
+### Python Day 7
+- Exam 02
+- If...else in single line
+- Python ternary operation
+- While loop
+
+### Exam 02
+How would you decrement n by 4 using a shorthand operator?
+ - [ ] n -=4
+ - [ ] n =- 4
+ - [ ] n = n - 4
+ - [ ] Both A and C
+
+Which of the following is not a valid Python increment operation?
+ - [ ] x += 1
+ - [ ] x = x + 1
+ - [ ] x++
+ - [ ] x +=- 1
+
+What is the output of the following nested condition?
+```python
+x = 5
+y = 10
+if x > y:
+    if x > 10:
+        print("A")
+    else:
+        print("B")
+else:
+    if y < 20:
+        print("C")
+    else:
+        print("D")
+```
+ - [ ] A
+ - [ ] B
+ - [ ] C
+ - [ ] D
+
+Choose the correct way to declare a variable x with the value 100.
+ - [ ] int x = 100
+ - [ ] x = 100
+ - [ ] var x = 100
+ - [ ] x == 100
+
+```python
+if not False:
+    print("Hello World")
+else:
+    print("Goodbye World")
+```
+ - [ ] Hello World
+ - [ ] Goodbye World
+ - [ ] Nothing, it's an error
+ - [ ] Both A and B
+
+Which condition will be true when $x = 3$ and $y = 5?$
+```python
+if x > y:
+    print("X")
+elif y > x:
+    print("Y")
+else:
+    print("Equal")
+```
+ - [ ] X
+ - [ ] Y
+ - [ ] Equal
+ - [ ] NONE
+
+```python
+x = 4
+x *= 2
+```
+ - [ ] 8
+ - [ ] 2
+ - [ ] 6
+ - [ ] 4
+
+```python
+x = 4
+y = 15
+print(x % y)
+```
+ - [ ] 4
+ - [ ] 11
+ - [ ] 3
+ - [ ] 0
+
+What is the output of the following code if $a = 10$ and $b = 20?$
+```python
+if a > b:
+    print("A is greater")
+elif b > a:
+    print("B is greater")
+else:
+    print("A and B are equal")
+```
+ - [ ] A is greater
+ - [ ] B is greater
+ - [ ] A and B are equal
+ - [ ] None of the above
+
+Evaluate the following logical expression when x = True and y = False:
+```python
+if x and not y:
+    print("True")
+else:
+    print("False")
+```
+ - [ ] True
+ - [ ] False
+ - [ ] Error
+ - [ ] None
+
+```python
+a = 5
+a *= 2
+```
+ - [ ] Subtracts 2 from a
+ - [ ] Adds 2 to a
+ - [ ] Divides a by 2
+ - [ ] Multiplies a by 2
+ - [ ] Other:___________
+
+Which operator is used for integer division that discards the remainder?
+ - [ ] **
+ - [ ] //
+ - [ ] /
+ - [ ] %
+
+```python
+a = 8
+b = '4'
+print(a + b)
+```
+ - [ ] 8'4'
+ - [ ] 12
+ - [ ] 84
+ - [ ] Error
+
+If $a = 10$, what is the value of a after $a //= 3?$
+ - [ ] 3
+ - [ ] 3.33
+ - [ ] 7
+ - [ ] 4
+
+print(2 + 3 * 4)
+ - [ ] 20
+ - [ ] 14
+ - [ ] 5
+ - [ ] 24
+
+### If else in single line
+- We can write if..else in single line
+    ```python
+    a=300
+    b=100
+
+    if a>b:print("a is greater") else: print("b is greater")
+    ```
+
+### Python ternary operation
+- Which is greater between a,b 
+    ```python
+    a=300
+    b=100
+
+    print("a is greater")if a>b else print("b is greater")
+    ```
+- Which is greater between a,b,c
+    ```python
+    a=100
+    b=200
+    c=300
+
+    print("a greater")if (a>b and a>c) else print("b is greater") if b>c else print("c is greater")
+    ```
+- Which is greater between a,b,c,d
+    ```python
+    a=100
+    b=200
+    c=300
+    d=400
+
+    print("a is greater") if (a>b and a>c and a>d) else print("b is greater") if b>c and b>d else print("c is greater") if c>d else print("d is greater")
+    ```
+- Which is greater between a,b,c,d,e
+    ```python
+    a=100
+    b=200
+    c=300
+    d=400
+    e=500
+
+    print("a is greater") if (a>b and a>c and a>d and a>e) else print("b is greater") if b>c and b>d and b>e else print("c is greater") if c>d and c>e else print("d is greater") if d>e else print("e is greater")
+    ```
+
+### While loop
+- It will run until the condition is false
+    ```python
+    i=1
+    while i<6:
+        print(i)
+        i+=1
+    ```
+
+### Database discussion
+- Field (Table head)
+- Object (Table data)
+- Query (SQL Query)
+- ORM vs SQL query
+    - ORM :arrow_right: `model_name.objects.get(id=id)`
+    - SQL :arrow_right: `SELECT * FROM table_name WHERE id = 1;`
+- Entities and Attributes
+    | Entities |              Attributes                        |
+    |----------|------------------------------------------------|
+    |Student   | Student_ID (Primary Key), Name, Age, Gender    |
+    |Book      | ISBN (Primary Key), Title, Author, Publish_Date|
+    |Employee  | Employee_ID (Primary Key), Name, Department    |
+
+</details>
