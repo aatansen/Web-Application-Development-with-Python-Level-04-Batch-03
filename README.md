@@ -7784,3 +7784,104 @@ print(2 + 3 * 4)
     |Employee  | Employee_ID (Primary Key), Name, Department    |
 
 </details>
+
+<details>
+<summary>Day-35-Python Day 08 Python Bkash App (08-05-2024)</summary>
+
+## Python Bkash App (Options)
+
+### Main Options
+1. Send Money
+2. Send Money to Non-Bkash User
+3. Mobile Recharge
+4. Payment
+5. Cash Out
+6. Pay Bill
+7. Microfinance
+8. Download Bkash App
+9. My Bkash
+10. Reset Pin
+
+### Send Money Options
+- Enter Personal Bkash Number
+    - Enter Amount
+    - Enter Your Bkash PIN
+    - Success message
+
+### Send Money to Non-Bkash User
+- Enter receiver number
+    - Enter amount
+    - Enter pin
+    - Success message
+
+### Mobile Recharge
+- Choose Operator:
+    1. Robi
+    2. Airtel
+    3. Banglalink
+    4. Grameenphone
+    5. Teletalk
+        - Enter mobile number
+        - Enter recharge amount
+        - Enter pin
+        - Success message
+### Payment
+- Enter merchant number
+    - Enter amount
+    - Enter pin
+    - Success message
+
+### Cash Out
+- Choose an option:
+    1. From Agent
+    2. From ATM
+    3. Priyo Agent Numbers
+        - Enter number
+        - Enter amount
+        - Enter pin
+        - Success message
+
+### Pay Bill
+- Choose an option:
+    1. Electricity (Prepaid)
+    2. Electricity (Postpaid)
+    3. Gas
+    4. Water
+    5. Internet & Phone
+    6. TV
+    7. City Services
+    8. Education
+    9. Financial Services
+    10. Others
+        - Enter bill number
+        - Enter amount
+        - Enter pin
+        - Success message
+
+### Microfinance
+- Enter Your Microfinance Type
+    - BRAC
+    - UDDIPAN
+    - SHAKTI
+    - Managed saved accounts
+        - Enter Your Pay Loan Amount
+        - Enter Your ID or Number
+        - Enter Your PIN
+        - Success message
+
+###  Download Bkash App
+- Download Bkash App
+
+### My Bkash
+- Check Balance 
+- Request Statement
+- Change PIN
+- Priyo Numbers
+- Save Bill
+- Update MNP
+- Confirm iPhone Login
+- iPhone PIN Reset
+- Helpline
+- Main Menu
+
+</details>
