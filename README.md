@@ -7885,3 +7885,186 @@ print(2 + 3 * 4)
 - Main Menu
 
 </details>
+
+<details>
+<summary>Day-36-Profile Update & Change Password (09-05-2024)</summary>
+
+## Day 36 Topics
+- Job portal project
+    - Profile Update
+    - Change Password
+
+### Profile Update
+- We created `updateprofile` function in `views.py`
+    ```python
+    def updateprofile(request):
+        current_user = request.user
+        if request.method=="POST":
+            profile_photo = request.FILES.get('profile_photo')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            username = request.POST.get('username')
+            age = request.POST.get('age')
+            gender = request.POST.get('gender')
+            city = request.POST.get('city')
+            country = request.POST.get('country')
+            blood_group = request.POST.get('blood_group')
+            user_types = request.POST.get('user_types')
+            s_qualification = request.POST.get('s_qualification')
+            s_experience = request.POST.get('s_experience')
+            s_skills = request.POST.get('s_skills')
+            s_last_education = request.POST.get('s_last_education')
+            s_father_name = request.POST.get('s_father_name')
+            s_mother_name = request.POST.get('s_mother_name')
+            s_hobby = request.POST.get('s_hobby')
+            s_languages = request.POST.get('s_languages')
+            s_mobile_number = request.POST.get('s_mobile_number')
+            s_email = request.POST.get('s_email')
+            s_address = request.POST.get('s_address')
+            s_education_name = request.POST.get('s_education_name')
+            s_education_year = request.POST.get('s_education_year')
+            s_education_institute = request.POST.get('s_education_institute')
+            s_Position = request.POST.get('s_Position')
+            s_Company_name = request.POST.get('s_Company_name')
+            s_Duration = request.POST.get('s_Duration')
+            r_company_name = request.POST.get('r_company_name')
+            r_company_location = request.POST.get('r_company_location')
+            r_recruiter_name = request.POST.get('r_recruiter_name')
+            r_father_name = request.POST.get('r_father_name')
+            r_mother_name = request.POST.get('r_mother_name')
+            r_hobby = request.POST.get('r_hobby')
+            r_languages = request.POST.get('r_languages')
+            r_mobile_number = request.POST.get('r_mobile_number')
+            r_email = request.POST.get('r_email')
+            r_address = request.POST.get('r_address')
+            password = request.POST.get('password')
+            cpassword = request.POST.get('cpassword')
+
+            if password==cpassword:
+                if check_password(password,current_user.password):
+                    if not profile_photo:
+                        current_user.profile_photo = CustomUserModel.objects.get(username=current_user).profile_photo
+                        current_user.first_name = first_name
+                        current_user.last_name = last_name
+                        current_user.age = age
+                        current_user.gender = gender
+                        current_user.city = city
+                        current_user.country = country
+                        current_user.blood_group = blood_group
+                        current_user.save()
+                    else:
+                        current_user.profile_photo = profile_photo
+                        current_user.first_name = first_name
+                        current_user.last_name = last_name
+                        current_user.age = age
+                        current_user.gender = gender
+                        current_user.city = city
+                        current_user.country = country
+                        current_user.blood_group = blood_group
+                        current_user.save()
+
+                    if current_user.user_types == 'seeker':
+                        current_user.seekerprofilemodel.Qualification=s_qualification
+                        current_user.seekerprofilemodel.Experience=s_experience
+                        current_user.seekerprofilemodel.Skills=s_skills
+                        current_user.seekerprofilemodel.last_education=s_last_education
+                        current_user.seekerprofilemodel.save()
+                        current_user.seekerbasicinfomodel.father_name=s_father_name
+                        current_user.seekerbasicinfomodel.mother_name=s_mother_name
+                        current_user.seekerbasicinfomodel.hobby=s_hobby
+                        current_user.seekerbasicinfomodel.languages=s_languages
+                        current_user.seekerbasicinfomodel.save()
+                        current_user.seekercontactmodel.languages=s_mobile_number
+                        current_user.seekercontactmodel.email=s_email
+                        current_user.seekercontactmodel.address=s_address
+                        current_user.seekercontactmodel.save()
+                        current_user.seekereducationmodel.education_name=s_education_name
+                        current_user.seekereducationmodel.education_year=s_education_year
+                        current_user.seekereducationmodel.education_institute=s_education_institute
+                        current_user.seekereducationmodel.save()
+                        current_user.seekerworkexmodel.Position=s_Position
+                        current_user.seekerworkexmodel.Company_name=s_Company_name
+                        current_user.seekerworkexmodel.Duration=s_Duration
+                        current_user.seekerworkexmodel.save()
+
+                    elif current_user.user_types == 'recruiter':
+                        current_user.recruiterprofilemodel.Company_name=r_company_name
+                        current_user.recruiterprofilemodel.Company_location=r_company_location
+                        current_user.recruiterprofilemodel.Recruiter_Name=r_recruiter_name
+                        current_user.recruiterprofilemodel.save()
+                        current_user.recruiterbasicinfomodel.father_name=r_father_name
+                        current_user.recruiterbasicinfomodel.mother_name=r_mother_name
+                        current_user.recruiterbasicinfomodel.hobby=r_hobby
+                        current_user.recruiterbasicinfomodel.languages=r_languages
+                        current_user.recruiterbasicinfomodel.save()
+                        current_user.recruitercontactmodel.mobile_number=r_mobile_number
+                        current_user.recruitercontactmodel.email=r_email
+                        current_user.recruitercontactmodel.address=r_address
+                        current_user.recruitercontactmodel.save()
+                else:
+                    messages.warning(request,all_messages['password_warning2'])
+                    return redirect('editprofile')
+            else:
+                messages.warning(request,all_messages['password_warning'])
+                return redirect('editprofile')
+        return redirect('profile')
+    ```
+    - Here first we get the profile data
+    - Then we update it using `request.user` which we stored in `current_user`
+    - Before we update we have to verify that the user is authenticate, So we checked password using `from django.contrib.auth.hashers import check_password` if password match then the update will proceed
+    - To update custom user model which we created from abstract user we use `request.user`
+    - To update other model we use their related name `request.user.recruiterprofilemodel`
+    - To show warning message we define those message in a dictionary and show them using `from django.contrib import messages`
+        ```python
+        all_messages={
+            'account_success':'Account create successful!',
+            'password_warning':'Password and Confirm password not match',
+            'password_warning2':'Password not match with Database',
+            'credential_warning':'Account credential not match',
+            'age_warning':'age is not valid',
+            'first_name_warning':'First Name should only contain letters.',
+            'last_name_warning':'Last Name should only contain letters.',
+            'username_warning':'Username Already exists',
+            'age_warning':'Please put your age in number; e.g: 19',
+            'age_warning2':'Your age must be between 18 and 150.',
+            'city_name_warning':'City Name not valid',
+            'country_name_warning':'Country Name not valid',
+            'user_not_found_warning':'Cant find the username',
+            'signin_success':'Sign In Successful',
+        }
+        ```
+
+### Change Password
+- We define `changepassword` function in `views.py`
+    ```python
+    @login_required
+    def changepassword(request):
+        if request.method == "POST":
+            cu_password = request.POST.get('cu_password')
+            n_password = request.POST.get('n_password')
+            cn_password = request.POST.get('cn_password')
+
+            if check_password(cu_password,request.user.password):
+                if n_password == cn_password:
+                    request.user.set_password(n_password)
+                    request.user.save()
+                    update_session_auth_hash(request,request.user)
+                    return redirect('profile')
+                else:
+                    messages.warning(request,all_messages['password_warning'])
+            else:
+                messages.warning(request,all_messages['password_warning2'])
+        return render(request,'changepassword.html')
+    ```
+    - First we get the value then check the password using `from django.contrib.auth.hashers import check_password` 
+        - Here check_password(cu_password,request.user.password)
+            - `cu_password` is the password which we get from the form
+            - `request.user.password` is the password which we get from the user who logged in; if both match it will be `True`
+        - Then we checked new password and confirm new password; if it matched then we set the new password using `request.user.set_password(n_password)`
+        - After changing password it will log out the user; So we used `from django.contrib.auth import update_session_auth_hash`
+            - In `update_session_auth_hash` arguments are
+                - request --> request
+                - user --> request.user (which is current logged in user)
+            - It update the session with new password
+
+</details>
