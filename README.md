@@ -8068,3 +8068,75 @@ print(2 + 3 * 4)
             - It update the session with new password
 
 </details>
+
+<details>
+<summary>Day-36-Job Portal Project Recap 2</summary>
+
+## Job Portal Project Recap 2
+
+- Sign Up page
+    - Each field with django messages
+        - Profile photo
+        - First name
+        - Last name
+        - Username
+        - Password
+        - Confirm password
+        - Age
+        - Gender
+        - City
+        - Country
+        - Blood group
+        - User type (Seeker,Recruiter)
+            - Seeker extra info model
+                - Seeker Profile (Qualification,Experience,Skills,Last education)
+                - Education (name,year,institute)
+                - Work Experience (Position,Company name,Duration)
+            - Recruiter extra info model
+                - Recruiter Profile (Company name,Company_location,Preferred communication)
+            - Common info model 
+                - Basic Info (Father Name,Mother name,Hobby,Languages)
+                - Contact Info (Mobile number,Email,Address)
+    - Warning message if user exists
+- Sign In page
+    - Each field with django messages
+        - Username
+        - Password
+    - Sign in success message
+    - Login failed warning message
+- Dashboard page (Template mastering) - Include django messages in necessary places
+    - Navbar with
+        - Dashboard
+        - Profile page (Template mastering)
+            - View full profile info
+            - Edit / Update Profile (success message on update profile)
+            - Change Password (password change success message or warning if failed)
+                - Current password
+                - New password
+                - Confirm New password
+        - Log out
+            - Log out success message
+        - Seeker
+            - Applied Job
+            - Recent Job
+        - Recruiter
+            - Add Job (With below field)
+                - Job title
+                - Company name
+                - Address
+                - Company description
+                - Job description
+                - Qualification
+                - Salary information
+                - Deadline
+                - Designation
+                - Experience
+            - Add job success message
+        - View All Job
+            - A table with action (view,delete,edit)
+                - Seeker can only view
+                - Recruiter will have all three action
+            - Edit success message
+            - Delete success message
+
+</details>
