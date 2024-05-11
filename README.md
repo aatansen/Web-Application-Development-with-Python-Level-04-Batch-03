@@ -8140,3 +8140,279 @@ print(2 + 3 * 4)
             - Delete success message
 
 </details>
+
+<details>
+<summary>Day-37-Django MCQ Exam (11-05-2024)</summary>
+
+## Day 37 Topic
+- Django MCQ Exam
+
+### Django MCQ Exam
+
+What is the purpose of the forms.ModelForm class in Django?
+
+ - [ ] Define a form without a model
+ - [ ] Create a form for a Django model
+ - [ ] Specify form validation rules
+ - [ ] Configure the form's display format and layout
+
+    > [Answer](# "Create a form for a Django model")
+
+Which Django command is used to create a new Django application?
+
+ - [ ] python manage.py startapp
+ - [ ] python createapp
+ - [ ] django startproject
+ - [ ] django createapp
+
+    > [Answer](# "python manage.py startapp")
+
+Which Django setting is used to specify the default database for the application?
+
+ - [ ] DATABASE_ENGINE
+ - [ ] DB_ENGINE
+ - [ ] DATABASES
+ - [ ] DEFAULT_DB
+    > [Answer](# "DATABASES")
+
+How do you include another app's URL patterns in your Django project's urls.py file?
+
+ - [ ] include('app.urls')
+ - [ ] add('app.urls')
+ - [ ] import app.urls
+ - [ ] use('app.urls')
+    > [Answer](# "include('app.urls')")
+
+What is the purpose of the HttpResponseRedirect class in Django?
+
+ - [ ] Render HTML templates
+ - [ ] Redirect to another URL
+ - [ ] Redirect to another function
+ - [ ] Handle form submissions
+
+    > [Answer](# "Redirect to another URL")
+
+What is the purpose of the STATIC_URL setting in settings.py?
+
+ - [ ] Define the URL for static files
+ - [ ] Specify the default static file storage backend
+ - [ ] Configure static file compression
+ - [ ] Set the root directory for static files
+
+    > [Answer](# "Define the URL for static files")
+
+In Django, what is the purpose of the middleware in the settings.py file?
+
+ - [ ] Define middleware functions for the project
+ - [ ] Configure global middleware settings
+ - [ ] Enable or disable specific middleware components
+ - [ ] Specify URL patterns for middleware
+    > [Answer](# "Enable or disable specific middleware components")
+
+How do you define a one-to-many relationship between two Django models?
+
+ - [ ] ForeignKey
+ - [ ] OneToManyField
+ - [ ] RelationshipField
+ - [ ] ManyToOneField
+
+    > [Answer](# "ForeignKey")
+
+What is the purpose of the choices option in a Django model field?
+
+ - [ ] Define available options for the field
+ - [ ] Set default choices for the field
+ - [ ] Specify a default value for the field
+ - [ ] Configure the display format for the field
+
+    > [Answer](# "Define available options for the field")
+
+In Django, which command is used to apply database migrations?
+
+ - [ ] python manage.py makmigrations
+ - [ ] python manage.py runmigrations
+ - [ ] python manage.py migrate
+ - [ ] django applymigrations
+    > [Answer](# "python manage.py migrate")
+
+What is the purpose of the blank option in a Django model field?
+
+ - [ ] Allow the field to be blank in forms
+ - [ ] Set a default value for the field
+ - [ ] Define a blank option for select fields
+ - [ ] Require the field to be blank in forms
+
+    > [Answer](# "Allow the field to be blank in forms")
+
+In Django, what is the purpose of the MEDIA_ROOT setting in settings.py?
+
+ - [ ] Define the root URL for media files
+ - [ ] Specify the default media storage backend
+ - [ ] Define the root directory for uploaded media files
+ - [ ] Configure media file permissions
+
+    > [Answer](# "Define the root directory for uploaded media files")
+
+Which of the following is used to define a URL pattern for a Django app's admin views?
+
+ - [ ] admin_url()
+ - [ ] path('admin/', admin.site.urls)
+ - [ ] url('admin/', admin.site.urls)
+ - [ ] admin.pattern()
+
+    > [Answer](# "path('admin/', admin.site.urls)")
+
+How do you customize the display of a model in the Django admin interface?
+
+ - [ ] Override the __str__ method in the model
+ - [ ] Use the list_display attribute in the model's admin class
+ - [ ] Define a custom admin template
+ - [ ] Specify the display option in the model's Meta class
+
+    > [Answer](# "Use the list_display attribute in the model's admin class")
+
+In Django, what is the purpose of the auto_now and auto_now_add options in a DateTimeField?
+
+ - [ ] Specify the default date and time for the field
+ - [ ] Automatically update the field to the current date and time
+ - [ ] Set the field to be read-only
+ - [ ] Define the format for displaying the date and time
+    > [Answer](# "Automatically update the field to the current date and time")
+
+What is the purpose of the AUTHENTICATION_BACKENDS setting in Django's settings.py?
+
+ - [ ] Define the authentication method for the application
+ - [ ] Specify the order of authentication backends to use
+ - [ ] Configure user roles and permissions
+ - [ ] Enable or disable user registration
+
+    > [Answer](# "Specify the order of authentication backends to use")
+
+How can you handle file uploads in Django forms?
+
+ - [ ] Using the FileField in the form
+ - [ ] Specifying upload_to attribute in the model's FileField
+ - [ ] Defining a handle_upload method in the form
+ - [ ] Configuring the UPLOAD_DIR setting in settings.py
+
+    > [Answer](# "Using the FileField in the form")
+
+Which Django module is used for creating forms in a Django application?
+
+ - [ ] django.models.forms
+ - [ ] django.forms
+ - [ ] forms.py
+ - [ ] models.forms
+
+    > [Answer](# "django.forms")
+
+What is the purpose of the settings.py file in a Django project?
+
+ - [ ] Define application-specific settings
+ - [ ] Configure project-wide settings
+ - [ ] Specify URL patterns
+ - [ ] Implement view functions
+
+    > [Answer](# "Configure project-wide settings")
+
+How do you create a superuser in Django's admin interface from the command line?
+
+ - [ ] python manage.py createsuperuser
+ - [ ] python manage.py superuser
+ - [ ] django createsuperuser
+ - [ ] django manage.py createsuperuser
+
+    > [Answer](# "python manage.py createsuperuser")
+
+Which of the following is used to define a URL pattern in urls.py for a Django view?
+
+ - [ ] link()
+ - [ ] url()
+ - [ ] route()
+ - [ ] path()
+
+    > [Answer](# "path()")
+
+Which Django template tag is used for URL reversing in a template?
+
+ - [ ] {% url %}
+ - [ ] {% reverse %}
+ - [ ] {% navigate %}
+ - [ ] {% redirect %}
+
+    > [Answer](# "{% url %}")
+
+In Django, what does the reverse() function do?
+
+ - [ ] Reverse the order of elements in a list
+ - [ ] Reverse the order of characters in a string
+ - [ ] Generate a URL for a given view name
+ - [ ] Reverse the order of items in a queryset
+
+    > [Answer](# "Generate a URL for a given view name")
+
+Which Django template tag is used to iterate through a list in a template?
+
+ - [ ] {% loop %}
+ - [ ] {% for %}
+ - [ ] {% iterate %}
+ - [ ] {% repeat %}
+
+    > [Answer](# "{% for %}")
+
+How can you perform database queries using raw SQL in Django?
+
+ - [ ] Using the raw() method on a model's manager
+ - [ ] Utilizing the queryset attribute in the model's Meta class
+ - [ ] Creating a custom manager with a raw_query method
+ - [ ] Configuring the USE_RAW_SQL setting in settings.py
+
+    > [Answer](# "Using the raw() method on a model's manager")
+
+How do you set a default value for a Django model field?
+
+ - [ ] Using the default attribute in the model's field definition
+ - [ ] Specifying a default value in the Meta class
+ - [ ] Using the default parameter in the model's constructor
+ - [ ] Setting the default value in the forms.py file
+
+    > [Answer](# "Using the default attribute in the model's field definition")
+
+What is the purpose of the on_delete parameter in a ForeignKey field in a Django model?
+
+ - [ ] Specify the default value
+ - [ ] Define the related model
+ - [ ] Set the on-delete behavior for the relationship
+ - [ ] Configure the field's display format
+
+    > [Answer](# "Set the on-delete behavior for the relationship")
+
+In Django, what is the primary purpose of the admin.py file?
+
+ - [ ] Define database models
+ - [ ] Configure the Django admin interface
+ - [ ] Define URL patterns for the admin section
+ - [ ] Implement view functions
+
+    > [Answer](# "Configure the Django admin interface")
+
+What does the login_required decorator do in Django?
+
+ - [ ] Forces users to log out before accessing a view
+ - [ ] Requires users to log in before accessing a view
+ - [ ] Checks if a user has administrative privileges
+ - [ ] Ensures that only superusers can access a view
+
+    > [Answer](# "Requires users to log in before accessing a view")
+    > [Answer](# "Requires users to log in before accessing a view")
+
+What is the purpose of the related_name attribute in a Django model's ForeignKey field?
+
+ - [ ] Specify the name of the related model
+ - [ ] Define a reverse relationship from the related model
+ - [ ] Set the order of related objects
+ - [ ] Determine the default sorting for the ForeignKey field
+
+    > [Answer](# "Define a reverse relationship from the related model")
+
+</details>
