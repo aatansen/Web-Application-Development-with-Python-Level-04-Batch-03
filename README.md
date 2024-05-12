@@ -8439,7 +8439,6 @@ What does the login_required decorator do in Django?
  - [ ] Ensures that only superusers can access a view
 
     > [Answer](# "Requires users to log in before accessing a view")
-    > [Answer](# "Requires users to log in before accessing a view")
 
 What is the purpose of the related_name attribute in a Django model's ForeignKey field?
 
