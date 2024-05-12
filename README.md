@@ -8139,6 +8139,41 @@ print(2 + 3 * 4)
             - Edit success message
             - Delete success message
 
+### Notes
+
+1. **While creating our CustomUserModel we have to import AbstractUser**
+    - `from django.contrib.auth.models import AbstractUser`
+
+2. **Add the CustomUserModel in `settings.py`**
+
+    - `AUTH_USER_MODEL="JobApp.CustomUserModel"`
+3. **Import `authenticate`,`login`,`logout` for user authentication and logout**
+
+    - `from django.contrib.auth import authenticate,login,logout`
+
+4. **To prevent a view without login Import login_required**
+    - `from django.contrib.auth.decorators import login_required`
+
+5. **To show messages import messages**
+
+    - `from django.contrib import messages`
+
+6. **Verify user to edit profile data by checking user current password using check_password**
+
+    - `from django.contrib.auth.hashers import check_password`
+
+7. **To make the user logged in after editing password use update_session_auth_hash**
+
+    - `from django.contrib.auth import update_session_auth_hash`
+
+8. **While creating JobModel add extra field `Created_by` using `ForeignKey` relationship**
+
+    - `Created_by = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)`
+
+9. **Create One To One relationship while creating related user info model using `OneToOneField` and include `related_name`; this related name will be very useful for updating,accessing model data****
+
+    - `user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='recruiterprofilemodel')`
+
 </details>
 
 <details>
