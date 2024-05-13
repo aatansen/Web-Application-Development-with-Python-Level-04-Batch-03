@@ -1284,7 +1284,7 @@ In this code when we have modified our studentModel entity `return self.Name` wi
 <details>
 <summary>Day-10-Django CRUD Delete Operation From Frontend (27-03-2024)</summary>
 
-## Day 10 Topics
+## Day 10 Topics:
 - Day 09 recap
 - Oral test
 - Two annoying error (comma method in form, model return type error)
@@ -2446,7 +2446,7 @@ Question: As a job recruiter, you are tasked with hiring a Django developer for 
 <details>
 <summary>Day-13-Python Basic Day 01, View Action & All Model Table Data in Single Page (31-03-2024)</summary>
 
-## Day 13 Topics:-
+## Day 13 Topics:
 - Security & code editor
 - Python Basic Day 01
 - Variable
@@ -2840,7 +2840,7 @@ Now link the `alltable.html` page in navbar:
 <details>
 <summary>Day-14-Add Image Option with Delete, Edit, View Action (01-04-2024)</summary>
 
-## Day 14 Topics
+## Day 14 Topics:
 - Day 13 recap
 - Add Image
 - Disscussion on previous batch final assessment
@@ -3244,7 +3244,7 @@ Now the update will work.
 <details>
 <summary>Day-15-Image update (02-04-2024)</summary>
 
-## Day 15 Topics
+## Day 15 Topics:
 - Recap old days work
 - Image add problem
 - Two ways to write object class
@@ -3301,7 +3301,7 @@ Similar task is repeated for student who failed to complete it. In Day 14 full d
 <details>
 <summary>Day-16-Python Basics Day 02 & PDF Download Test (03-04-2024)</summary>
 
-## Day 16 Topics
+## Day 16 Topics:
 - Previous days recap
 - Python basics day 2
 - PDF Download
@@ -3326,7 +3326,7 @@ Similar task is repeated for student who failed to complete it. In Day 14 full d
 <details>
 <summary>Day-17-Python Day 03 & Custom Template Setup (04-04-2024)</summary>
 
-## Day 17 Topics
+## Day 17 Topics:
 - Django Framework Disscussion
 - Custom template setup / Customize UI
 - Python Day 03
@@ -3854,7 +3854,7 @@ To include a model table in this custom template we will create our model as usu
 <details>
 <summary>Day-18-Custom Template CRUD Update Operation (16-04-2024)</summary>
 
-## Day 18 Topic
+## Day 18 Topics:
 - Custom template setup recap
 - CRUD Operation on Custom Template
 - Task
@@ -4061,7 +4061,7 @@ To include a model table in this custom template we will create our model as usu
 <details>
 <summary>Day-19-Lab Exam 03 (18-04-2024)</summary>
 
-## Day 19 Topics
+## Day 19 Topics:
 - Lab Exam 03
 - PDF download using js (Test code)
 - Bonus task: PDF download implementation
@@ -4205,7 +4205,7 @@ Submission:
 <details>
 <summary>Day-20-Python Basic Day 04 & Lab Exam 03 Portfolio Project Recap (20-04-2024)</summary>
 
-## Day 20 Topics
+## Day 20 Topics:
 
 - Arithmetic operators
 - Assignment Operators
@@ -5137,7 +5137,7 @@ Submission:
 <details>
 <summary>Day-21-Python Basic Day 05 & Job Portal Project Part 01 (21-04-2024)</summary>
     
-## Day 21 Topics
+## Day 21 Topics:
 - Python Basics Day 04 recap
 - Nested If else
 - Simple problem solving using only if..else
@@ -5481,7 +5481,7 @@ else:
 <details>
 <summary>Day-22-Job Portal Project Part 02 (22-04-2024)</summary>
 
-## Day 22 Topics
+## Day 22 Topics:
 - Day 21 recap
 - Job Portal Project Part 02 (Signup)
 
@@ -5664,7 +5664,7 @@ else:
 <details>
 <summary>Day-23-Job Portal Project Part 01 to 03 (23-04-2024)</summary>
 
-## Day 23 Topics
+## Day 23 Topics:
 
 - Day 22 recap
 - Job Portal Part 03 (Sign-In Authentication)
@@ -5753,7 +5753,7 @@ else:
 <details>
 <summary>Day-24-Job Portal Project Part 04 (24-04-2024)</summary>
 
-## Day 24 Topics
+## Day 24 Topics:
 - Day 23 recap
 - Job Portal Project Part 04
     - Organize Templates
@@ -5980,7 +5980,7 @@ else:
 <details>
 <summary>Day-25-Job Portal Project (ForeignKey) (25-04-2024)</summary>
 
-## Day 25 Topics
+## Day 25 Topics:
 - Job Portal Project Day 01 to 04 Recap
 - Using ForeignKey
 
@@ -6675,7 +6675,7 @@ User Authentication:
 <details>
 <summary>Day-28-Profile Model (OneToOneField) (29-04-2024)</summary>
 
-## Day 28 Topics
+## Day 28 Topics:
 - Lab Exam 04 : Recipe Manager Project Recap
 - Profile Model
 
@@ -6744,7 +6744,7 @@ User Authentication:
 <details>
 <summary>Day-29-Recipe Management Project recap Day 02 & Python Day 06 (30-04-2024)</summary>
 
-## Day 29 Topics
+## Day 29 Topics:
 - Lab Exam 04 : Recipe Manager Project Recap Day 02
 - Python Day 06
 
@@ -7110,7 +7110,7 @@ What is the result of the expression `3 * "2"`?
 <details>
 <summary>Day-30-Job Portal Project User Profile (02-05-2024)</summary>
 
-## Day 30 Topics
+## Day 30 Topics:
 - Job Portal Project recap
 - User Profile Model
 - User Profile Update
@@ -7284,7 +7284,7 @@ What is the result of the expression `3 * "2"`?
 <details>
 <summary>Day-31-Job Portal Project Time Challenge (04-05-2024)</summary>
 
-## Day 31 Topics
+## Day 31 Topics:
 - Job Portal Project Time Challenge
     - Field Requirement
 - Model hidden field/attribute notes
@@ -7339,7 +7339,7 @@ What is the result of the expression `3 * "2"`?
 <details>
 <summary>Day-32-Job Portal More Profile Info & Template Mastering (05-05-2024)</summary>
 
-## Day 32 Topics
+## Day 32 Topics:
 - Job Portal Project Profile
     - More model in profile
     - Connect the Custom user data to other created model while signup
@@ -7438,7 +7438,7 @@ What is the result of the expression `3 * "2"`?
 <details>
 <summary>Day-33-Django Messages (06-05-2024)</summary>
 
-## Day 33 Topics
+## Day 33 Topics:
 - Job Portal Project Profile Edit
     - Auto selected of the current one (In select option edit)
 - Django Messages
@@ -7559,7 +7559,7 @@ What is the result of the expression `3 * "2"`?
 <details>
 <summary>Day-34-Python Day 07 & Database Discussion (07-05-2024)</summary>
 
-## Day 33 Topics
+## Day 33 Topics:
 - Python Day 7
 - Database discussion
 ### Python Day 7
@@ -7889,7 +7889,7 @@ print(2 + 3 * 4)
 <details>
 <summary>Day-36-Profile Update & Change Password (09-05-2024)</summary>
 
-## Day 36 Topics
+## Day 36 Topics:
 - Job portal project
     - Profile Update
     - Change Password
@@ -8179,7 +8179,7 @@ print(2 + 3 * 4)
 <details>
 <summary>Day-37-Django MCQ Exam (11-05-2024)</summary>
 
-## Day 37 Topic
+## Day 37 Topics:
 - Django MCQ Exam
 
 ### Django MCQ Exam
@@ -8448,5 +8448,62 @@ What is the purpose of the related_name attribute in a Django model's ForeignKey
  - [ ] Determine the default sorting for the ForeignKey field
 
     > [Answer](# "Define a reverse relationship from the related model")
+
+</details>
+
+<details>
+<summary>Day-38-Python Day 09 While recap & For loop (12-04-2024)</summary>
+
+Day 38 Topics
+- Python Day 09
+
+### Python day 09
+- While recap & problem solving
+- Array in python
+- For loop
+
+### problem solving
+- Natural numbers from 10-1 in reverse
+    ```python
+    # i=10
+    user_input=int(input("Input N: "))
+    i=user_input-1
+    print('Natural numbers from 10-1 in reverse: ')
+    while i<=user_input:
+        if i==0:
+            break
+        print(f'{i}',end=", ")
+        i-=1
+    ```
+
+### Array in python
+There are four types of array
+- List
+- Set
+- Tupple
+- Dictionary
+
+List
+- `x=[1,2]`
+
+Set
+- `x={1,2}`
+
+Tupple
+- `x=(1,2)`
+
+Dictionary
+- `x = {"key1": value1, "key2": value2}`
+
+### For loop
+
+```python
+list_1 = ['apple', 'banana', 'cherry']
+index = 0
+
+for item in list_1:
+    print(f"Index: {index}, Item: {item}")
+    index += 1
+```
 
 </details>
