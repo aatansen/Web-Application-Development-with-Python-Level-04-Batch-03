@@ -8507,3 +8507,105 @@ for item in list_1:
 ```
 
 </details>
+
+<details>
+<summary>Day-39-Python Day 10 Screen Recorder & For loop, List (13-05-2024)</summary>
+
+### Day 39 Topics
+- Screen Recorder with python
+- For loop & List
+
+### Screen Recorder with python
+- Screen recorder using pyautogui and open cv in `screenrecorder1.py`
+    ```python
+    import cv2
+    import pyautogui
+    from win32api import GetSystemMetrics
+    import numpy as np
+    import time
+
+    width = GetSystemMetrics(0)
+    height = GetSystemMetrics(1)
+
+    dim = (width, height)
+    # f = cv2.VideoWriter_fourcc(*"avc1") # best
+    # f = cv2.VideoWriter_fourcc(*"H264") # medium
+    f = cv2.VideoWriter_fourcc(*"mp4v") # normal
+    file_name=input("Enter video file name: ")
+    output = cv2.VideoWriter(f"{file_name}.mp4", f, 30.0, dim)
+    now_start_time = time.time()
+    dur = 5
+    end_time = now_start_time + dur
+
+    while True:
+        image = pyautogui.screenshot()
+        frame_1 = np.array(image)
+        frame = cv2.cvtColor(frame_1, cv2.COLOR_BGR2RGB)
+        output.write(frame)
+        c_time = time.time()
+        if c_time > end_time:
+            break
+    output.release()
+    print("__END__")
+    ```
+    - Here `avc1` and `H264` codec required `openh264-1.8.0-win64.dll` which can be downloaded from [openh264](https://github.com/cisco/openh264/releases/tag/v1.8.0)
+    - More modification is done in `screenrecorder2.py` where pyqt5 added with start,pause,stop button
+
+### For loop & List
+- Skip a from the given string
+    ```python
+    fruit = "banana"
+    for x in fruit:
+        if x=="a":
+            continue
+        print(x,end=" ")
+    else:
+        print("\nEnded")
+    ```
+- Only print the `banana`
+    ```python
+    fruit = "bananajtjtrdfseefes"
+    for x in fruit:
+        if x=="j":
+            break
+        print(x,end=" ")
+    else:
+        print("\nEnded")
+    ```
+- Print `apple` & `cherry` only
+    ```python
+    fruits = ['apple','banana','cherry']
+    for x in fruits:
+        if x=="banana":
+            continue
+        print(x,end=" ")
+    else:
+        print("\nEnded")
+    ```
+- Print the nested list in normal text
+    ```python
+    fruits = [['alahi','almin','tansen'],'banana','cherry']
+    for x in fruits:
+        if isinstance(x, list):  # Check if the item is a list
+            for i in x:
+                print(i)
+        else:
+            print(x)
+    ```
+- Print each character from the nested list
+    ```python
+    fruits = [['tansen','alahi','almin'],'banana','cherry']
+    for x in fruits:
+        for i in x:
+            for j in i:
+                print(j)
+    else:
+        print("\nEnded")
+    ```
+- For loop with range
+    ```python
+    for x in range(0,100,10):
+        print(x)
+    ```
+
+</details>
