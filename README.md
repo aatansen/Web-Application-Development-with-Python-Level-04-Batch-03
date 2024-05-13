@@ -8454,7 +8454,7 @@ What is the purpose of the related_name attribute in a Django model's ForeignKey
 <details>
 <summary>Day-38-Python Day 09 While recap & For loop (12-04-2024)</summary>
 
-Day 38 Topics
+## Day 38 Topics:
 - Python Day 09
 
 ### Python day 09
@@ -8511,9 +8511,10 @@ for item in list_1:
 <details>
 <summary>Day-39-Python Day 10 Screen Recorder & For loop, List (13-05-2024)</summary>
 
-### Day 39 Topics
-- Screen Recorder with python
-- For loop & List
+## Day 39 Topics:
+- Python Day 10
+    - Screen Recorder with python
+    - For loop & List
 
 ### Screen Recorder with python
 - Screen recorder using pyautogui and open cv in `screenrecorder1.py`
