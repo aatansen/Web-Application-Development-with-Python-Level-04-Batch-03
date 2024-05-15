@@ -8983,4 +8983,360 @@ What does the editable attribute specify in Django models?
         print("Not Equal")
     ```
 
-    </details>
+</details>
+
+<details>
+<summary>Day-41-Python Day 12 & Motivational Session (15-05-2024)</summary>
+
+## Day 41 Topics:
+- Django MCQ Exam 3
+- Python Day 12
+- Motivational Session
+
+### Django MCQ Exam 3
+
+What is the purpose of the distinct() method in Django?
+
+ - [ ] To remove duplicate objects from a queryset.
+ - [ ] To select distinct fields from a queryset.
+ - [ ] To ensure that a queryset is not empty.
+ - [ ] To order the queryset in descending order.
+
+    > [Answer](# "To remove duplicate objects from a queryset.")
+
+You want to retrieve all books that are available for purchase. Which query would you use?
+
+ - [ ] Book.objects.filter(available=True)
+ - [ ] Book.objects.filter(availability=True)
+ - [ ] Book.objects.filter(available="Yes")
+ - [ ] Book.objects.filter(status="Available")
+
+    > [Answer](# "Book.objects.filter(available=True)")
+
+You want to retrieve all books that have been published in the years 2018, 2019, or 2020. Which query would you use?
+
+ - [ ] Book.objects.filter(published_year=2018, published_year=2019, published_year=2020)
+ - [ ] Book.objects.filter(published_year__in=[2018, 2019, 2020])
+ - [ ] Book.objects.filter(published_year=[2018, 2019, 2020])
+ - [ ] Book.objects.filter(published_year__range=(2018, 2020))
+
+    > [Answer](# "Book.objects.filter(published_year__in=[2018, 2019, 2020])")
+
+You want to retrieve all books whose title contains the word "Python". Which query would you use?
+
+ - [ ] Book.objects.filter(title___contains="Python")
+ - [ ] Book.objects.filter(title__like="Python")
+ - [ ] Book.objects.filter(title__icontains="Python")
+ - [ ] Book.objects.filter(title__ilike="Python")
+
+    > [Answer](# "Book.objects.filter(title__icontains='Python')")
+
+What does the exists() method do in Django?
+
+ - [ ] Checks if a queryset is empty.
+ - [ ] Checks if a queryset exists in the database.
+ - [ ] Checks if a specific object exists in a queryset.
+ - [ ] Checks if a specific field exists in a model.
+
+    > [Answer](# "Checks if a queryset is empty.")
+
+You want to retrieve the sum of all ratings for books in the database. Which method would you use?
+
+ - [ ] Book.objects.sum('rating')
+ - [ ] Book.objects.aggregate(Sum('rating'))
+ - [ ] Book.objects.rating__sum()
+ - [ ] Book.objects.aggregate(Total('rating'))
+
+    > [Answer](# "Checks if a queryset is empty.")
+
+You want to retrieve all books that are either available for purchase or have a rating of more than 4.5. Which query would you use?
+
+ - [ ] Book.objects.filter(available=True || rating__gt=4.5)
+ - [ ] Book.objects.filter(Q(available=True) | Q(rating__gt=4.5))
+ - [ ] Book.objects.filter(available=True).filter(rating__gt=4.5)
+ - [ ] Book.objects.filter(available=True | rating__gt=4.5)
+
+    > [Answer](# "Book.objects.filter(Q(available=True) | Q(rating__gt=4.5))")
+
+Suppose you have a Django model Book with fields title and author. What is the correct way to retrieve all books written by "John Doe"?
+
+ - [ ] Book.objects.filter(author="John Doe")
+ - [ ] Book.objects.get(author="John Doe")
+ - [ ] Book.objects.all(author="John Doe")
+ - [ ] Book.objects.find(author="John Doe")
+
+    > [Answer](# "Book.objects.filter(author='John Doe')")
+
+You need to retrieve all books published after the year 2000. Which query would you use?
+
+ - [ ] Book.objects.filter(published_year__gt=2000)
+ - [ ] Book.objects.filter(published_year__gte=2000)
+ - [ ] Book.objects.filter(published_year__lt=2000)
+ - [ ] Book.objects.filter(published_year__lte=2000)
+
+    > [Answer](# "Book.objects.filter(published_year__gt=2000)")
+
+Which method is used to perform an OR query in Django?
+
+ - [ ] or_filter()
+ - [ ] Q()
+ - [ ] or()
+ - [ ] filter_or()
+
+    > [Answer](# "Q()")
+
+Which method is used to retrieve the last object from a queryset in Django?
+
+ - [ ] last_get()
+ - [ ] get_last()
+ - [ ] reverse().first()
+ - [ ] order_by('-id').first()
+
+    > [Answer](# "order_by('-id').first()")
+
+In Django, what is the purpose of the values() method in a queryset?
+
+ - [ ] To return a list of field values for each object in the queryset.
+ - [ ] To return a single value from the queryset.
+ - [ ] To filter the queryset based on specific values.
+ - [ ] To sort the queryset in ascending order.
+
+    > [Answer](# "To return a list of field values for each object in the queryset.")
+
+Which method would you use to retrieve a random object from a Django model queryset?
+
+ - [ ] random()
+ - [ ] get_random()
+ - [ ] order_by('?').first()
+ - [ ] random_object()
+
+    > [Answer](# "order_by('?').first()")
+
+You want to retrieve all books that are authored by "John Doe" and published after the year 2015. Which query would you use?
+
+ - [ ] Book.objects.filter(author="John Doe").filter(published_year__gt=2015)
+ - [ ] Book.objects.filter(author="John Doe" && published_year__gt=2015)
+ - [ ] Book.objects.filter(author="John Doe" & published_year__gt=2015)
+ - [ ] Book.objects.filter(Q(author="John Doe") & Q(published_year__gt=2015))
+
+    > [Answer](# "Book.objects.filter(Q(author='John Doe') & Q(published_year__gt=2015))")
+
+You want to retrieve the first ten books from a queryset in Django. Which method would you use?
+
+ - [ ] first(10)
+ - [ ] limit(10)
+ - [ ] slice(10)
+ - [ ] [:10]
+
+    > [Answer](# "[:10]")
+
+Which method would you use to retrieve the last ten objects from a queryset in Django?
+
+ - [ ] last(10)
+ - [ ] tail(10)
+ - [ ] reverse()[:10]
+ - [ ] order_by('-id')[:10]
+
+    > [Answer](# "order_by('-id')[:10]")
+
+You want to retrieve the average rating of all books in the database. Which method would you use?
+
+ - [ ] Book.objects.average('rating')
+ - [ ] Book.objects.aggregate(Avg('rating'))
+ - [ ] Book.objects.avg('rating')
+ - [ ] Book.objects.rating__avg()
+
+    > [Answer](# "Book.objects.aggregate(Avg('rating'))")
+
+Which method is used to count the number of objects in a queryset in Django?
+
+ - [ ] size()
+ - [ ] length()
+ - [ ] count()
+ - [ ] total()
+
+    > [Answer](# "count()")
+
+You want to retrieve all books that have either been published by "Publisher A" or "Publisher B". Which query would you use?
+
+ - [ ] Book.objects.filter(publisher="Publisher A" | "Publisher B")
+ - [ ] Book.objects.filter(publisher="Publisher A").filter(publisher="Publisher B")
+ - [ ] Book.objects.filter(Q(publisher="Publisher A") | Q(publisher="Publisher B"))
+ - [ ] Book.objects.filter(publisher="Publisher A" || publisher="Publisher B")
+
+    > [Answer](# "Book.objects.filter(Q(publisher='Publisher A') | Q(publisher='Publisher B'))")
+
+You want to retrieve all books that have been published between the years 2010 and 2020. Which query would you use?
+
+ - [ ] Book.objects.filter(published_year__gte=2010).filter(published_year__lte=2020)
+ - [ ] Book.objects.filter(published_year__gte=2010, published_year__lte=2020)
+ - [ ] Book.objects.filter(published_year__range=(2010, 2020))
+ - [ ] Book.objects.filter(published_year__gt=2010, published_year__lt=2020)
+
+    > [Answer](# "Book.objects.filter(published_year__range=(2010, 2020))")
+
+### Python Day 12
+- List remove method
+    ```python
+    fruits = ['apple', 'banana', 'cherry']
+    fruits.remove("banana")
+    print(fruits)
+    ```
+- List pop method
+    ```python
+    fruits = ['apple', 'banana', 'cherry']
+    fruits.pop()
+    print(fruits)
+    ```
+- Del statement
+    ```python
+    fruits = ['apple', 'banana', 'cherry']
+    del fruits[1]
+    print(fruits)
+    ```
+- List clear method
+    ```python
+    fruits = ['apple', 'banana', 'cherry']
+    fruits.clear()
+    print(fruits)
+    ```
+### Motivational Session
+- Wrong direction
+    - Mobile
+    - Non-interested direction
+- Right direction
+    - Study
+        - Problems (not actually)
+            - Focus
+            - Concentration
+            - Distraction
+            - Time management 
+        - Problem (main) - Interest
+            - No strong reason
+    - Life purpose (Everyday)
+    - A strong reason (With emotion)
+    - BEST (`B`elief, `E`xecution, `S`kills, `T`ransformation)
+        - Belief System
+            - Quote from **British olympic coach (Harry Andrews) - 1903**
+            - For 53 years this quote remain true
+                - Four Minute Mile break 1956
+                - 22k person break it after `Four Minute Mile break`
+                - `3.43 second` current record
+            - After 1971 (oneday match - 60 overs - run average 200..250..300)
+                - It was belief that a single person can't make double century
+                - But Sachin break it then Birendra Shahbag..then another...then another...
+        - Belief system create Attitude (Positive)
+            - Even though lion is the king but it does not have:
+                - Speed
+                - Power
+        - Knowledge is power (no actually)
+        - Execution of knowledge is power!
+            - Start with small execution
+                - Virat Kohli story (mirror self ask)
+        - Skills
+            - Madness
+            - Hunger
+            - Anger
+            - Example:
+                - Elon Musk madness on selling paypal and going on rent
+                - T. A. Edison trying 9999 times and succeed on 10000
+                - Jack Ma - Tried to become KFC waiter, Now he is the founder of alibaba
+                - Sachin first debut story (16 years old)
+        - Transformation
+            - Through training
+                - Trainer (personal development) meets his friend story (tennis training)
+        - Task
+            - Loudly say `I AM HAPPY`
+            - Three task (Next 30 Days)
+                - Affirmation (What you want in life , find the reason - give yourself time)
+                - Life Goal (After 1 month where you want to see yourself)
+                    - Note 2 task that you want to complete everyday
+                - Gratification - Thankful to the creator (Allah)
+    > NO ONE CAN STOP YOU BUT YOURSELF
+
+</details>
+
+<details>
+<summary>Day-41-Practise Django Project Question</summary>
+
+## Project Name: Blog Project
+- **Sign Up page**
+    - Profile Pic
+    - Name
+    - Username
+    - Password
+    - Confirm password
+    - User Type (Author,Reader)
+    > - Name should only contain character
+    > - Password must be combined with (character,number,special character) - **Optional**
+    > - Warning message if user already exists
+- **Models**:
+    - **Custom User Model**
+        - Add field according to signup page
+    - **Common info model**
+        - Basic Info (Father Name,Mother name,Languages)
+        - Contact Info (Mobile number,Email,Address)
+    - **Reader extra info model**
+        - Reader Profile Model(Hobby,Last education)
+        - Interest Model(Interest_name,description,category)
+    - **Author extra info model**
+        - Author Profile (biography,social_media,writing_category)
+    - **Blog Model**
+        - Add field according to below requirement
+    - **Contact Us Model**
+        - Add field according to below requirement
+- **Sign In page**
+    - Username
+    - Password
+    > - Username not found warning message
+    > - Login failed warning message
+    > - Sign in success message
+- **Dashboard page (Template mastering)**
+    - **Navbar**:
+        - **Dashboard**
+        - **Profile page (Template mastering)**
+            - View full profile info
+            - Edit / Update Profile
+            - Change Password
+                - Current password
+                - New password
+                - Confirm New password
+            > - Password not match warning
+            > - Password change success message
+            > - New and Confirm password not match
+            > - Profile update success message
+        - **Log out**
+            - Log out
+            > - Log out success message
+        - **Blog**
+            - Create new post
+                - Title
+                - Content
+            - Edit post
+            - Delete post
+            - View single post
+        - **View All blog post**
+        - **Contact Us**
+            - Name
+            - Email
+            - Message
+            > - Success message after form submission (submitted data will be stored in database)
+
+> [!CAUTION]
+> 
+> **Do Not use Chatgpt**
+>
+> **Use W3school (For frontend pages) / Django Documentation**
+
+> [!TIP]
+> 1. **While creating our CustomUserModel we have to import AbstractUser**
+> 2. **Add the CustomUserModel in `settings.py`**
+> 3. **Import `authenticate`,`login`,`logout` for user authentication and logout from `django.contrib.auth`**
+> 4. **To prevent a view without login Import `login_required`**
+> 5. **To show messages import `messages` from `django.contrib`**
+> 6. **Verify user to edit profile data by checking user current password using `check_password` from `django.contrib.auth.hashers`**
+> 7. **To make the user logged in after editing password use `update_session_auth_hash` from `django.contrib.auth`**
+> 8. **While creating BlogModel add extra field `Created_by` using `ForeignKey` relationship**
+> 9. **Create One To One relationship while creating related user info model using `OneToOneField` and include `related_name`; this related name will be very useful for updating,accessing model data**
+
+</details>
