@@ -8610,3 +8610,336 @@ for item in list_1:
     ```
 
 </details>
+
+<details>
+<summary>Day-40-Python Day 11 List Operations & Problem Solving (14-05-2024)</summary>
+
+## Day 40 Topics:
+- Django MCQ Exam 2
+- Python Day 11
+- Task
+
+### Django MCQ Exam 2
+
+Which of the following fields is used to represent a date and without time in Django models?
+
+ - [ ] DateField
+ - [ ] DateTimeField
+ - [ ] TimeField
+ - [ ] TimestampField
+
+    > [Answer](# "DateField")
+
+How do you represent an integer field that increments automatically with each new object created?
+
+ - [ ] IntegerField with auto_increment=True
+ - [ ] AutoField
+ - [ ] IntegerField with auto_increment
+ - [ ] PrimaryKeyField
+
+    > [Answer](# "AutoField")
+
+Which field type in Django models is used for storing large text content?
+
+ - [ ] CharField
+ - [ ] TextField
+ - [ ] EmailField
+ - [ ] URLField
+
+    > [Answer](# "TextField")
+
+In Django models, how do you define a primary key field explicitly?
+
+ - [ ] primary_key=True
+ - [ ] primary=True
+ - [ ] pk=True
+ - [ ] id=True
+
+    > [Answer](# "primary_key=True")
+
+Which attribute in a Django model is used to define the default ordering for queries?
+
+ - [ ] order_by
+ - [ ] default_order
+ - [ ] ordering
+ - [ ] default_sort
+
+    > [Answer](# "ordering")
+
+Which of the following is true regarding the null attribute in Django models?
+
+ - [ ] It allows NULL values in the database for the field.
+ - [ ] It forces the field to have a non-NULL value in the database.
+ - [ ] It specifies a default value for the field.
+ - [ ] It automatically generates a unique value for the field.
+
+    > [Answer](# "It allows NULL values in the database for the field.")
+
+How do you define a primary key field in Django models?
+
+ - [ ] Using PrimaryKeyField.
+ - [ ] Using AutoField.
+ - [ ] Using IntegerField with primary_key=True
+ - [ ] Using CharField with primary_key=True.
+
+    > [Answer](# "Using AutoField.")
+
+In Django ORM, what does the filter() method do?
+
+ - [ ] Retrieves a single object by its primary key
+ - [ ] Adds a WHERE clause to the SQL query
+ - [ ] Orders the queryset by a specified field
+ - [ ] Counts the number of objects in a queryset
+
+    > [Answer](# "Adds a WHERE clause to the SQL query")
+
+How do you represent a  precision  decimal number field in Django models?
+
+ - [ ] FloatField
+ - [ ] DecimalField
+ - [ ] IntegerField
+ - [ ] NumberField
+
+    > [Answer](# "DecimalField")
+
+How do you represent a time field in Django models?
+
+ - [ ] DateField
+ - [ ] DateTimeField
+ - [ ] TimeField
+ - [ ] TimestampField
+
+    > [Answer](# "TimeField")
+
+Which method is used to create a new object in the database using Django models?
+
+ - [ ] insert()
+ - [ ] new()
+ - [ ] Save()
+ - [ ] create()
+
+    > [Answer](# "create()")
+
+In Django models, how can you order a queryset in descending order based on a field?
+
+ - [ ] sort('field')
+ - [ ] order_by('-field')
+ - [ ] order('field')
+ - [ ] order_by('field')
+
+    > [Answer](# "order_by('-field')")
+
+Which of the following is a correct way to create a new instance of a Django model?
+
+ - [ ] Model.create()
+ - [ ] Model.objects.new()
+ - [ ] Model.objects.create()
+ - [ ] Model.new_instance()
+
+    > [Answer](# "Model.objects.create()")
+
+Which of the following statements is true regarding the unique attribute in Django models?
+
+ - [ ] It ensures that the field's value is unique across all instances.
+ - [ ] It enforces uniqueness only within the same model instance.
+ - [ ] It specifies a unique constraint on the database level.
+ - [ ] It automatically generates a unique value for the field.
+
+    > [Answer](# "It ensures that the field's value is unique across all instances.")
+
+
+Which method in a Django model is called when you want to delete an object?
+
+ - [ ] delete()
+ - [ ] remove()
+ - [ ] destroy()
+ - [ ] erase()
+
+    > [Answer](# "delete()")
+
+What does the CASCADE option of the on_delete parameter do?
+
+ - [ ] Deletes the related object and all its dependencies.
+ - [ ] Sets the foreign key value to NULL.
+ - [ ] Raises an error if the related object is deleted.
+ - [ ] Ignores the deletion of the related object.
+
+    > [Answer](# "Deletes the related object and all its dependencies.")
+
+How can you define a default value for a field in a Django model?
+
+ - [ ] Using the value attribute.
+ - [ ] Using the initial attribute
+ - [ ] Using the default attribute.
+ - [ ] Using the default_value attribute.
+
+    > [Answer](# "Using the default attribute.")
+
+Which field type in Django models is used for storing Boolean (true/false) values?
+
+ - [ ] BooleanField
+ - [ ] CharField
+ - [ ] IntegerField
+ - [ ] FloatField
+
+    > [Answer](# "BooleanField")
+
+What is the purpose of the verbose_name attribute in Django models?
+
+ - [ ] It sets a custom name for the field in the admin interface.
+ - [ ] It defines the maximum length of the field.
+ - [ ] It specifies a help text for the field.
+ - [ ] It specifies the type of data the field holds.
+
+    > [Answer](# "It sets a custom name for the field in the admin interface.")
+
+What does the editable attribute specify in Django models?
+
+ - [ ] It allows the field to be edited in forms.
+ - [ ] It forces the field to be read-only in forms.
+ - [ ] It specifies a default value for the field.
+ - [ ] It renames the field in the database.
+
+    > [Answer](# "It allows the field to be edited in forms.")
+
+### Python Day 11
+- List operations
+
+### List operations
+- Length
+   ```python
+   my_list=['apple','banana','orange']
+   print(len(my_list))
+   ```
+- Accesing list items from last index
+   ```python
+   my_list=['apple','banana','orange','juice','kiwi','melon']
+   print(my_list[-6:-2])
+   ```
+- Append list items
+   ```python
+   my_list=['apple','banana','orange','juice','kiwi','melon']
+   my_list[2]='cake'
+   print(my_list)
+   ```
+- Append list items using insert
+   ```python
+   my_list=['apple','banana','orange','juice','kiwi','melon']
+   my_list.insert(4,'mango')
+   print(my_list)
+   ```
+- Append list items using append
+   ```python
+   my_list=['apple','banana','orange','juice','kiwi','melon']
+   my_list.append('mango')
+   print(my_list)
+   ```
+- Appending lists
+   ```python
+   my_list1=['apple','banana','orange']
+   my_list2=['juice','kiwi','melon']
+
+   concat_list=my_list2+my_list1
+   my_list1.extend(my_list2)
+   print(my_list1)
+   print(concat_list)
+   ```
+- Appending list and tupple
+   ```python
+   my_list1=['apple','banana','orange']
+   my_list2=('juice','kiwi','melon')
+
+   my_list1.extend(my_list2)
+   print(my_list1)
+   ```
+   > This will also converted to list
+
+### Task
+- Problem 01
+   ```python
+   myList=['Apple','Banana','Cherry','Pineapple']
+   List1=['Orange','Purple','Lavender','Black','White']
+   ```
+   - Insert an item in the end of myList
+   - Extend myList with List1
+   - Append a new item on myList
+   - Print only the fruits name when character start with a or A
+- Problem 02
+   - Input n numbers item(positive integer) in a list
+   - Separate Even numbers from the list and store it in Even_List then sum the Even list number
+   - Separate Odd numbers from the list and store it in Odd_List then sum the Odd list number
+   - Summation the main_list
+   - Check main_list summation == Even_list + Odd_list summation
+   - If Equal print Hello.
+
+### Solution 01
+- Insert an item in the end of myList
+   ```python
+   myList.insert(len(myList),'Kiwi')
+   ```
+- Extend myList with List1
+   ```python
+   myList.extend(List1)
+   ```
+- Append a new item on myList
+   ```python
+   myList.append('Mango')
+   ```
+- Print only the fruits name when character start with a or A
+   ```python
+   for x in myList:
+      if x[0]=='a' or x[0]=='A':
+         print(x)
+   ```
+
+### Solution 02
+- Solution of the problem 02
+    ```python
+    # main_list=[1,2,3,4,5]
+    # print(f"Main List: {main_list}")
+
+    main_list=[]
+    Even_List=[]
+    Odd_List=[]
+    Main_List_Sum=0
+    Even_List_Sum=0
+    Odd_List_Sum=0
+
+    user_input_count = int(input("How many positive integer number you want to input: "))
+
+    for x in range(user_input_count):
+        user_in = int(input("Enter list item: "))
+        if user_in>=0:
+            main_list.append(user_in)
+        else:
+            print(f"Only input positive integer, {user_in} is not positive integer")
+
+    print(f"Main List: {main_list}")
+
+    for x in main_list:
+        if x%2==0:
+            Even_List.append(x)
+        else:
+            Odd_List.append(x)
+    print(f"Stored Even List: {Even_List}")
+    print(f"Stored Odd List: {Odd_List}")
+
+    for x in Even_List:
+        Even_List_Sum+=x
+    print(f"Sum of Even List: {Even_List_Sum}")
+
+    for x in Odd_List:
+        Odd_List_Sum+=x
+    print(f"Sum of Odd List: {Odd_List_Sum}")
+
+    Even_Odd_Sum = Even_List_Sum+Odd_List_Sum
+    print(f"Sum of Even & Odd: {Even_Odd_Sum}")
+
+    for x in main_list:
+        Main_List_Sum+=x
+    print(f"Sum of Main List: {Main_List_Sum}")
+
+    if Main_List_Sum == Even_Odd_Sum:
+        print("Hello")
+    ```
+    </details>
