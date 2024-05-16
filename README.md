@@ -9340,3 +9340,77 @@ You want to retrieve all books that have been published between the years 2010 a
 > 9. **Create One To One relationship while creating related user info model using `OneToOneField` and include `related_name`; this related name will be very useful for updating,accessing model data**
 
 </details>
+
+<details>
+<summary>Day-42-Python Day 13, Python MCQ Exam & Problem solving (16-05-2024)</summary>
+
+## Day 42 Topics:
+- Python MCQ Exam
+- Python Day 13
+- Problem Solving
+- Task
+
+### Python day 13
+- Loop lists
+    ```python
+    thislist = ["apple", "banana", "cherry"]
+    [print(x) for x in thislist]
+    ```
+- Appending item to new list
+    ```python
+    fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+    newlist = []
+    for x in fruits:
+        if "a" in x:
+            newlist.append(x)
+    print(newlist)
+    ```
+- Appending item to new list (with list comprehension)
+    ```python
+    fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+    newlist = [x for x in fruits if "a" in x]
+    print(newlist)
+    ```
+
+### Problem Solving
+- Problem 01 (Searching a specific item in a list)
+    ```python
+    myList=[0,1,2,6,3,4,3,3,6]
+    ```
+    > In the given list if 5 number item occur 3 times print hello
+- Solution to Problem 01
+    ```python
+    myList=[0,1,2,6,3,4,3,3,6]
+    count=0
+    fifth_item = myList[5-1]
+    for x in myList:
+        if fifth_item==x:
+            count+=1
+            if count >= 3:
+                print("Hello")
+    ```
+- Taking list item from user
+    ```python
+    total_user_input = int(input("How many number you want to input: "))
+    userList = []
+    for x in range(total_user_input):
+        user_input = int(input())
+        userList.append(user_input)
+    print(userList)
+    ```
+- Problem 02
+    ```python
+    myList=[0,1,2,6,3,4,3,3,6]
+    ```
+    > In the given list if 5 number item is equal to the length of list print hello
+
+- Problem 03
+    ```python
+    myList=[0,1,2,6,3,4,3,3,6]
+    ```
+    > In the given list remove duplicate and store it in another list
+
+### Task
+- Solve HackerRank basic problem
+
+</details>
