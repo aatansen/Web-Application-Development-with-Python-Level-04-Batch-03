@@ -1,7 +1,12 @@
-total_user_input = int(input("How many number you want to input: "))
-userList = []
-for x in range(total_user_input):
-    user_input = int(input(f"Enter item number {x+1} of {total_user_input}:"))
-    user_input = int(input("Enter item number {} of {}:".format(x+1,total_user_input)))
-    userList.append(user_input)
-print(userList)
+myList = [0, 1, 2, 6, 3, 4, 3, 3, 6]
+counts = {}
+
+for item in myList:
+    if item in counts:
+        counts[item] += 1
+
+    else:
+        counts[item] = 1
+
+for item, count in counts.items():
+    print(f"{item}: {count}")

@@ -1,14 +1,7 @@
-'''
-myList=[0,1,2,6,3,4,3,3,6]
-In list if 5 number item occur 3 times print hello
-'''
-myList=[0,1,2,6,3,4,3,3,6]
-count=0
-
-fifth_item = myList[5-1]
-
-for x in myList:
-    if fifth_item==x:
-        count+=1
-        if count >= 3:
-            print("Hello")
+total_user_input = int(input("How many number you want to input: "))
+userList = []
+for x in range(total_user_input):
+    user_input = int(input(f"Enter item number {x+1} of {total_user_input}:"))
+    user_input = int(input("Enter item number {} of {}:".format(x+1,total_user_input)))
+    userList.append(user_input)
+print(userList)

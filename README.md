@@ -9628,13 +9628,45 @@ Which of the following creates a list in Python?
     newlist = [x for x in fruits if "a" in x]
     print(newlist)
     ```
+- Taking list item from user
+    ```python
+    total_user_input = int(input("How many number you want to input: "))
+    userList = []
+    for x in range(total_user_input):
+        user_input = int(input())
+        userList.append(user_input)
+    print(userList)
+    ```
+- Counting list items
+    ```python
+    myList = [0, 1, 2, 6, 3, 4, 3, 3, 6]
+    counts = {}
 
+    for item in myList:
+        if item in counts:
+            counts[item] += 1
+        else:
+            counts[item] = 1
+    for item, count in counts.items():
+        print(f"{item}: {count}")
+    ```
 ### Problem Solving
 - Problem 01 (Searching a specific item in a list)
     ```python
     myList=[0,1,2,6,3,4,3,3,6]
     ```
     > In the given list if 5 number item occur 3 times print hello
+- Problem 02
+    ```python
+    myList=[0,1,2,6,3,4,3,3,6]
+    ```
+    > In the given list if 5 number item is equal to the length of list print hello
+- Problem 03
+    ```python
+    myList=[0,1,2,6,3,4,3,3,6]
+    ```
+    > In the given list remove duplicate
+
 - Solution to Problem 01
     ```python
     myList=[0,1,2,6,3,4,3,3,6]
@@ -9646,28 +9678,73 @@ Which of the following creates a list in Python?
             if count >= 3:
                 print("Hello")
     ```
-- Taking list item from user
+- Solution to Problem 02
     ```python
-    total_user_input = int(input("How many number you want to input: "))
-    userList = []
-    for x in range(total_user_input):
-        user_input = int(input())
-        userList.append(user_input)
-    print(userList)
-    ```
-- Problem 02
-    ```python
+    '''
     myList=[0,1,2,6,3,4,3,3,6]
-    ```
-    > In the given list if 5 number item is equal to the length of list print hello
+    In the given list if 5 number item is equal to the length of list print hello
+    '''
 
-- Problem 03
-    ```python
     myList=[0,1,2,6,3,4,3,3,6]
+
+    fifth_item=myList[5-1]
+    print(f"Fifth item is: {fifth_item}")
+
+    list_length=len(myList)
+    print(f"List length is: {list_length}")
+
+    if fifth_item==list_length:
+        print("hello")
+    else:
+        print(f"Fifth item: {fifth_item} is not equal to list length {list_length}")
     ```
-    > In the given list remove duplicate and store it in another list
+- Solution to Problem 03
+    ```python
+    '''
+    myList=[0,1,2,6,3,4,3,3,6]
+    In the given list remove duplicate
+    '''
+    myList=[0,1,2,6,3,4,3,3,6]
+    index = 0
+    while index<len(myList):
+        item = myList[index]
+        for duplicate_index in range(index + 1, len(myList)):
+            if myList[duplicate_index] == item:
+                myList.pop(duplicate_index)
+                break
+        else:
+            index += 1
+    print("List with duplicates removed:", myList)
+    ```
 
 ### Task
 - Solve HackerRank basic problem
+
+### HackerRank (Easy)
+- HackerRank 01 (Easy): Say "Hello, World!" With Python
+    ```python
+    if __name__ == '__main__':
+        print("Hello, World!")
+    ```
+- HackerRank 02 (Easy): Python If-Else
+    ```python
+    import math
+    import os
+    import random
+    import re
+    import sys
+
+    if __name__ == '__main__':
+        n = int(input().strip())
+        if n%2!=0:
+            print("Weird")
+        else:
+            if 2<=n<=5:
+                print("Not Weird")
+            elif 6<=n<=20:
+                print("Weird")
+            elif n>20:
+                print("Not Weird")
+    ```
 
 </details>
