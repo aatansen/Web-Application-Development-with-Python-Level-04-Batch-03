@@ -9350,6 +9350,263 @@ You want to retrieve all books that have been published between the years 2010 a
 - Problem Solving
 - Task
 
+### Python MCQ Exam
+
+What is the output of the following code?
+```python
+list = [1, 2, 3, 4, 5]
+print(list[2])
+```
+
+ - [ ] 1
+ - [ ] 2
+ - [ ] 3
+ - [ ] 4
+
+    > [Answer](# "3")
+
+What is the output of the following code?
+```python
+list = [0, 1, 2, 3, 4]
+print(list[1:3])
+```
+
+ - [ ] [0, 1, 2]
+ - [ ] [1, 2, 3]
+ - [ ] [1, 2]
+ - [ ] [2, 3]
+
+    > [Answer](# "[1, 2]")
+
+What is the output of the following code?
+```python
+for i in range(3):
+    for j in range(3):
+        if i == j:
+            print(i, j)
+```
+
+ - [ ] 1 1 2 2
+ - [ ] 0 0 1 1
+ - [ ] 0 1 2
+ - [ ] 0 0 1 1 2 2
+
+    > [Answer](# "0 0 1 1 2 2")
+
+Which of the following is true about nested loops?
+
+ - [ ] Only for loops can be nested
+ - [ ] Only while loops can be nested.
+ - [ ] for and while loops can be nested within each other.
+ - [ ] Loops cannot be nested.
+
+    > [Answer](# "for and while loops can be nested within each other.")
+
+What is the output of the following code?
+```python
+list = [1, 2, 3, 4]
+new_list = [x*2 for x in list]
+print(new_list)
+```
+
+ - [ ] [1, 4, 9, 16]
+ - [ ] [2, 4, 6, 8, 10]
+ - [ ] [1, 2, 3, 4]
+ - [ ] [2, 4, 6, 8]
+
+    > [Answer](# "[2, 4, 6, 8]")
+
+What is the output of the following code?
+```python
+for i in range(2):
+    for j in range(2):
+        print(i, j)
+```
+
+ - [ ] 0 0 0 1 1 0 1 1 2
+ - [ ] 0 1 1 0
+ - [ ] 0 0 1 1 1 0 1 1
+ - [ ] 0 0 0 1 1 0 1 1
+
+    > [Answer](# "0 0 0 1 1 0 1 1")
+
+Which statement is true about lists in Python?
+
+ - [ ] Lists are immutable.
+ - [ ] Lists are mutable
+ - [ ] Lists can only contain elements of the same type.
+ - [ ] Lists cannot contain other lists.
+
+    > [Answer](# "Lists are mutable")
+
+What is the output of the following code?
+```python
+for i in range(2):
+    for j in range(2):
+        print(i, j, end=' ')
+```
+
+ - [ ] 0 0 0 1 1 0 1 1
+ - [ ] 0 0 1 0 1 1
+ - [ ] 0 1 1 0
+ - [ ] 0 0 0 1 1 0 1 01
+
+    > [Answer](# "0 0 0 1 1 0 1 1")
+
+Which method removes the last element from a list?
+
+ - [ ] list.remove()
+ - [ ] list.pop()
+ - [ ] list.delete()
+ - [ ] list.discard()
+
+    > [Answer](# "list.pop()")
+
+How do you append an element to a list in Python?
+
+ - [ ] list.append(4)
+ - [ ] list.add(4)
+ - [ ] list = {1, 2, 3}
+ - [ ] list = 1, 2, 3
+
+    > [Answer](# "list.append(4)")
+
+What is the correct syntax for a for loop in Python?
+
+ - [ ] for i in 1 to 10:
+ - [ ] for i in range(10):
+ - [ ] for (i=0; i<10; i++):
+ - [ ] for i from 1 to 10:
+
+    > [Answer](# "for i in range(10):")
+
+Which statement will correctly check if a number is even in a nested if condition?
+
+ - [ ] if num % 2 = 0:
+ - [ ] if num % 2 == 0:
+ - [ ] if (num % 2) == 0
+ - [ ] Both b and c
+
+    > [Answer](# "if num % 2 == 0:")
+
+What is the output of the following code?
+```python
+list = [1, 2, 3, 4]
+for i in range(len(list)):
+    list[i] *= 2
+print(list)
+```
+
+ - [ ] [1, 4, 9, 16]
+ - [ ] [2, 4, 6]
+ - [ ] [2, 4, 6, 8]
+ - [ ] [1, 2, 3, 4]
+
+    > [Answer](# "[2, 4, 6, 8]")
+
+What is the output of the following code?
+```python
+for i in range(3):
+    print(i)
+```
+
+ - [ ] 0 1 2
+ - [ ] 0 1 2 3
+ - [ ] 1 2 3
+ - [ ] None of them
+
+    > [Answer](# "0 1 2")
+
+What is the output of the following code?
+```python
+for i in range(3):
+    if i == 1:
+        continue
+    print(i)
+```
+
+ - [ ] 0 1 2
+ - [ ] 0 2
+ - [ ] 1 2
+ - [ ] 0 1
+
+    > [Answer](# "0 2")
+
+Which of the following is a valid list comprehension?
+
+ - [ ] [x for x in range(5)]
+ - [ ] [x in range(5)]
+ - [ ] [for x in range(5)]
+ - [ ] [x range(5)]
+
+    > [Answer](# "[x for x in range(5)]")
+
+What is the output of the following code?
+```python
+i = 0
+while i < 5:
+    if i == 3:
+        break
+    print(i)
+    i += 1
+```
+
+ - [ ] 1 2 3
+ - [ ] 0 1 2
+ - [ ] 0 1 2 3
+ - [ ] 0 1 2 3 4
+
+    > [Answer](# "0 1 2")
+
+What is the output of the following code?
+```python
+i = 0
+while i < 3:
+    print(i)
+    i += 1
+```
+
+ - [ ] 0 1 2
+ - [ ] 1 2 3
+ - [ ] 0 1 2 3
+ - [ ] 1 2
+
+    > [Answer](# "0 1 2")
+
+How do you check if an element is in a list?
+
+ - [ ] if 3 in list:
+ - [ ] if list.has(3):
+ - [ ] if list.contains(3):
+ - [ ] if 3 inside list:
+
+    > [Answer](# "if 3 in list:")
+
+What is the output of the following code?
+```python
+list = [1, 2, 3, 4]
+for i in range(len(list)):
+    for j in range(i):
+        print(list[j], end=' ')
+    print()
+```
+
+ - [ ] 1 1 2 1 2 3 1 2 3 4
+ - [ ] 1 2 1 2 3 1 2 3 4
+ - [ ] 1 1 2 2 3 3 4 4
+ - [ ] 1 2 1 2 3 1 2 3
+
+    > [Answer](# "1 2 1 2 3 1 2 3 4")
+
+Which of the following creates a list in Python?
+
+ - [ ] list = [1, 2, 3]
+ - [ ] list = (1, 2, 3)
+ - [ ] list = {1, 2, 3}
+ - [ ] list = 1, 2, 3
+
+    > [Answer](# "list = [1, 2, 3]")
+
 ### Python day 13
 - Loop lists
     ```python
