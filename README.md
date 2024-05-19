@@ -9980,3 +9980,103 @@ Which of the following creates a list in Python?
     ```
 
 </details>
+
+<details>
+<summary>Day-44-Python Day 15 List Method Continues & Function Intro (19-05-2024)</summary>
+
+## Day 44 Topics:
+- Python Day 15
+    - Insert instead of append
+    - List Comprehension
+    - List sorting
+    - List copy
+    - Function
+    - Bubble sort
+
+### Python Day 15
+- Insert instead of append
+    ```python
+    # insert instead of append
+    myList=["banana","mango","orange","kiwi"]
+    newList=[]
+    i=0
+    for item in myList:
+        if "a" in item:
+            newList.insert(i,item)
+            i+1
+    print(newList)
+    ```
+- List Comprehension
+    ```python
+    # List comprehension
+    myList = ["kiwi","orange"]
+    newList = [x if "a" in x else "not present" for x in myList]
+    newList = [x for x in myList if "a" in x]
+    print(newList)
+    newList = [x.upper() for x in myList if "a" in x]
+    print(newList)
+    ```
+- List sorting
+    ```python
+    # List sorting
+    myList = [2,5,3,1,6,9,6,5]
+    # ascending
+    myList.sort()
+    print(myList)
+    # decending
+    myList.sort(reverse=True)
+    print(myList)
+
+    myList2=["banana","15","Kiwi","cherry"]
+    myList2.sort(key=str.lower)
+    print(myList2)
+    ```
+- List copy
+    ```python
+    # List copy
+    myList = [2,5,3,1,6,9,6,5]
+    newlist=myList.copy()
+    print(newlist)
+    ```
+- Function
+    ```python
+    def my_function():
+        print("Hello from my function")
+        
+    my_function()
+    ```
+- Bubble sort
+    ```python
+    # Define an array of numbers
+    numbers = [67, 44, 82, 17, 20]
+
+    # Get the total number of elements in the array
+    total_numbers = len(numbers)
+
+    # Print the array before sorting
+    print("Array before Sorting:")
+    print(numbers)
+
+    # Iterate through each number in the array to sort them
+    for i in range(total_numbers):
+        # Keep track of whether any swaps occurred in this pass
+        did_swap = False
+
+        # Go through each pair of adjacent numbers in the array
+        for j in range(0, total_numbers - i - 1):
+            # Check if the current number is greater than the next number
+            if numbers[j] > numbers[j + 1]:
+                # If so, swap the positions of the numbers
+                numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
+                did_swap = True  # Mark that a swap occurred
+
+        # If no swaps occurred in this pass, the array is sorted
+        if not did_swap:
+            break
+
+    # Print the array after sorting
+    print("Array after Sorting:")
+    print(numbers)
+    ```
+
+</details>
