@@ -5,7 +5,3 @@ for x in range(len(myList)):
     index=x+1
     reverseList.append(myList[-index])
 print(reverseList)
-
-
-
-

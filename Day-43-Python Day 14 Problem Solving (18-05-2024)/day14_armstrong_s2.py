@@ -8,6 +8,3 @@ for i in range(1000):
     if sum == check_num:
         armstrong_series.append(check_num)
 print(armstrong_series)
-
-
-

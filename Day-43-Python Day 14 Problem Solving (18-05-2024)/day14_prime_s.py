@@ -7,7 +7,3 @@ for x in range(user_input):
             x+=1
         prime_numbers.append(x)
 print(prime_numbers)
-
-
-
-

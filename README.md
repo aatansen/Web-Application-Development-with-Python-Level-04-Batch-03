@@ -9748,3 +9748,235 @@ Which of the following creates a list in Python?
     ```
 
 </details>
+
+<details>
+<summary>Day-43-Python Day 14 Problem Solving (18-05-2024)</summary>
+
+## Day 43 Topics:
+- Python Day 14
+    - List of problem
+    - Problem solution
+
+### List of problem
+- Searching from list
+- Summation list value
+- Reverse list item
+- Maximum number and minimum number from list
+- Prime number
+- Prime number series
+- Factorial
+- Digit reverse
+- Palindrome number
+- Armstrong number
+- Armstrong number series
+- Leap year
+- Pattern
+- Find the sequence of numbers
+- Fibonacci series
+- Geomatric series
+- Arithmatic series
+- Bubble sort (Any sorting algorithm)
+
+### Question:
+- Programming contest:
+  - Solve 10 problem in 3 hour
+- Exam:
+  - Write the output of the given program
+
+### Problem solution
+- Searching from list
+    ```python
+    # Searching from list
+    myList=[1,2,3,5,3,4,4,6,2,1,1]
+    search = 2
+    count=0
+    for item in myList:
+        if search == item:
+            count+=1
+    print(f"Item {search} found {count} times")
+    ```
+- Summation list value
+    ```python
+    # Summation list value
+    myList=[1,2,3,5,3,4,4,6,2,1,1]
+    sum=0
+    for item in myList:
+        sum+=item
+    print(f"list summation: {sum}")
+    ```
+- Reverse list item
+    ```python
+    # list item reverse
+    myList=[1,2,3,4,5,6,7,8,9]
+    reverseList=[]
+    for x in range(len(myList)):
+        index=x+1
+        reverseList.append(myList[-index])
+    print(reverseList)
+    ```
+- Maximum number and minimum number from list
+    ```python
+    # Maximum number from list
+    myList=[11,3,100,2,1,222,4,2]
+    max=0
+    for item in myList:
+        if item>max:
+            max=item
+    print(max)
+    ```
+    ```python
+    # Minimum number from list
+    myList=[1,11,3,100,2,222,4,2]
+    min=0
+    for item in myList:
+        temp=item
+        for j in myList:
+            if j<temp:
+                min=j
+    print(min)
+    ```
+- Prime number
+    ```python
+    # prime number check
+    user_input = 29
+    if user_input%2!=0:
+        print(f"{user_input} is prime number")
+    else:
+        print(f"{user_input} is not a prime number")
+    ```
+- Prime number series
+    ```python
+    # prime number series
+    user_input = 100
+    prime_numbers=[]
+    for x in range(user_input):
+        if x%2!=0:
+            if x==1:
+                x+=1
+            prime_numbers.append(x)
+    print(prime_numbers)
+    ```
+- Factorial
+    ```python
+    # Factorial
+    user_input=5
+    fact=1
+    for x in range(1,user_input+1):
+        fact*=x
+    print(fact)
+    ```
+- Digit reverse
+    ```python
+    # Digit reverse
+    myDigit=324345
+    digit_str=str(myDigit)
+    digit_reverse=""
+    for i in range(len(digit_str)):
+        index=i+1
+        digit_reverse += digit_str[-index]
+
+    print(f"Original digit: {myDigit}")
+    print(f"Reverse digit: {int(digit_reverse)}")
+    ```
+- Palindrome number
+    ```python
+    # palindrome check
+    myDigit=323
+    digit_str=str(myDigit)
+    digit_reverse=""
+    for i in range(len(digit_str)):
+        index=i+1
+        digit_reverse += digit_str[-index]
+    if int(digit_reverse) == myDigit:
+        print("It is a Palindrome number")
+    print(f"Original digit: {myDigit}")
+    print(f"Reverse digit: {int(digit_reverse)}")
+    ```
+- Armstrong number
+    ```python
+    # Armstrong number
+    num = 8208
+    sum=0
+    for x in str(num):
+        sum += int(x)**len(str(num))
+    print(sum)
+    ```
+- Armstrong number series logic building
+    ```python
+    # logic building code for creating the series of armstrong number
+    armstrong_series1=[407]
+    for i in armstrong_series1:
+        check_num = i
+        sum=0
+        for j in str(check_num):
+            sum+=int(j)**len(str(check_num))
+        if sum == check_num:
+            print(check_num)
+    ```
+    - Before working with range I build the logic with single number first from a list
+    ```python
+    # armstrong series
+    armstrong_series =[]
+    for i in range(1000):
+        check_num = i
+        sum=0
+        for j in str(check_num):
+            sum+=int(j)**len(str(check_num))
+        if sum == check_num:
+            armstrong_series.append(check_num)
+    print(armstrong_series)
+    ```
+- Leap year
+    ```python
+    # Leap year
+    user_input=[2020, 1700, 1800, 1900, 2100, 2200, 2300, 2500, 2600]
+    for x in user_input:
+        if x%100==0:
+            if x%400==0:
+                print(f"{x} is leap year")
+            else:
+                print(f"{x} is not leap year")
+        elif x%4==0:
+            print(f"{x} is leap year")
+        else:
+            print(f"{x} is not leap year")
+    ```
+- Patterns
+    ```python
+    '''
+    Right Half Pyramid
+    *
+    * *
+    * * *
+    * * * *     
+    * * * * *
+    '''
+    for x in range(1,6):
+        print(x*"*")
+    ```
+- Find the sequence of numbers,Geomatric,Arithmatic series
+    ```python
+    # sequence 2,4,6,8,10
+    sequence=[]
+    start=2
+    for x in range(10):
+        sequence.append(start)
+        start+=2
+    print(sequence)
+    ```
+- Fibonacci series
+    ```python
+    # Fibonacci series
+    user_input = 10
+    a = 0
+    b = 1
+    fibonacci = []
+    for i in range(user_input):
+        fibonacci.append(a)
+        next_number = a + b
+        a = b
+        b = next_number
+    print(fibonacci)
+    ```
+
+</details>

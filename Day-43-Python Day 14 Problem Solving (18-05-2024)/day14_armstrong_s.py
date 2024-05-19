@@ -7,6 +7,3 @@ for i in armstrong_series1:
         sum+=int(j)**len(str(check_num))
     if sum == check_num:
         print(check_num)
-
-
-
