@@ -10080,3 +10080,118 @@ Which of the following creates a list in Python?
     ```
 
 </details>
+
+<details>
+<summary>Day-45-Python Day 16 Function Class & Object (20-05-2024)</summary>
+
+## Day 45 Topics
+- Python Day 15
+    - Function recap
+    - More usage of function
+    - Class - Object
+
+### More usage of function
+- Arbitrary *kwargs
+    ```python
+    # Arbitrary *kwargs
+    def my_function(*names):
+        print(type(names))
+        print(list(names))
+
+    my_function("Mango","Orange")
+    ```
+- Problem: print all child name in single line
+    ```python
+    # print all child name in single line
+    def my_function(*names):
+        print("The youngest child are:",end=" ")
+        for x in names:
+            if x == names[-1]:
+                print(x,end=".")
+            else:
+                
+                print(x,end=",")
+
+    my_function("Emil","Tobias","Linus")
+    ```
+- Arbitrary as dictionary **kwargs
+    ```python
+    # arbitrary as dictionary **kwargs
+    def my_function(**kids):
+        print(kids)
+        print(type(kids))
+
+    my_function(first="John",second="Doe")
+    ```
+- Function return
+    ```python
+    # Function return
+    def my_function(x):
+        return 5*x
+
+    user_input=int(input("Enter a number: "))
+    answer=my_function(3)
+    print(answer)
+    ```
+- Problem: print each name later individually using nested loop
+    ```python
+    # print each name later individually using nested loop
+    def my_function(fname,lname):
+        for names in fname,lname:
+            print(names)
+            for j in names:
+                print(j)
+
+    my_function("Alahi","Tansennn")
+    ```
+- Problem: Print type of all arguments
+    ```python
+    # print type of all arguments
+    def my_function(**food):
+        # for key, value in food.items():
+        #     print(f"Type: {type(value)}")
+        #     print(value)
+        for key, value in food.items():
+            print(f"Type: {type(value)}")
+            print(value)
+
+    food_list=["Mango","Orange","Apple"]
+    food_tuple=("Mango","Orange","Apple")
+    food_set={"Mango","Orange","Apple"}
+    food_dict={"food1":"Mango","food2":"Orange","food3":"Apple"}
+
+    my_function(food_list=food_list)
+    my_function(food_tuple=food_tuple)
+    my_function(food_set=food_set)
+    my_function(food_dict=food_dict)
+    ```
+- Class - Object
+  - Inside class defined variable are attribute
+  - Inside class function are called method
+  - From class we get object
+- Class object creation
+    ```python
+    # Class object creation
+    class MyClass:
+        x=5
+
+    p1 = MyClass()
+    print(p1.x)
+    MyClass.x=80
+    print(p1.x)
+    p1.x=8
+    print(p1.x)
+
+    id = MyClass()
+    age = MyClass()
+    length = MyClass()
+
+    id.x=1
+    print(id.x)
+    age.x=22
+    print(age.x)
+    length.x=100
+    print(length.x)
+    ```
+
+</details>
