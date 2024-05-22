@@ -10243,3 +10243,330 @@ Which of the following creates a list in Python?
     - Can take any number of arguments, but can only have one expression
 
 </details>
+
+<details>
+<summary>Day-46-Day-46-Job Portal Project Recap 3</summary>
+
+## Job Portal Project Recap 3
+
+- Sign Up page
+    - Each field with django messages
+        - Profile photo
+        - First name
+        - Last name
+        - Username
+        - Password
+        - Confirm password
+        - Age
+        - Gender
+        - City
+        - Country
+        - Blood group
+        - User type (Seeker,Recruiter)
+            - Seeker extra info model
+                - Seeker Profile (Qualification,Experience,Skills,Last education)
+                - Education (name,year,institute)
+                - Work Experience (Position,Company name,Duration)
+            - Recruiter extra info model
+                - Recruiter Profile (Company name,Company_location,Preferred communication)
+            - Common info model 
+                - Basic Info (Father Name,Mother name,Hobby,Languages)
+                - Contact Info (Mobile number,Email,Address)
+    - Warning message if user exists
+- Sign In page
+    - Each field with django messages
+        - Username
+        - Password
+    - Sign in success message
+    - Login failed warning message
+- Dashboard page (Template mastering) - Include django messages in necessary places
+    - Navbar with
+        - Dashboard
+        - Profile page (Template mastering)
+            - View full profile info
+            - Edit / Update Profile (success message on update profile)
+            - Change Password (password change success message or warning if failed)
+                - Current password
+                - New password
+                - Confirm New password
+        - Log out
+            - Log out success message
+        - Seeker
+            - Applied Job
+            - Recent Job
+        - Recruiter
+            - Add Job (With below field)
+                - Job title
+                - Company name
+                - Address
+                - Company description
+                - Job description
+                - Qualification
+                - Salary information
+                - Deadline
+                - Designation
+                - Experience
+            - Add job success message
+        - View All Job
+            - A table with action (view,delete,edit)
+                - Seeker can only view
+                - Recruiter will have all three action
+            - Edit success message
+            - Delete success message
+
+### Solution
+- Create project : `django-admin startproject jobProject`
+- Create app:
+    - Go to project directory: `cd jobroject`
+    - Now create app: `py manage.py startapp jobApp`
+- Add app name in `settings.py`
+    ```python
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'jobApp',
+    ]
+    ```
+> Previously in this step we did migration but as we gonna create custom user from `AbstractUser` so we will create that model first then we will do the migration step
+- Create user model using the given field in `signup` page
+    - First create `signup.html` page
+    - Create a folder `templates` in project directory where `manage.py` exists
+    - Add this `templates` in `TEMPLATES`'s `DIRS`
+        - `'DIRS': [BASE_DIR, "templates"],`
+        - Now we will create all the required `.html` file in `templates` directory
+    - Signup page:
+        - Now create `signup.html` with the mentioned fields
+            - Profile photo
+            - First name
+            - Last name
+            - Username
+            - Password
+            - Confirm password
+            - Age
+            - Gender
+            - City
+            - Country
+            - Blood group
+            - User type (Seeker,Recruiter)
+        - Now create a file `views.py` in project directory
+            - Create a function `signup`
+                ```python
+                from django.shortcuts import render,redirect
+
+                def signup(request):
+                    return render(request,"signup.html")
+                ```
+            - Add url path for `signup` in `urls.py`
+                ```python
+                from django.contrib import admin
+                from django.urls import path
+                from jobProject.views import signup
+
+                urlpatterns = [
+                    path('admin/', admin.site.urls),
+                    path('signup/',signup,name='signup'),
+                ]
+                ```
+        - Now we will be able to see `signup` page live in browser
+        - Now let's update the `signup` function to receive the info given by user to store it in model. Now we need the model so let's create it first then update the `signup` function
+        - Create `CustomUserModel` in `models.py`
+            ```python
+            from django.db import models
+            from django.contrib.auth.models import AbstractUser
+            # Create your models here.
+            class CustomUserModel(AbstractUser):
+                profilePhoto = models.ImageField(upload_to='static/user_profile')
+                age=models.CharField(max_length=100)
+                GENDER=[
+                    ('male','Male'),
+                    ('female','Female'),
+                    ('others','Others'),
+                ]
+                gender=models.CharField(choices=GENDER,max_length=100)
+                city=models.CharField(max_length=100)
+                country=models.CharField(max_length=100)
+                bloodGroup=models.CharField(max_length=100)
+                USER_TYPE=[
+                    ('seeker','Job Seeker'),
+                    ('recruiter','Job Recruiter'),
+                ]
+                userType = models.CharField(choices=USER_TYPE,max_length=100)
+                
+                def __str__(self):
+                    return self.username
+            ```
+            - while creating model we know that there is image to save and show, in order to make it work we have to add `MEDIA_URL` and `STATICFILES_DIRS`. First add `STATICFILES_DIRS` in `settings.py`
+                ```python
+                STATICFILES_DIRS = [
+                    BASE_DIR / "static",
+                ]
+                ```
+            - Now in `urls.py` add `MEDIA_URL`
+                ```python
+                from django.conf import settings
+                from django.conf.urls.static import static
+
+                urlpatterns = [
+                    # ... the rest of your URLconf goes here ...
+                ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                ```
+        - Register `CustomUserModel` in `admin.py`
+            ```python
+            from django.contrib import admin
+            from jobApp.models import CustomUserModel
+            # Register your models here.
+            class CustomUserModelDisplay(admin.ModelAdmin):
+                list_display=['username','user']
+            admin.site.register(CustomUserModel,CustomUserModelDisplay)
+            ```
+            - We extra added `CustomUserModelDisplay` class to see the `CustomUserModel` in a formatted way where `userType`,`user`
+        - Add `CustomUserModel` in `settings.py`
+            - `AUTH_USER_MODEL = 'jobApp.CustomUserModel'`
+        - Now we will migrate
+            - `py manage.py makemigrations jobApp`
+            - `py manage.py migrate jobApp`
+            - `py manage.py makemigrations`
+            - `py manage.py migrate`
+        - Now let's create superuser
+            - `py manage.py createsuperuser`
+        - Now modify the `signup` function to get the form data and save it in `CustomUserModel`
+            ```python
+            from django.shortcuts import render,redirect
+            from jobApp.models import CustomUserModel
+
+            def signup(request):
+                if request.method == "POST":
+                    profilePhoto = request.FILES.get('profilePhoto')
+                    first_name = request.POST.get('first_name')
+                    last_name = request.POST.get('last_name')
+                    username = request.POST.get('username')
+                    password = request.POST.get('password')
+                    confirmPassword = request.POST.get('confirmPassword')
+                    age = request.POST.get('age')
+                    gender = request.POST.get('gender')
+                    city = request.POST.get('city')
+                    country = request.POST.get('country')
+                    bloodGroup = request.POST.get('bloodGroup')
+                    userType = request.POST.get('userType')
+                    
+                    if password==confirmPassword:
+                        user = CustomUserModel.objects.create_user(
+                            profilePhoto=profilePhoto,
+                            first_name=first_name,
+                            last_name=last_name,
+                            username=username,
+                            password=password,
+                            age=age,
+                            gender=gender,
+                            city=city,
+                            country=country,
+                            bloodGroup=bloodGroup,
+                            userType=userType,
+                        )
+                        user.save()
+                        return redirect('signin')
+                return render(request,"signup.html")
+            ```
+            - Here before we save it in our model we checked if `password` and `confirmPassword` matched or not
+            - After successful signup it will redirect to `signin` page; Now our next step is creating the `signin` page
+    - Signin page:
+        - Create `signin.html` page using below field
+            - username
+            - password
+        - Create `signin` function in `views.py`
+            ```python
+            def signin(request):
+                return render(request,'signin.html')
+            ```
+        - Add url path for `signin` in `urls.py`
+            ```python
+            path('',signin,name='signin'),
+            ```
+        - Now modify the `signin` function to work
+            ```python
+            def signin(request):
+                if request.method == "POST":
+                    username=request.POST.get('username')
+                    password=request.POST.get('password')
+                    
+                    user = authenticate(
+                        username=username,
+                        password=password
+                    )
+                    if user:
+                        login(request,user)
+                        return redirect('dashboard')
+                return render(request,'signin.html')
+            ```
+            - Here `authenticate`, `login` is imported:
+                - `from django.contrib.auth import authenticate,login`
+    - Dashboard page:
+        - While creating dashboard we will do template mastering
+            - Create a `base.html`
+                - This will contain the base html contain and every time we create another html page we will extends it
+                - It will include the content which is repeated. e.g:`navbar.html`
+            - Create `navbar.html`
+                - This will have the navbar contain only and will be include in `base.html`
+            - Create `dashboard.html`
+                - This will `extends` the `base.html` 
+                - Inside block contain it will have its own content
+        - Create `dashboard` function in `views.py`
+            ```python
+            def dashboard(request):
+                return render(request,'dashboard.html')
+            ```
+        - Add `dashboard` path in `urls.py`'s `urlpatterns`
+            ```python
+            path('dashboard/',dashboard,name='dashboard'),
+            ```
+    - Logout:
+        - First create a function `logoutpage`
+            > We can't name it `logout` as it is already a function which we import
+            ```python
+            def logoutpage(request):
+                logout(request)
+                return redirect('signin')
+            ```
+            - Here `logout` is imported
+                - `from django.contrib.auth import logout`
+        - Add url path for `logoutpage` in `urls.py`
+            ```python
+            path('logoutpage/',logoutpage,name='logoutpage'),
+            ```
+        - Add `logoutpage` in `navbar.html`
+        ```html
+        <li style="float:right"><a href="{% url 'logoutpage' %}">Logout</a></li>
+        ```
+        - Now there is a problem when logout we can still access dashboard path. To solve it let's make the user needed to be log in to access it by using `required_login`
+            ```python
+            @login_required
+            def dashboard(request):
+                return render(request,'dashboard.html')
+            ```
+            - Here we used `@login_required` which is imported:
+                - `from django.contrib.auth.decorators import login_required`
+        - Now we have to add the login url in `settings.py`
+            `LOGIN_URL='signin'`
+    - Profile page:
+        - First create `profile.html` page 
+        - Now create `profile` function in `views.py`
+            ```python
+            def profile(request):
+                return render(request,'profile.html')
+            ```
+        - Add url path for `profile` in `urls.py`
+            ```python
+            path('profile/',profile,name='profile'),
+            ```
+        - Add `profile` in `navbar.html`
+            ```html
+            <li style="float:right"><a class="active" href="{% url 'profile' %}">Profile</a></li>
+            ```
+        - Now in `profile.html` page we will access the data from the model using `{{user.field_name_from_the_model}}` e.g: `{{user.profilePhoto}}`
+
+</details>
+

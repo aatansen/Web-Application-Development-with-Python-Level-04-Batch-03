@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="profilePhoto">Profile photo:</label><br>
+        <input type="file" id="profilePhoto" name="profilePhoto" value=""><br>
+
+        <label for="firstName">First name:</label><br>
+        <input type="text" id="firstName" name="first_name" value=""><br>
+
+        <label for="lastName">Last name:</label><br>
+        <input type="text" id="lastName" name="last_name" value=""><br>
+
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" value=""><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" value=""><br>
+
+        <label for="confirmPassword">Confirm password:</label><br>
+        <input type="password" id="confirmPassword" name="confirmPassword" value=""><br>
+
+        <label for="age">Age:</label><br>
+        <input type="text" id="age" name="age" value=""><br>
+
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender">
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br>
+
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" value=""><br>
+
+        <label for="country">Country:</label><br>
+        <input type="text" id="country" name="country" value=""><br>
+
+        <label for="bloodGroup">Blood group:</label><br>
+        <input type="text" id="bloodGroup" name="bloodGroup" value=""><br>
+
+        <label for="userType">User type:</label><br>
+        <select id="userType" name="userType">
+            <option value="">Select</option>
+            <option value="seeker">Seeker</option>
+            <option value="recruiter">Recruiter</option>
+        </select><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    <a href="{% url 'signin' %}"> Already have an account?</a>
+</body>
+</html>
