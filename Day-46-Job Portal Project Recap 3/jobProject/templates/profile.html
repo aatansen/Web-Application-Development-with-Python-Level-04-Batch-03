@@ -1,25 +1,57 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-    <h3>Profile picture: </h3>
-    <img src="/{{user.profilePhoto}}" width="100px" alt="">
-    <h3>First name:</h3>
-    <p>{{user.first_name}}</p>
-    <h3>Last name:</h3>
-    <p>{{user.last_name}}</p>
-    <h3>Username:</h3>
-    <p>{{user.username}}</p>
-    <h3>Age:</h3>
-    <p>{{user.age}}</p>
-    <h3>Gender:</h3>
-    <p>{{user.get_gender_display}}</p>
-    <h3>City:</h3>
-    <p>{{user.city}}</p>
-    <h3>Country:</h3>
-    <p>{{user.country}}</p>
-    <h3>Blood Group:</h3>
-    <p>{{user.bloodGroup}}</p>
-    <h3>User Type:</h3>
-    <p>{{user.get_userType_display}}</p>
+    <div class="profile-info">
+        <h3>Profile picture:</h3>
+        <img src="/{{user.profilePhoto}}" width="100px" alt="">
+        <div class="button-group">
+            {% include 'profilebuttons.html' %}
+
+            {% block profileinfo %}
+                
+            {% endblock profileinfo %}
+
+        </div>
+
+    </div>
+    <style>
+        .profile-info {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        img {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            margin-bottom: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 {% endblock content %}

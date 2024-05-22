@@ -22,3 +22,65 @@ class CustomUserModel(AbstractUser):
     
     def __str__(self):
         return self.username
+
+# Recruiter models:
+class RecruiterProfileModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='recruiterprofilemodel')
+    Company_name=models.CharField(max_length=100)
+    Company_location=models.CharField(max_length=100)
+    Recruiter_Name=models.CharField(max_length=100)
+    def __str__(self):
+        return self.user.username
+
+# Seeker models:
+class SeekerProfileModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='seekerprofilemodel')
+    Qualification=models.CharField(max_length=100)
+    Experience=models.CharField(max_length=100)
+    Skills=models.CharField(max_length=100)
+    LAST_EDUCATION=[
+        ('jsc','JSC'),
+        ('ssc','SSC'),
+        ('hsc','HSC'),
+    ]
+    last_education = models.CharField(choices=LAST_EDUCATION,max_length=100)
+
+    def __str__(self):
+        return self.user.username
+
+class SeekerEducationModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='seekereducationmodel')
+    education_name=models.CharField(max_length=100)
+    education_year=models.CharField(max_length=100)
+    education_institute=models.CharField(max_length=100)
+    def __str__(self):
+        return self.user.username
+    
+class SeekerWorkExModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='seekerworkexmodel')
+    Position=models.CharField(max_length=100)
+    Company_name=models.CharField(max_length=100)
+    Duration=models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user.username
+
+# Common models 
+class BasicInfoModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='basicinfomodel')
+    father_name = models.CharField(max_length=100)
+    mother_name = models.CharField(max_length=100)
+    hobby = models.CharField(max_length=100)
+    languages = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user.username
+    
+class ContactModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE,related_name='contactmodel')
+    mobile_number = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user.username

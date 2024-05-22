@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from jobApp.models import CustomUserModel
+from jobApp.models import CustomUserModel,RecruiterProfileModel,SeekerProfileModel,SeekerEducationModel,SeekerWorkExModel,BasicInfoModel,ContactModel
 
 def signup(request):
     if request.method == "POST":
@@ -32,6 +32,15 @@ def signup(request):
                 bloodGroup=bloodGroup,
                 userType=userType,
             )
+            if user.userType=='recruiter':
+                RecruiterProfileModel.objects.create(user=user)
+            elif user.userType=='seeker':
+                SeekerProfileModel.objects.create(user=user)
+                SeekerEducationModel.objects.create(user=user)
+                SeekerWorkExModel.objects.create(user=user)
+
+            BasicInfoModel.objects.create(user=user)
+            ContactModel.objects.create(user=user)
             user.save()
             return redirect('signin')
     return render(request,"signup.html")
@@ -60,3 +69,39 @@ def logoutpage(request):
 
 def profile(request):
     return render(request,'profile.html')
+
+def profileinfo(request):
+    return render(request,'profileinfo.html')
+
+def recruiterprofile(request):
+    return render(request,'recruiter/recruiterprofile.html')
+
+def seekerprofile(request):
+    return render(request,'seeker/seekerprofile.html')
+
+def seekereducation(request):
+    return render(request,'seeker/seekereducation.html')
+
+def seekerworkex(request):
+    return render(request,'seeker/seekerworkex.html')
+
+def basicinfo(request):
+    return render(request,'basicinfo.html')
+
+def contactinfo(request):
+    return render(request,'contactinfo.html')
+
+def editprofile(request):
+    return render(request,'editprofile.html')
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,8 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Username</h3>
-    <p>{{user.username}}</p>
-    <h3>User type</h3>
-    <p>{{user.userType}}</p>
+    <div class="profile-info">
+        <h3>Username</h3>
+        <p>{{user.username}}</p>
+        <h3>User type</h3>
+        <p>{{user.userType}}</p>
+    </div>
+    <style>
+        .profile-info {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
 {% endblock content %}
