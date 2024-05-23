@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from jobProject.views import signup,signin,dashboard,logoutpage,profile,profileinfo,recruiterprofile,seekerprofile,seekereducation,seekerworkex,basicinfo,contactinfo,editprofile
+from jobProject.views import signup,signin,dashboard,logoutpage,profile,profileinfo,recruiterprofile,seekerprofile,seekereducation,seekerworkex,basicinfo,contactinfo,editprofile,addjob,viewalljob
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -19,4 +19,6 @@ urlpatterns = [
     path('basicinfo/',basicinfo,name='basicinfo'),
     path('contactinfo/',contactinfo,name='contactinfo'),
     path('editprofile/',editprofile,name='editprofile'),
+    path('addjob/',addjob,name='addjob'),
+    path('viewalljob/',viewalljob,name='viewalljob'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

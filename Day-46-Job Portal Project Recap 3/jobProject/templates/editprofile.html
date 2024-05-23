@@ -37,7 +37,7 @@
         <input type="text" id="country" name="bloodGroup" value="{{user.bloodGroup}}"><br><br>
 
         <label for="country">User types</label>
-        <select id="country" name="user_types">
+        <select id="country" name="userType">
             <option disabled value="recruiter" {% if user.userType == 'recruiter' %} selected {% endif %}>Job Recruiter</option>
             <option disabled value="seeker" {% if user.userType == 'seeker' %} selected {% endif %}>Job Seeker</option>
         </select><br>
@@ -54,51 +54,51 @@
         
         <h3>Contact Info</h3>
             <label for="recruiter_name">Mobile number</label><br>
-            <input type="text" id="recruiter_name" name="s_mobile_number" value="{{user.contactmodel.mobile_number}}"><br><br>
+            <input type="text" id="recruiter_name" name="mobile_number" value="{{user.contactmodel.mobile_number}}"><br><br>
             <label for="recruiter_name">Email</label><br>
-            <input type="text" id="recruiter_name" name="s_email" value="{{user.contactmodel.email}}"><br><br>
+            <input type="text" id="recruiter_name" name="email" value="{{user.contactmodel.email}}"><br><br>
             <label for="recruiter_name">Address</label><br>
-            <input type="text" id="recruiter_name" name="s_address" value="{{user.contactmodel.address}}"><br><br>
+            <input type="text" id="recruiter_name" name="address" value="{{user.contactmodel.address}}"><br><br>
         
             {% if user.userType == 'seeker' %}
             <label for="qualification">Qualification</label><br>
-            <input type="text" id="qualification" name="s_qualification" value="{{user.seekerprofilemodel.Qualification}}"><br><br>
+            <input type="text" id="qualification" name="qualification" value="{{user.seekerprofilemodel.Qualification}}"><br><br>
 
             <label for="experience">Experience</label><br>
-            <input type="text" id="experience" name="s_experience" value="{{user.seekerprofilemodel.Experience}}"><br><br>
+            <input type="text" id="experience" name="experience" value="{{user.seekerprofilemodel.Experience}}"><br><br>
 
             <label for="skills">Skills</label><br>
-            <input type="text" id="skills" name="s_skills" value="{{user.seekerprofilemodel.Skills}}"><br><br>
+            <input type="text" id="skills" name="skills" value="{{user.seekerprofilemodel.Skills}}"><br><br>
             
             <label for="skills">Last Education</label><br>
-            <input type="text" id="skills" name="s_last_education" value="{{user.seekerprofilemodel.last_education}}"><br><br>
+            <input type="text" id="skills" name="last_education" value="{{user.seekerprofilemodel.last_education}}"><br><br>
             
             
             <h3>Seeker Education</h3>
             <label for="recruiter_name">Education name</label><br>
-            <input type="text" id="recruiter_name" name="s_education_name" value="{{user.seekereducationmodel.education_name}}"><br><br>
+            <input type="text" id="recruiter_name" name="education_name" value="{{user.seekereducationmodel.education_name}}"><br><br>
             <label for="recruiter_name">Education year</label><br>
-            <input type="text" id="recruiter_name" name="s_education_year" value="{{user.seekereducationmodel.education_year}}"><br><br>
+            <input type="text" id="recruiter_name" name="education_year" value="{{user.seekereducationmodel.education_year}}"><br><br>
             <label for="recruiter_name">Education institute</label><br>
-            <input type="text" id="recruiter_name" name="s_education_institute" value="{{user.seekereducationmodel.education_institute}}"><br><br>
+            <input type="text" id="recruiter_name" name="education_institute" value="{{user.seekereducationmodel.education_institute}}"><br><br>
             
             <h3>Seeker Work Experience</h3>
-            <label for="Position">Education institute</label><br>
-            <input type="text" id="recruiter_name" name="s_Position" value="{{user.seekerworkexmodel.Position}}"><br><br>
+            <label for="Position">Position</label><br>
+            <input type="text" id="recruiter_name" name="Position" value="{{user.seekerworkexmodel.Position}}"><br><br>
             <label for="Position">Company name</label><br>
-            <input type="text" id="recruiter_name" name="s_Company_name" value="{{user.seekerworkexmodel.Company_name}}"><br><br>
+            <input type="text" id="recruiter_name" name="Company_name" value="{{user.seekerworkexmodel.Company_name}}"><br><br>
             <label for="Position">Duration</label><br>
-            <input type="text" id="recruiter_name" name="s_Duration" value="{{user.seekerworkexmodel.Duration}}"><br><br>
+            <input type="text" id="recruiter_name" name="Duration" value="{{user.seekerworkexmodel.Duration}}"><br><br>
             
         {% elif user.userType == 'recruiter' %}
             <label for="company_name">Company Name</label><br>
-            <input type="text" id="company_name" name="r_company_name" value="{{user.recruiterprofilemodel.Company_name}}"><br><br>
+            <input type="text" id="company_name" name="company_name" value="{{user.recruiterprofilemodel.Company_name}}"><br><br>
 
             <label for="company_location">Company Location</label><br>
-            <input type="text" id="company_location" name="r_company_location" value="{{user.recruiterprofilemodel.Company_location}}"><br><br>
+            <input type="text" id="company_location" name="company_location" value="{{user.recruiterprofilemodel.Company_location}}"><br><br>
 
             <label for="recruiter_name">Recruiter Name</label><br>
-            <input type="text" id="recruiter_name" name="r_recruiter_name" value="{{user.recruiterprofilemodel.Recruiter_Name}}"><br><br>
+            <input type="text" id="recruiter_name" name="recruiter_name" value="{{user.recruiterprofilemodel.Recruiter_Name}}"><br><br>
 
             {% endif %}
             <label for="recruiter_name">Password</label><br>

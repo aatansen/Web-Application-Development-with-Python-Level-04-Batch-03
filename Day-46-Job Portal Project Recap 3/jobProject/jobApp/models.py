@@ -84,3 +84,19 @@ class ContactModel(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class AddJobModel(models.Model):
+    created_by = models.ForeignKey(CustomUserModel,on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    company_description = models.TextField()
+    job_description = models.TextField()
+    qualification = models.CharField(max_length=100)
+    salary_information = models.CharField(max_length=100)
+    deadline = models.DateField(auto_now_add=True)
+    designation = models.CharField(max_length=100)
+    experience = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.created_by.username

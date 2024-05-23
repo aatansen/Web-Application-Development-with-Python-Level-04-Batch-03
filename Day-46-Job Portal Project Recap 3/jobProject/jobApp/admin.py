@@ -1,5 +1,5 @@
 from django.contrib import admin
-from jobApp.models import CustomUserModel,RecruiterProfileModel,SeekerProfileModel,SeekerEducationModel,SeekerWorkExModel,BasicInfoModel,ContactModel
+from jobApp.models import CustomUserModel,RecruiterProfileModel,SeekerProfileModel,SeekerEducationModel,SeekerWorkExModel,BasicInfoModel,ContactModel,AddJobModel
 # Register your models here.
 
 class CustomUserModelDisplay(admin.ModelAdmin):
@@ -11,3 +11,4 @@ admin.site.register(SeekerEducationModel)
 admin.site.register(SeekerWorkExModel)
 admin.site.register(BasicInfoModel)
 admin.site.register(ContactModel)
+admin.site.register(AddJobModel)
