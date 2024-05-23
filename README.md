@@ -10570,3 +10570,157 @@ Which of the following creates a list in Python?
 
 </details>
 
+<details>
+<summary>Day-47-Python Day 18 Lambda, Class Object (23-05-2024)</summary>
+
+## Day 47 Topics
+- Python Day 18
+  - Lambda
+  - Tuple methods
+  - Dictionary methods
+  - Class Object 
+    - Object are instance
+    - Inheritance
+    - Multi level Inheritance
+    - Multiple Inheritance
+    - constructor - a method which is called automatically when class is called
+
+### Lambda
+- Creating a normal function then converting it to lambda
+  ```python
+  # normal function
+
+  def x(a):
+      return a*3
+  result = x(5)
+  print(result)
+
+  # Lambda
+  x =lambda a: a*3
+  result = x(5)
+  print(result)
+  ```
+- Lambda problem 1: sum of 5 number
+  ```python
+  # Lambda problem 1: sum of 5 number
+  x = lambda a,b,c,d,e: a+b+c+d+e
+  result = x(1,2,3,4,5)
+  print(result)
+  ```
+- Lambda Anonymous function inside another function
+  ```python
+  # Lambda Anonymous function inside another function
+  def myfunc(n):
+    return lambda a : a * n
+
+  mydoubler = myfunc(2)
+  mytripler = myfunc(3)
+
+  print(mydoubler(11)) 
+  print(mytripler(11))
+  ```
+- Lambda problem 2 : Sum of 3 number using Lambda
+  ```python
+  # Lambda problem 2 : Sum of 3 number using Lambda
+  def myfunc(x,y,z):
+    return lambda a,b,c : a+b+c+x+y+z
+
+  mydoubler = myfunc(1,1,1)
+  mytripler = myfunc(2,2,2)
+
+  print(mydoubler(1,2,3)) 
+  print(mytripler(4,5,6))
+  ```
+### Tuple methods
+- problem 3: what is the index of 8 when it occur 2nd time
+  ```python
+  # problem: what is the index of 8 when it occur 2nd time
+  thistuple = (1, 3, 4, 8, 4, 3, 2, 4, 8, 4, 3)
+  count = 0
+  i=0
+  for x in thistuple:
+      if x == 8:
+          i += 1
+      if x==8 and i == 2:
+          print(count)
+      count+=1
+  ```
+- problem 3: what is the index of 8 when it occur 2nd time (another approach)
+  ```python
+  # problem: what is the index of 8 when it occur 2nd time (another approach)
+  thistuple = (1,3,4,8,4,3,2,4,8,4,3,8,2,5,6,8,5,3,4,8)
+  count = 0
+  for i in range(len(thistuple)):
+      if thistuple[i] == 8:
+          count+=1
+      if thistuple[i]==8 and count == 5:
+          print(i)
+  ```
+### Dictionary methods
+- Dictionary in one line 
+  ```python
+  # dictionary in one line
+  thisdict = dict(name = "tansen",age = 23,country = "Bangladesh")
+  print(thisdict)
+  ```
+### Class Object 
+- creating class and object
+  ```python
+  # creating class and object
+  class myClass():
+      x=5
+  p1 = myClass()
+  p1.x=10
+  print(p1.x)
+  ```
+- Normal Inheritance
+  ```python
+  # normal Inheritance
+  class a:
+      x=10
+  class b(a):
+      pass
+  obj1 = b()
+  print(obj1.x)
+  ```
+- Multi level Inheritance
+  ```python
+  # Multi level Inheritance
+  class c:
+      y=20
+  class a(c):
+      x=10
+  class b(a):
+      pass
+  obj1 = b()
+  print(obj1.x)
+  print(obj1.y)
+  ```
+- Multiple Inheritance
+  ```python
+  # Multiple Inheritance
+  class c():
+      y=20
+  class a():
+      x=10
+  class b(a,c):
+      pass
+  obj1 = b()
+  print(obj1.x)
+  print(obj1.y)
+  ```
+- Python constructor
+  ```python
+  # python constructor
+  class Person:
+      def __init__(s):
+          print("I will be called auto")
+      def another(s):
+          print("I won't be call auto")
+
+  obj1=Person()
+  obj1.another()
+  print(obj1)
+  ```
+
+</details>
