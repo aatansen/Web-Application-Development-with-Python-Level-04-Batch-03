@@ -1,30 +1,62 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
-    <div class="profile-info">
-        <h3>Username</h3>
-        <p>{{user.username}}</p>
-        <h3>User type</h3>
-        <p>{{user.userType}}</p>
-    </div>
-    <style>
-        .profile-info {
-            max-width: 300px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Jobs</title>
+</head>
+<body>
+    <h1>All Jobs</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>Company Description</th>
+                <th>Job Description</th>
+                <th>Qualification</th>
+                <th>Salary Information</th>
+                <th>Deadline</th>
+                <th>Designation</th>
+                <th>Experience</th>
+                <th>Created By</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for j in job %}
+            <tr>
+                <td>{{ j.job_title }}</td>
+                <td>{{ j.company_name }}</td>
+                <td>{{ j.address }}</td>
+                <td>{{ j.company_description }}</td>
+                <td>{{ j.job_description }}</td>
+                <td>{{ j.qualification }}</td>
+                <td>{{ j.salary_information }}</td>
+                <td>{{ j.deadline }}</td>
+                <td>{{ j.designation }}</td>
+                <td>{{ j.experience }}</td>
+                <td>{{ j.created_by }}</td>
+                <td>
+                    
+                    {% if user.userType == "recruiter" %}
+                                                
+                    <a href="{% url 'deletejob' j.id %}">Delete</a>
+                    <a href="{% url 'editjob' j.id %}">Edit</a>
+                    {% endif %}
 
-        h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
+                    <a href="{% url 'viewsinglejob' j.id %}">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
 
-        p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-    </style>
 {% endblock content %}

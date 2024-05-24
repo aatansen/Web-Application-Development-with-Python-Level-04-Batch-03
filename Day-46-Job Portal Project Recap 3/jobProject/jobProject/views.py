@@ -62,7 +62,15 @@ def signin(request):
 
 @login_required
 def dashboard(request):
-    return render(request,'dashboard.html')
+    current_user = request.user
+    if current_user.userType == "seeker":
+        job = AddJobModel.objects.all()
+    elif current_user.userType == "recruiter":
+        job = AddJobModel.objects.filter(created_by=current_user)
+    jobDict={
+        'job':job
+    }
+    return render(request,'dashboard.html',jobDict)
 
 def logoutpage(request):
     logout(request)
@@ -173,7 +181,7 @@ def addjob(request):
         company_name = request.POST.get('company_name')
         address = request.POST.get('address')
         company_description = request.POST.get('company_description')
-        company_description = request.POST.get('job_description')
+        job_description = request.POST.get('job_description')
         qualification = request.POST.get('qualification')
         salary_information = request.POST.get('salary_information')
         deadline = request.POST.get('deadline')
@@ -186,6 +194,7 @@ def addjob(request):
             company_name=company_name,
             address=address,
             company_description=company_description,
+            job_description=job_description,
             qualification=qualification,
             salary_information=salary_information,
             deadline=deadline,
@@ -194,17 +203,64 @@ def addjob(request):
             created_by=current_user,
         )
         job.save()
-        return redirect('viewalljob')
+        return redirect('dashboard')
     return render(request,'recruiter/addjob.html')
 
 def viewalljob(request):
+    current_user = request.user
     job = AddJobModel.objects.all()
     jobDict={
-        job:'job'
+        'job':job
     }
     return render(request,'viewalljob.html',jobDict)
 
+def deletejob(request,jobid):
+    job = AddJobModel.objects.get(id = jobid)
+    job.delete()
+    return redirect('dashboard')
 
+def editjob(request,jobid):
+    job = AddJobModel.objects.get(id = jobid)
+    jobDict={
+        'job' : job
+    }
+    if request.method == "POST":
+        job_title = request.POST.get('job_title')
+        company_name = request.POST.get('company_name')
+        address = request.POST.get('address')
+        company_description = request.POST.get('company_description')
+        job_description = request.POST.get('job_description')
+        qualification = request.POST.get('qualification')
+        salary_information = request.POST.get('salary_information')
+        deadline = request.POST.get('deadline')
+        designation = request.POST.get('designation')
+        experience = request.POST.get('experience')
+        current_user = request.user
+        
+        job = AddJobModel(
+            id = jobid,
+            job_title=job_title,
+            company_name=company_name,
+            address=address,
+            company_description=company_description,
+            job_description=job_description,
+            qualification=qualification,
+            salary_information=salary_information,
+            deadline=deadline,
+            designation=designation,
+            experience=experience,
+            created_by=current_user,
+        )
+        job.save()
+        return redirect('dashboard')
+    return render(request,'recruiter/editjob.html',jobDict)
+
+def viewsinglejob(request,jobid):
+    job =AddJobModel.objects.get(id=jobid)
+    jobDict={
+        'job':job
+    }
+    return render(request,'viewsinglejob.html',jobDict)
 
 
 
