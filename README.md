@@ -10567,6 +10567,57 @@ Which of the following creates a list in Python?
             <li style="float:right"><a class="active" href="{% url 'profile' %}">Profile</a></li>
             ```
         - Now in `profile.html` page we will access the data from the model using `{{user.field_name_from_the_model}}` e.g: `{{user.profilePhoto}}`
+        - Now we will do template mastering where `profile.html` will be master template for profile and cut the part where others info will be shown and make it `block profileinfo` to show the specific content on that part. we will create below pages where `profile.html` will be extends and `block profileinfo` will hold their specific contents
+            - `profileinfo.html` - To show profile info which user fill up in signup and access those using `{{user.field_name_from_the_model}}` - Here Model is `CustomUserModel`
+            - `recruiterprofile.html` - This will show the content from the `RecruiterProfileModel` where will will access the data `{{user.related_name.field_name_from_the_model}}`
+            - `seekerprofile.html` - This will show the content from the `SeekerProfileModel` where will will access the data `{{user.related_name.field_name_from_the_model}}`
+            - `seekereducation.html` - This will show the content from the `SeekerEducationModel` where will will access the data `{{user.related_name.field_name_from_the_model}}`
+            - `seekerworkex.html` - This will show the content from the `SeekerWorkExModel` where will will access the data `{{user.related_name.field_name_from_the_model}}`
+            - `basicinfo.html` - This will show the content from the `BasicInfoModel` where will will access the data `{{user.related_name.field_name_from_the_model}}`
+            - `contactinfo.html` - This will show the content from the `ContactModel` where will will access the data `{{user.related_name.field_name_from_the_model}}`
+        - Profile edit:
+            - To edit profile we will create a form page `editprofile.html` where we will add all the model data there which we created for profile
+            - While editing we will access the data in our function as below
+                - `request.user.field_name_from_the_model` - This is for `CustomUserModel`
+                - `request.user.related_name.field_name_from_the_model` - Others model data will be update using this where related name is important to write
+                - Every time data is assigned we will save that
+    - Add job & Create job:
+        - To add job we will create a directory `recruiter` where we will create `addjob.html` form which will contain below fields:
+            - Job title
+            - Company name
+            - Address
+            - Company description
+            - Job description
+            - Qualification
+            - Salary information
+            - Deadline
+            - Designation
+            - Experience
+        - While creating `editjob.html` we will do the same
+        - Now to make it work we will do that same as others where a function,url etc will be created just like others
+    - Delete,Edit,View:
+        - This functionalities will be created based on `id` , by getting specific id we implement that
+    - Messages:
+        - To add messages we will create `messages.html` where message will be shown and it will be included where we need to show the message
+        - In `views.py` we will import the `messages` from `from django.contrib import messages`
+        - Now create a dictionaries of messages
+            ```python
+            all_messages ={
+                "signup_success":"Successfully signed up",
+                "signin_success":"Successfully signed in",
+                "name_warning":"Name can only contain letters",
+                "username_warning":"username can only contain letters and number",
+                "username_warning2":"Username Already exists",
+                "password_warning":"Password and confirm password not matched!",
+                "age_warning":"You need to be 18 Years or above",
+                "signin_warning":"Credentials not match",
+                "username_warning3":"Username does not exists",
+                "addjob_success":"Job added successfully",
+                "editjob_success":"Job updated successfully",
+                "logout_success":"Log out successful",
+            }
+            ```
+        - This message will be accessed using `messages.success(request,all_messages['signup_success'])`
 
 </details>
 

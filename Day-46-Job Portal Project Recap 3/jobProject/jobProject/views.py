@@ -15,7 +15,9 @@ all_messages ={
     "age_warning":"You need to be 18 Years or above",
     "signin_warning":"Credentials not match",
     "username_warning3":"Username does not exists",
+    "addjob_success":"Job added successfully",
     "editjob_success":"Job updated successfully",
+    "logout_success":"Log out successful",
 }
 
 def signup(request):
@@ -50,7 +52,7 @@ def signup(request):
         # checking name
         def name_check(*names):
             for name in names:
-                if not re.match(r"^[a-zA-Z]+$", name):
+                if not re.match(r"^[a-zA-Z\s]+$", name):
                     return False
             return True
         
@@ -155,32 +157,42 @@ def dashboard(request):
 
 def logoutpage(request):
     logout(request)
+    messages.success(request,all_messages['logout_success'])
     return redirect('signin')
 
+@login_required
 def profile(request):
     return render(request,'profile.html')
 
+@login_required
 def profileinfo(request):
     return render(request,'profileinfo.html')
 
+@login_required
 def recruiterprofile(request):
     return render(request,'recruiter/recruiterprofile.html')
 
+@login_required
 def seekerprofile(request):
     return render(request,'seeker/seekerprofile.html')
 
+@login_required
 def seekereducation(request):
     return render(request,'seeker/seekereducation.html')
 
+@login_required
 def seekerworkex(request):
     return render(request,'seeker/seekerworkex.html')
 
+@login_required
 def basicinfo(request):
     return render(request,'basicinfo.html')
 
+@login_required
 def contactinfo(request):
     return render(request,'contactinfo.html')
 
+@login_required
 def editprofile(request):
     if request.method == "POST":
         profile_photo = request.FILES.get("profile_photo")
@@ -256,6 +268,7 @@ def editprofile(request):
                 return redirect('profile')
     return render(request,'editprofile.html')
 
+@login_required
 def addjob(request):
     if request.method == "POST":
         job_title = request.POST.get('job_title')
@@ -284,9 +297,11 @@ def addjob(request):
             created_by=current_user,
         )
         job.save()
+        messages.success(request,all_messages['addjob_success'])
         return redirect('dashboard')
     return render(request,'recruiter/addjob.html')
 
+@login_required
 def viewalljob(request):
     current_user = request.user
     job = AddJobModel.objects.all()
@@ -295,11 +310,13 @@ def viewalljob(request):
     }
     return render(request,'viewalljob.html',jobDict)
 
+@login_required
 def deletejob(request,jobid):
     job = AddJobModel.objects.get(id = jobid)
     job.delete()
     return redirect('dashboard')
 
+@login_required
 def editjob(request,jobid):
     job = AddJobModel.objects.get(id = jobid)
     jobDict={
@@ -337,19 +354,10 @@ def editjob(request,jobid):
         return redirect('dashboard')
     return render(request,'recruiter/editjob.html',jobDict)
 
+@login_required
 def viewsinglejob(request,jobid):
     job =AddJobModel.objects.get(id=jobid)
     jobDict={
         'job':job
     }
     return render(request,'viewsinglejob.html',jobDict)
-
-
-
-
-
-
-
-
-
-
