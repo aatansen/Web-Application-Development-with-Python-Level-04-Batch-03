@@ -10618,6 +10618,16 @@ Which of the following creates a list in Python?
             }
             ```
         - This message will be accessed using `messages.success(request,all_messages['signup_success'])`
+    - Change Password:
+        - To change password we will create a `changepassword.html` form and include below field
+            - Current Password
+            - New Password
+            - Confirm New Password
+        - Just like other this page will be rendered and create the url
+        - Now in function we will first check the current password with logged in user password using `check_password`
+        - Then we will check if New Password and Confirm New Password is same or not
+        - If both are same then we will change the password by setting the password to the current user: `request.user.set_password(new_password)` then save it `request.user.save()`
+        - Now as password change it will auto log out in order to prevent it we can use `update_session_auth_hash` which is imported from `from django.contrib.auth` and to use it we update the current user session `update_session_auth_hash(request,request.user)` and show the success message
 
 </details>
 

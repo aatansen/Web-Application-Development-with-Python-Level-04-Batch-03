@@ -2,6 +2,7 @@
 
 {% block content %}
     <div class="profile-info">
+        {% include 'messages.html' %}
         <h3>Profile picture:</h3>
         <img src="/{{user.profilePhoto}}" width="100px" alt="">
         <div class="button-group">

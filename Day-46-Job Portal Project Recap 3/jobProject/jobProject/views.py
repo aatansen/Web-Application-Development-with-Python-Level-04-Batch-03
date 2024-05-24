@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from jobApp.models import CustomUserModel,RecruiterProfileModel,SeekerProfileModel,SeekerEducationModel,SeekerWorkExModel,BasicInfoModel,ContactModel,AddJobModel
 import re
 all_messages ={
@@ -18,6 +19,9 @@ all_messages ={
     "addjob_success":"Job added successfully",
     "editjob_success":"Job updated successfully",
     "logout_success":"Log out successful",
+    "password_change_success":"Password change successful",
+    "password_change_warning1":"New and confirm password not matched!",
+    "password_change_warning2":"Current password not matched with database password!",
 }
 
 def signup(request):
@@ -267,6 +271,34 @@ def editprofile(request):
                     current_user.recruiterprofilemodel.save()
                 return redirect('profile')
     return render(request,'editprofile.html')
+
+@login_required
+def changepassword(request):
+    if request.method == "POST":
+        cu_password=request.POST.get('cu_password')
+        new_password=request.POST.get('new_password')
+        con_new_password=request.POST.get('con_new_password')
+        
+        # preserve data
+        context={
+            'cu_password':cu_password,
+            'new_password':new_password,
+            'con_new_password':con_new_password,
+        }
+        if check_password(cu_password,request.user.password):
+            if new_password == con_new_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                update_session_auth_hash(request,request.user)
+                messages.success(request,all_messages['password_change_success'])
+                return redirect('profile')
+            else:
+                messages.warning(request,all_messages['password_change_warning1'])
+                return render(request,'changepassword.html',context)
+        else:
+            messages.warning(request,all_messages['password_change_warning2'])
+            return render(request,'changepassword.html',context)
+    return render(request,'changepassword.html')
 
 @login_required
 def addjob(request):
