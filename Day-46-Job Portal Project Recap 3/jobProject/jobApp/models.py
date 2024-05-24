@@ -94,7 +94,7 @@ class AddJobModel(models.Model):
     job_description = models.TextField()
     qualification = models.CharField(max_length=100)
     salary_information = models.CharField(max_length=100)
-    deadline = models.DateField(auto_now_add=True)
+    deadline = models.DateField()
     designation = models.CharField(max_length=100)
     experience = models.CharField(max_length=100)
     

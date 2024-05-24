@@ -2,7 +2,21 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
+from django.contrib import messages
 from jobApp.models import CustomUserModel,RecruiterProfileModel,SeekerProfileModel,SeekerEducationModel,SeekerWorkExModel,BasicInfoModel,ContactModel,AddJobModel
+import re
+all_messages ={
+    "signup_success":"Successfully signed up",
+    "signin_success":"Successfully signed in",
+    "name_warning":"Name can only contain letters",
+    "username_warning":"username can only contain letters and number",
+    "username_warning2":"Username Already exists",
+    "password_warning":"Password and confirm password not matched!",
+    "age_warning":"You need to be 18 Years or above",
+    "signin_warning":"Credentials not match",
+    "username_warning3":"Username does not exists",
+    "editjob_success":"Job updated successfully",
+}
 
 def signup(request):
     if request.method == "POST":
@@ -19,6 +33,58 @@ def signup(request):
         bloodGroup = request.POST.get('bloodGroup')
         userType = request.POST.get('userType')
         
+        # Preserve data
+        context={
+            'first_name':first_name,
+            'last_name':last_name,
+            'username':username,
+            'password':password,
+            'confirmPassword':confirmPassword,
+            'age':age,
+            'gender':gender,
+            'city':city,
+            'country':country,
+            'bloodGroup':bloodGroup,
+            'userType':userType,
+        }
+        # checking name
+        def name_check(*names):
+            for name in names:
+                if not re.match(r"^[a-zA-Z]+$", name):
+                    return False
+            return True
+        
+        # checking username
+        def username_check(username):
+            existing_user = CustomUserModel.objects.filter(username=username).exists()
+            if existing_user:
+                return True
+            
+        # checking age
+        def age_check(age):
+            age=int(age)
+            if 18<=age<=100:
+                return True
+        
+        # checking city,country name
+        def country_city_check(*names):
+            for name in names:
+                if not re.match(r"^[a-zA-Z]+$", name):
+                    return False
+            return True
+
+        if not name_check(first_name,last_name):
+            messages.warning(request,all_messages['name_warning'])
+            return render(request,'signup.html',context)
+        if username_check(username):
+            messages.warning(request,all_messages['username_warning2'])
+            return render(request,'signup.html',context)
+        if not age_check(age):
+            messages.warning(request,all_messages['age_warning'])
+            return render(request,'signup.html',context)
+        if not country_city_check(city,country):
+            messages.warning(request,all_messages['name_warning'])
+            return render(request,'signup.html',context)
         if password==confirmPassword:
             user = CustomUserModel.objects.create_user(
                 profilePhoto=profilePhoto,
@@ -43,21 +109,36 @@ def signup(request):
             BasicInfoModel.objects.create(user=user)
             ContactModel.objects.create(user=user)
             user.save()
+            messages.success(request,all_messages['signup_success'])
             return redirect('signin')
+        else:
+            messages.warning(request,all_messages['password_warning'])
+            return render(request,"signup.html",context)
     return render(request,"signup.html")
 
 def signin(request):
     if request.method == "POST":
         username=request.POST.get('username')
         password=request.POST.get('password')
-        
+        context ={
+            'username':username,
+            'password':password,
+        }
         user = authenticate(
             username=username,
             password=password
         )
+        existing_user = CustomUserModel.objects.filter(username=username).exists()
+        if not existing_user:
+            messages.warning(request,all_messages['username_warning3'])
+            return render(request,'signin.html',context)
         if user:
             login(request,user)
+            messages.success(request,all_messages['signin_success'])
             return redirect('dashboard')
+        if not user:
+            messages.warning(request,all_messages['signin_warning'])
+            return render(request,'signin.html',context)
     return render(request,'signin.html')
 
 @login_required
@@ -236,7 +317,7 @@ def editjob(request,jobid):
         designation = request.POST.get('designation')
         experience = request.POST.get('experience')
         current_user = request.user
-        
+
         job = AddJobModel(
             id = jobid,
             job_title=job_title,
@@ -252,6 +333,7 @@ def editjob(request,jobid):
             created_by=current_user,
         )
         job.save()
+        messages.success(request,all_messages['editjob_success'])
         return redirect('dashboard')
     return render(request,'recruiter/editjob.html',jobDict)
 
