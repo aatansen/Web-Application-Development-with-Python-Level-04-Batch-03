@@ -10084,7 +10084,7 @@ Which of the following creates a list in Python?
 <details>
 <summary>Day-45-Python Day 16 Function Class & Object (20-05-2024)</summary>
 
-## Day 45 Topics
+## Day 45 Topics:
 - Python Day 15
     - Function recap
     - More usage of function
@@ -10199,7 +10199,7 @@ Which of the following creates a list in Python?
 <details>
 <summary>Day-46-Python Day 17 Recursion Lambda (21-05-2024)</summary>
 
-## Day 17 Topics
+## Day 46 Topics:
 - Python Day 17
     - Recursion
     - Recursion problem
@@ -10634,7 +10634,7 @@ Which of the following creates a list in Python?
 <details>
 <summary>Day-47-Python Day 18 Lambda, Class Object (23-05-2024)</summary>
 
-## Day 47 Topics
+## Day 47 Topics:
 - Python Day 18
   - Lambda
   - Tuple methods
@@ -10783,5 +10783,110 @@ Which of the following creates a list in Python?
   obj1.another()
   print(obj1)
   ```
+
+</details>
+
+<details>
+<summary>Day-48-Rest API Framework, Serializer (25-05-2024)</summary>
+
+## Day 48 Topics:
+- API
+- Serialization of API
+- Django Shell
+- Brainstorming
+- Task
+
+### API
+- `API` : Application Programming Interface
+- `MVC` : Model View Controller
+- `MVT` : Model View Template where it is related to MVC --> Model, View(Template), Controller(View)
+- URL ⇔ Template ⇔ View(controller) ⇔ Database
+- Serializers is used to convert the data in api json format
+- API are made on models
+- Django Rest Framework Quickstart
+  - [django-rest-framework-quickstart](https://www.django-rest-framework.org/tutorial/quickstart/)
+
+### Serialization of API
+- Create project and app
+- Now by following the quickstart
+  - install django rest framework: `pip install djangorestframework`
+  - Include `'rest_framework'` in `settings.py` file `INSTALLED_APPS`
+    ```python
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'rest_framework',
+        'myApp',
+    ]
+    ```
+  - In `models.py` create a model:
+    ```python
+    from django.db import models
+
+    # Create your models here.
+    class StudentModel(models.Model):
+        name=models.CharField(max_length=100)
+        department=models.CharField(max_length=100)
+        email=models.EmailField(max_length=100)
+        
+        def __str__(self):
+            return self.name
+    ```
+  - Create `serializers.py` file in app directory
+  - Now add those code
+    ```python
+    from django.contrib.auth.models import Group, User
+    from rest_framework import serializers
+    from .models import StudentModel
+
+    class StudentSerializer(serializers.Serializer):
+        name=serializers.CharField(max_length=100)
+        department=serializers.CharField(max_length=100)
+        email=serializers.EmailField(max_length=100)
+
+        def create(self, validated_data):
+            return StudentModel.objects.create(**validated_data)
+
+        def update(self, instance, validated_data):
+            instance.name = validated_data.get('name', instance.email)
+            instance.department = validated_data.get('department', instance.content)
+            instance.email = validated_data.get('email', instance.created)
+            instance.save()
+            return instance
+    ```
+    - This code is from the [Django Rest Framework Documentation Quickstart](https://www.django-rest-framework.org/tutorial/quickstart/) and [Django Rest Framework Serializers](https://www.django-rest-framework.org/api-guide/serializers/#saving-instances)
+### Django Shell
+- Now using shell to create new object; First open shell
+- `py manage.py shell`
+  - `from myApp.models import StudentModel`
+  - `from myApp.serializers import StudentSerializer`
+  - `from rest_framework.renderers import JSONRenderer`
+  - `from rest_framework.parsers import JSONParser`
+  - `s=StudentModel(name="Tansen",department="CSE",email="aatansen@gmail.com")`
+  - `s.save()`
+Now let's view the data:
+- `serializer=StudentSerializer(s)`
+- `serializer.data`
+- `objs=StudentModel.objects.all()`
+- `objs`
+  ```python
+  for i in objs:
+    print(i.name,i.department,i.email)
+  ```
+
+### Brainstorming
+- In Dhaka City at Dhanmondi. There are 4 friends. They have to go home. They need to cross Dhanmondi bridge but bridge structure is weak. At a time 2 people can cross the road. For crossing the road they have a one torch. Torch can not be thrown
+- Ranajit can cross the bridge 1 min
+- Rejoine can cross the bridge 2 min
+- Mamun can cross the bridge 5 min
+- Jessica can cross the bridge 10 min
+    > Solve it in a lowest time (17 minutes)
+
+### Task
+- Preskool template setup in Django
 
 </details>
