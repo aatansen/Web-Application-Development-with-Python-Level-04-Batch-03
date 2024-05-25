@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from schoolProject.views import signinpage,signuppage,adminpage,teacherdashboard,studentdashboard,studentlist,studentadd,studentedit,studentadelete,teacherlist,teacheradd,studentdetails,teacherdetails,teacheredit,teacherdelete,departmentslist,departmentsadd,departmentsedit,departmentsdelete,subjectslist,subjectsedit,subjectsadd,subjectsdelete
+from schoolProject.views import signinpage,signuppage,adminpage,teacherdashboard,studentdashboard,studentlist,studentadd,studentedit,studentadelete,teacherlist,teacheradd,studentdetails,teacherdetails,teacheredit,teacherdelete,departmentslist,departmentsadd,departmentsedit,departmentsdelete,subjectslist,subjectsedit,subjectsadd,subjectsdelete,homepage,logoutpage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signuppage/',signuppage,name='signuppage'),
     path('',signinpage,name='signinpage'),
+    path('homepage',homepage,name='homepage'),
+    path('logoutpage',logoutpage,name='logoutpage'),
     path('adminpage/',adminpage,name='adminpage'),
     path('teacherdashboard/',teacherdashboard,name='teacherdashboard'),
     path('studentdashboard/',studentdashboard,name='studentdashboard'),

@@ -32,18 +32,19 @@
 <h1>Register</h1>
 <p class="account-subtitle">Access to our dashboard</p>
 
-<form action="https://preschool.dreamguystech.com/html-template/login.html">
+<form action="{% url 'signuppage' %}" method="POST">
+    {% csrf_token %}
 <div class="form-group">
-<input class="form-control" type="text" placeholder="Name">
+<input class="form-control" name="username" type="text" placeholder="Name">
 </div>
 <div class="form-group">
-<input class="form-control" type="text" placeholder="Email">
+<input class="form-control" name="email" type="text" placeholder="Email">
 </div>
 <div class="form-group">
-<input class="form-control" type="text" placeholder="Password">
+<input class="form-control" name="password" type="text" placeholder="Password">
 </div>
 <div class="form-group">
-<input class="form-control" type="text" placeholder="Confirm Password">
+<input class="form-control" name="cpassword" type="text" placeholder="Confirm Password">
 </div>
 <div class="form-group mb-0">
 <button class="btn btn-primary btn-block" type="submit">Register</button>
