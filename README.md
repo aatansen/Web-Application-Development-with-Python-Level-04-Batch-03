@@ -10890,3 +10890,35 @@ Now let's view the data:
 - Preskool template setup in Django
 
 </details>
+
+<details>
+<summary>Day-49-Preskool Project Template Mastering & CRUD (26-05-2024)</summary>
+
+## Day 49 Topics:
+- School project template mastering recap
+- fieldsets in `admin.py`
+
+### School project template mastering recap
+- > It is done similar way of resume project 
+
+### fieldsets in `admin.py`
+- We can modify the view of admin page 
+    ```python
+    from django.contrib import admin
+    from schoolApp.models import *
+    # Register your models here.
+
+    class CustomUserModelDisplay(admin.ModelAdmin):
+        list_display=['username','user_type']
+        search_fields=['username','user_type']
+        fieldsets=[
+        ( 
+                "User",
+                {"fields":["username","email","user_type"],}
+            ),
+        ]
+
+    admin.site.register(CustomUserModel,CustomUserModelDisplay)
+    ```
+
+</details>
