@@ -10922,3 +10922,30 @@ Now let's view the data:
     ```
 
 </details>
+
+<details>
+<summary>Day-50-Preskool Project Template Mastering & CRUD 02 (27-05-2024)</summary>
+
+## Day 50 Topics:
+- Python Day-19 
+    - Function Exam
+    - Class Object Exam
+- Preskool Project 02 Add student
+
+
+</details>
+
+<details>
+<summary>Day-51-Preskool Project Part 03 (28-05-2024)</summary>
+
+## Day 51 Topics:
+- Preskool Project Part 03
+    - Student and teacher relationship with department
+    - Department View
+    - Student count
+- Task
+
+### Task
+- Teacher Add,count
+
+</details>
