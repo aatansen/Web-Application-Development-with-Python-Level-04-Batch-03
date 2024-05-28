@@ -59,12 +59,12 @@
                                                     style="width: 72.0521px;">HOD</th>
                                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Started Year: activate to sort column ascending"
-                                                    style="width: 101.365px;">Started Year</th>
+                                                    aria-label="No of Students: activate to sort column ascending"
+                                                    style="width: 118.073px;">No of Students</th>
                                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                     rowspan="1" colspan="1"
                                                     aria-label="No of Students: activate to sort column ascending"
-                                                    style="width: 118.073px;">No of Students</th>
+                                                    style="width: 118.073px;">No of Teachers</th>
                                                 <th class="text-right sorting" tabindex="0"
                                                     aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                                     aria-label="Action: activate to sort column ascending"
@@ -73,27 +73,34 @@
                                         </thead>
                                         <tbody>
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">PRE1534</td>
+                                                
+                                                {% for i in departmentList %}
+                                                <td class="sorting_1">{{i.id}}</td>
                                                 <td>
                                                     <h2>
-                                                        <a>MCA</a>
+                                                        <a>{{i.Department_Name}}</a>
                                                     </h2>
                                                 </td>
-                                                <td>Lois&nbsp;A</td>
-                                                <td>1992</td>
-                                                <td>200</td>
+                                                <td>{{i.Head_of_Department}}</td>
+                                                <td>{{i.student_count}}</td>
+                                                <td>{{i.teacher_count}}</td>
                                                 <td class="text-right">
                                                     <div class="actions">
                                                         <a href="{% url 'departmentsedit' %}"
                                                             class="btn btn-sm bg-success-light mr-2">
                                                             <i class="fas fa-pen"></i>
                                                         </a>
-                                                        <a href="{% url 'departmentsdelete' %}" class="btn btn-sm bg-danger-light">
+                                                        
+                                                        {% if i.student_count == 0 %}
+                                                        <a href="{% url 'departmentsdelete' i.id %}" class="btn btn-sm bg-danger-light">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
+                                                        {% endif %}
+                                                            
                                                     </div>
                                                 </td>
                                             </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

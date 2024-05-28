@@ -42,7 +42,7 @@ urlpatterns = [
     path('departmentslist/',departmentslist,name='departmentslist'),
     path('departmentsadd/',departmentsadd,name='departmentsadd'),
     path('departmentsedit/',departmentsedit,name='departmentsedit'),
-    path('departmentsdelete/',departmentsdelete,name='departmentsdelete'),
+    path('departmentsdelete/<str:deptid>',departmentsdelete,name='departmentsdelete'),
     
     #_______________Subject-Pages_______________#
     path('subjectslist/',subjectslist,name='subjectslist'),
