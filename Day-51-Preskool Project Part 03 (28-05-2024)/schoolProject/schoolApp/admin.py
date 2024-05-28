@@ -16,4 +16,5 @@ admin.site.register(CustomUserModel,CustomUserModelDisplay)
 admin.site.register(StudentAddModel)
 admin.site.register(DepartmentAddModel)
 admin.site.register(SessionAddModel)
+admin.site.register(TeacherAddModel)
 

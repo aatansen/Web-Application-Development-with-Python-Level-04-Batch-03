@@ -64,5 +64,26 @@ class StudentAddModel(models.Model):
     Present_Address=models.TextField()
     Permanent_Address=models.TextField()
     
-
+class TeacherAddModel(models.Model):
+    user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE)
+    teacher_id=models.CharField(max_length=100)
+    name=models.CharField(max_length=100)
+    GENDER={
+        ("male","Male"),
+        ("female","Female"),
+        ("others","Others"),
+    }
+    gender=models.CharField(max_length=100,choices=GENDER)
+    mobile=models.CharField(max_length=100)
+    joining_date=models.DateField()
+    QUALIFICATION={
+        ("bsc","BSc. in CSE"),
+        ("msc","MSc. in CSE"),
+    }
+    qualification=models.CharField(max_length=100,choices=QUALIFICATION)
+    experience=models.CharField(max_length=100)
+    myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)
+    profile_image=models.ImageField(upload_to='static/teacher_img')
+    present_address=models.CharField(max_length=100)
+    permanent_address=models.CharField(max_length=100)
     

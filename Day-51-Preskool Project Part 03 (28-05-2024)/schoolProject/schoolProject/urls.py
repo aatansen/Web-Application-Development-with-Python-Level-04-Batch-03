@@ -28,7 +28,7 @@ urlpatterns = [
     path('teacheradd/',teacheradd,name='teacheradd'),
     path('teacherdetails/',teacherdetails,name='teacherdetails'),
     path('teacheredit/',teacheredit,name='teacheredit'),
-    path('teacherdelete/',teacherdelete,name='teacherdelete'),
+    path('teacherdelete/<str:teaUser>',teacherdelete,name='teacherdelete'),
 
     #_______________Student-Pages_______________#
     path('studentdashboard/',studentdashboard,name='studentdashboard'),
