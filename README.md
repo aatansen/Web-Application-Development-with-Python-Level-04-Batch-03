@@ -10949,3 +10949,322 @@ Now let's view the data:
 - Teacher Add,count
 
 </details>
+
+<details>
+<summary>Day-56-Rest API Framework, Serializer 02 (03-06-2024)</summary>
+
+### Task Solution:
+- Initial setup
+- Working with model serializers
+- Creating Object using Shell
+- Class based view
+- Update / Delete objects
+
+### Initial setup
+- Install Django & Django Rest Framework in virtual environment
+    - `pip install django djangorestframework`
+- Create Project & App
+- `django-admin startproject myProject`
+    - `cd myProject`
+    - `py manage.py startapp myApp`
+    - In `settings.py` add app name `myApp` and `rest_framework` in `INSTALLED_APPS`
+        ```python
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'rest_framework',
+            'myApp'
+        ]
+        ```
+- Create model in `models.py` 
+    ```python
+    from django.db import models
+
+    class StudentModel(models.Model):
+        name=models.CharField(max_length=100)
+        dept=models.CharField(max_length=100)
+        city=models.CharField(max_length=100)
+        def __str__(self):
+            return self.name
+    ```
+- Register the model in `admin.py`
+    ```python
+    from django.contrib import admin
+    from .models import *
+    # Register your models here.
+    admin.site.register(StudentModel)
+    ```
+- Migrate the database
+    - `py manage.py makemigrations`
+    - `py manage.py migrate  `
+- Create superuser
+    - `py manage.py createsuperuser`
+
+### Working with model serializers
+- Create a file `serializers.py` in app directory
+    - Go to [django-rest-framework-serialization documentation](https://www.django-rest-framework.org/tutorial/1-serialization/#using-modelserializers) and copy the code snippet
+        ```python
+        class SnippetSerializer(serializers.ModelSerializer):
+            class Meta:
+                model = Snippet
+                fields = ['id', 'title', 'code', 'linenos', 'language', 'style']
+        ```
+    - In the copied code snippet `serializers` import is missing which must be imported
+        - `from rest_framework import serializers`
+    - Here `class SnippetSerializer` will be modified as our model which is student--> `class StudentModelSerializer` 
+    - `model = Snippet` will be modified to `model = StudentModel`
+    - `fields` attribute will be modified to our model one which is `fields = ['id', 'name', 'dept', 'city']`
+    - After modify we will be our serializer as below
+        ```python
+        from rest_framework import serializers
+        from .models import *
+
+        class StudentModelSerializer(serializers.ModelSerializer):
+            class Meta:
+                model = StudentModel
+                fields = ['id', 'name', 'dept', 'city']
+        ```
+
+### Creating Object using Shell
+- Now we will create object using shell
+    - Go to terminal/cmd and start the shell
+        - `py manage.py shell`
+    - Import `StudentModel`
+        - `from myApp.models import StudentModel`
+    - Creating object
+        - `obj=StudentModel()`
+    - Now let's assign value in created object's model attribute
+        ```shell
+        obj.name="Tansen" 
+        obj.dept="CSE"
+        obj.city="Dhaka"
+        ```
+    - Finally save it
+        - `obj.save()`
+        > We can create object in my ways
+    - Now simply enter object name and enter `obj` we can see the created object
+    - To delete an object we can do `obj.delete()`
+    - Also we can view it in the admin panel
+    - We can view the serializers too using `repr()`
+        ```shell
+        from myApp.serializers import StudentModelSerializer
+        s = StudentModelSerializer()
+        print(repr(s))
+        ```
+- Now let's view the serializer in browser
+    - Go to [django-rest-framework-writing-regular-django-views-using-our-serializer documentation](https://www.django-rest-framework.org/tutorial/1-serialization/#writing-regular-django-views-using-our-serializer) and copy the code snippet to `views.py` in app directory
+        ```python
+        from django.shortcuts import render
+        from django.http import HttpResponse, JsonResponse
+        from django.views.decorators.csrf import csrf_exempt
+        from rest_framework.parsers import JSONParser
+        from .models import StudentModel
+        from .serializers import StudentModelSerializer
+
+        @csrf_exempt
+        def snippet_list(request):
+            """
+            List all code snippets, or create a new snippet.
+            """
+            if request.method == 'GET':
+                snippets = Snippet.objects.all()
+                serializer = SnippetSerializer(snippets, many=True)
+                return JsonResponse(serializer.data, safe=False)
+
+            elif request.method == 'POST':
+                data = JSONParser().parse(request)
+                serializer = SnippetSerializer(data=data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return JsonResponse(serializer.data, status=201)
+                return JsonResponse(serializer.errors, status=400)
+        ```
+        - In this code snippet all we have to do is replace the model and serializer name. Here is the modified one
+        ```python
+        from django.shortcuts import render
+        from django.http import HttpResponse, JsonResponse
+        from django.views.decorators.csrf import csrf_exempt
+        from rest_framework.parsers import JSONParser
+        from .models import StudentModel
+        from .serializers import StudentModelSerializer
+
+        @csrf_exempt
+        def StudentApiView(request):
+            """
+            List all code snippets, or create a new snippet.
+            """
+            if request.method == 'GET':
+                snippets = StudentModel.objects.all()
+                serializer = StudentModelSerializer(snippets, many=True)
+                return JsonResponse(serializer.data, safe=False)
+
+            elif request.method == 'POST':
+                data = JSONParser().parse(request)
+                serializer = StudentModelSerializer(data=data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return JsonResponse(serializer.data, status=201)
+                return JsonResponse(serializer.errors, status=400)
+        ```
+    - Now create url path in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from myApp.views import StudentApiView
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('StudentApiView/',StudentApiView,name='StudentApiView')
+        ]
+        ```
+        - Now we can view it in `http://127.0.0.1:8000/StudentApiView/` route
+- Class based view
+    - Go to [django-rest-framework-class-based-view documentation](https://www.django-rest-framework.org/tutorial/3-class-based-views/#tutorial-3-class-based-views) and copy the code snippet to `views.py` in app directory
+        ```python
+        from snippets.models import Snippet
+        from snippets.serializers import SnippetSerializer
+        from django.http import Http404
+        from rest_framework.views import APIView
+        from rest_framework.response import Response
+        from rest_framework import status
+
+        class SnippetList(APIView):
+            """
+            List all snippets, or create a new snippet.
+            """
+            def get(self, request, format=None):
+                snippets = Snippet.objects.all()
+                serializer = SnippetSerializer(snippets, many=True)
+                return Response(serializer.data)
+
+            def post(self, request, format=None):
+                serializer = SnippetSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        ```
+        - Similarly in this code snippet all we have to do is replace the model and serializer name. Here is the modified one
+        ```python
+        from .models import StudentModel
+        from .serializers import StudentModelSerializer
+        from django.http import Http404
+        from rest_framework.views import APIView
+        from rest_framework.response import Response
+        from rest_framework import status
+
+
+        class StudentApiView2(APIView):
+            """
+            List all snippets, or create a new snippet.
+            """
+            def get(self, request, format=None):
+                snippets = StudentModel.objects.all()
+                serializer = StudentModelSerializer(snippets, many=True)
+                return Response(serializer.data)
+
+            def post(self, request, format=None):
+                serializer = StudentModelSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        ```
+    - Now add url in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from myApp.views import StudentApiView,StudentApiView2
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('StudentApiView/',StudentApiView,name='StudentApiView'),
+            path('StudentApiView2/',StudentApiView2.as_view(),name='StudentApiView2'),
+        ]
+        ```
+    - Now we can view it in `http://127.0.0.1:8000/StudentApiView2/` route
+
+- Update, Delete 
+    - Go to [django-rest-framework-class-based-view-update-delete documentation](https://www.django-rest-framework.org/tutorial/3-class-based-views/#rewriting-our-api-using-class-based-views) and copy the code snippet to `views.py` in app directory
+        ```python
+        class SnippetDetail(APIView):
+            """
+            Retrieve, update or delete a snippet instance.
+            """
+            def get_object(self, pk):
+                try:
+                    return Snippet.objects.get(pk=pk)
+                except Snippet.DoesNotExist:
+                    raise Http404
+
+            def get(self, request, pk, format=None):
+                snippet = self.get_object(pk)
+                serializer = SnippetSerializer(snippet)
+                return Response(serializer.data)
+
+            def put(self, request, pk, format=None):
+                snippet = self.get_object(pk)
+                serializer = SnippetSerializer(snippet, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            def delete(self, request, pk, format=None):
+                snippet = self.get_object(pk)
+                snippet.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        ```
+        - Also in this code snippet all we have to do is replace the model and serializer name. Here is the modified one
+        ```python
+        class StudentUpdateDelete(APIView):
+            """
+            Retrieve, update or delete a snippet instance.
+            """
+            def get_object(self, pk):
+                try:
+                    return StudentModel.objects.get(pk=pk)
+                except StudentModel.DoesNotExist:
+                    raise Http404
+
+            def get(self, request, pk, format=None):
+                snippet = self.get_object(pk)
+                serializer = StudentModelSerializer(snippet)
+                return Response(serializer.data)
+
+            def put(self, request, pk, format=None):
+                snippet = self.get_object(pk)
+                serializer = StudentModelSerializer(snippet, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            def delete(self, request, pk, format=None):
+                snippet = self.get_object(pk)
+                snippet.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        ```
+        - Now add url in `urls.py`
+        ```python
+        from django.contrib import admin
+        from django.urls import path
+        from myApp.views import StudentApiView,StudentApiView2,StudentUpdateDelete
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('StudentApiView/',StudentApiView,name='StudentApiView'),
+            path('StudentApiView2/',StudentApiView2.as_view(),name='StudentApiView2'),
+            path('StudentUpdateDelete/<int:pk>',StudentUpdateDelete.as_view(),name='StudentUpdateDelete'),
+        ]
+        ```
+        - Here we can see `StudentUpdateDelete/<int:pk>` has `pk` which is private key, as we are updating/deleting we need specific `id` to do that
+        - Now we can update/delete in `http://127.0.0.1:8000/StudentUpdateDelete/1` route
+            > Here pk which is id is important and it need to be valid
+> Similarly we will create 4 more to complete the task
+
+</details>
