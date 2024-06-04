@@ -11268,3 +11268,232 @@ Now let's view the data:
 > Similarly we will create 4 more to complete the task
 
 </details>
+
+<details>
+<summary>Day-57-Rest API Framework, Serializer 03 (04-06-2024)</summary>
+
+## Day 57 Topics:
+- API endpoint
+  - Using shell
+  - function based
+  - Class based
+  - Mixins
+- Mixins
+- API Authentication
+    - Authentication
+        - Token
+        - Cookies
+        - Email,SMS verification
+        - OTP
+        - Session
+### API endpoint
+- Using shell
+- function based
+- Class based
+    > Covered in previous day
+
+### Mixins
+- Documentation: https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-mixins
+- Generic view: https://www.django-rest-framework.org/api-guide/generic-views/
+    > Django’s generic views... were developed as a shortcut for common usage patterns
+
+- To use mixins , Go to : [django-rest-framework-mixins documentation](https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-mixins) and copy the code snippet
+    ```python
+    from snippets.models import Snippet
+    from snippets.serializers import SnippetSerializer
+    from rest_framework import mixins
+    from rest_framework import generics
+
+    class SnippetList(mixins.ListModelMixin,
+                    mixins.CreateModelMixin,
+                    generics.GenericAPIView):
+        queryset = Snippet.objects.all()
+        serializer_class = SnippetSerializer
+
+        def get(self, request, *args, **kwargs):
+            return self.list(request, *args, **kwargs)
+
+        def post(self, request, *args, **kwargs):
+            return self.create(request, *args, **kwargs)
+    ```
+    - Modify the model and serializer name, Here is the modified code:
+    ```python
+    from .models import StudentModel
+    from .serializers import StudentModelSerializer
+    from rest_framework import mixins
+    from rest_framework import generics
+
+    class StudentList(mixins.ListModelMixin,
+                    mixins.CreateModelMixin,
+                    generics.GenericAPIView):
+        queryset = StudentModel.objects.all()
+        serializer_class = StudentModelSerializer
+
+        def get(self, request, *args, **kwargs):
+            return self.list(request, *args, **kwargs)
+
+        def post(self, request, *args, **kwargs):
+            return self.create(request, *args, **kwargs)
+    ```
+    - Now add the url in `urls.py`
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from myApp.views import StudentList,StudentDetail
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('studentlist/',StudentList.as_view(),name='StudentList'),
+    ]
+    ```
+- Update / Delete using mixins
+  - Go to [django-rest-framework-mixins documentation](https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-mixins) and copy the code snippet
+    ```python
+    class SnippetDetail(mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        generics.GenericAPIView):
+        queryset = Snippet.objects.all()
+        serializer_class = SnippetSerializer
+
+        def get(self, request, *args, **kwargs):
+            return self.retrieve(request, *args, **kwargs)
+
+        def put(self, request, *args, **kwargs):
+            return self.update(request, *args, **kwargs)
+
+        def delete(self, request, *args, **kwargs):
+            return self.destroy(request, *args, **kwargs)
+    ```
+    - Modify the model and serializer name, Here is the modified code:
+    ```python
+    class StudentDetail(mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        generics.GenericAPIView):
+        queryset = StudentModel.objects.all()
+        serializer_class = StudentModelSerializer
+
+        def get(self, request, *args, **kwargs):
+            return self.retrieve(request, *args, **kwargs)
+
+        def put(self, request, *args, **kwargs):
+            return self.update(request, *args, **kwargs)
+
+        def delete(self, request, *args, **kwargs):
+            return self.destroy(request, *args, **kwargs)
+    ```
+    - Add url in `urls.py`
+    ```python
+    from django.contrib import admin
+    from django.urls import path
+    from myApp.views import StudentList,StudentDetail
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('studentlist/',StudentList.as_view(),name='StudentList'),
+        path('StudentDetail/<int:pk>',StudentDetail.as_view(),name='StudentDetail'),
+    ]
+    ```
+### API Authentication:
+- API Authentication documentation: [API Authentication](https://www.django-rest-framework.org/api-guide/authentication/) 
+- Go to [django-rest-framework-setting-the-authentication documentation](https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme) and copy the code snippet
+    ```python
+    from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+    from rest_framework.permissions import IsAuthenticated
+    from rest_framework.response import Response
+    from rest_framework.views import APIView
+
+    class ExampleView(APIView):
+        authentication_classes = [SessionAuthentication, BasicAuthentication]
+        permission_classes = [IsAuthenticated]
+
+        def get(self, request, format=None):
+            content = {
+                'user': str(request.user),  # `django.contrib.auth.User` instance.
+                'auth': str(request.auth),  # None
+            }
+            return Response(content)
+    ```
+    - From this snippet we will copy the import of `SessionAuthentication`, `BasicAuthentication` and `IsAuthenticated`
+    - And add the below code in our own view class
+        ```python
+        authentication_classes = [SessionAuthentication, BasicAuthentication]
+        permission_classes = [IsAuthenticated]
+        ```
+    - Final modified code will be
+        ```python
+        from django.shortcuts import render
+        from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+        from rest_framework.permissions import IsAuthenticated
+
+        # Create your views here.
+        from .models import StudentModel
+        from .serializers import StudentModelSerializer
+        from rest_framework import mixins
+        from rest_framework import generics
+
+        class StudentList(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        generics.GenericAPIView):
+            queryset = StudentModel.objects.all()
+            serializer_class = StudentModelSerializer
+            authentication_classes = [SessionAuthentication, BasicAuthentication]
+            permission_classes = [IsAuthenticated]
+
+            def get(self, request, *args, **kwargs):
+                return self.list(request, *args, **kwargs)
+
+            def post(self, request, *args, **kwargs):
+                return self.create(request, *args, **kwargs)
+        ```
+- Authentication Token
+    - Add `rest_framework.authtoken` in `settings.py`
+        ```python
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'rest_framework',
+            'rest_framework.authtoken',
+            'myApp',
+        ]
+        ```
+    - Now migrate it `py manage.py migrate`
+    - Now go to : [django-rest-framework-token-authentication documentation](https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication)
+    - Import `from rest_framework.authentication import TokenAuthentication`
+    - Add `authentication_classes = [TokenAuthentication]` and `permission_classes = [IsAuthenticated]` inside class; Here is the modified class
+        ```python
+        from django.shortcuts import render
+        from rest_framework.authentication import SessionAuthentication, BasicAuthentication,TokenAuthentication 
+        from rest_framework.permissions import IsAuthenticated
+
+        # Create your views here.
+        from .models import StudentModel
+        from .serializers import StudentModelSerializer
+        from rest_framework import mixins
+        from rest_framework import generics
+
+        class StudentList(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        generics.GenericAPIView):
+            queryset = StudentModel.objects.all()
+            # serializer_class = StudentModelSerializer
+            # authentication_classes = [SessionAuthentication, BasicAuthentication]
+            authentication_classes = [TokenAuthentication]
+            permission_classes = [IsAuthenticated]
+
+            def get(self, request, *args, **kwargs):
+                return self.list(request, *args, **kwargs)
+
+            def post(self, request, *args, **kwargs):
+                return self.create(request, *args, **kwargs)
+        ```
+    - Now we can assign an user under token in admin page
+    - To test it we can use [Postman](https://www.postman.com/) or [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
+    - Add `Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b` in Thunder Client header and then send the request
+
+</details>
