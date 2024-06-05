@@ -35,6 +35,7 @@ div {
 <body>
 
 <div>
+  {% include 'common/messages.html' %}
   <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="fname">Username</label>
@@ -63,7 +64,7 @@ div {
     </select>
     
     <label for="lname">Profile Picture</label>
-    <input type="file" id="lname" name="profile_picture" required>
+    <input type="file" id="lname" name="profile_picture"  accept="image/jpeg, image/png" required>
 
     <br><br>
     <label for="lname">Email</label>
