@@ -98,15 +98,23 @@ def addjob(request):
     return render(request,'recruiter/addjob.html')
 
 def viewjob(request):
+    # change apply button for seeker when already applied 
     jobs = JobModel.objects.all()
+    job_filtered=[]
+    for i in jobs:
+        already_applied=ApplyJobModel.objects.filter(applicant=request.user,applied_job=i)
+        job_filtered.append(
+            (i,already_applied),
+        )
     jobDict={
-        'jobs':jobs
+        'job_filtered':job_filtered
     }
     return render(request,'common/viewjob.html',jobDict)
 
 @login_required
 def editjob(request,jobid):
     jobs=JobModel.objects.get(id=jobid)
+    print(f"This is the selected job: {jobs.company_logo}")
     jobDict={
         'jobs':jobs
     }
@@ -119,7 +127,8 @@ def editjob(request,jobid):
         qualifications=request.POST.get('qualifications')
         deadline=request.POST.get('deadline')
         salary=request.POST.get('salary')
-        
+
+        print(f"This is my image: {company_logo}")
         if company_logo:
             job=JobModel(
                 id=jobid,

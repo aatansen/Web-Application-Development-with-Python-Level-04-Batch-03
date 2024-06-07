@@ -60,7 +60,7 @@
     
     </style>
 <div class="job-cards">
-  {% for i in jobs %}
+  {% for i,already_applied in job_filtered %}
   <div class="job-card">
     {% include 'common/messages.html' %}
     <h3>Job Title</h3>
@@ -88,20 +88,15 @@
         <button class="edit-btn"><a href="{% url 'editjob' i.id %}">Edit</a></button>
         <button class="delete-btn"><a href="{% url 'deletejob' i.id %}">Delete</a></button>
         
-        {% elif user.user_type == 'seeker' %}
+        {% elif user.user_type == 'seeker' and not already_applied %}
         
         <button class="edit-btn"><a href="{% url 'applyjob' i.id %}">Apply job</a></button>
         
-        {% if already_applied %}
-            <p>Already applied</p>
+        {% elif already_applied %}
+        <button class="edit-btn"><a href="{% url 'appliedjob' %}">You Already applied for this job, Check applied job page</a></button>
+  
         {% endif %}
-        
-        {% else %}
-        
-        <button class="edit-btn"><a href="{% url 'signup' %}">Please signup to apply</a></button>
-        
-        {% endif %}
-        
+
     </div>
   </div>
   {% endfor %}
