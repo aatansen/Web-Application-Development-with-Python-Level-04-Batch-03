@@ -37,6 +37,7 @@ div {
 <h3>Sigin page</h3>
 
 <div>
+  {% include 'common/messages.html' %}
   <form action="{% url 'signin' %}" method="POST">
     {% csrf_token %}
     <label for="fname">Username</label>

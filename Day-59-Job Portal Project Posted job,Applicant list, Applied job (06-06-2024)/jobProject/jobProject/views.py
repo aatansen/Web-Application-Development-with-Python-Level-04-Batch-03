@@ -6,6 +6,12 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from jobApp.models import *
 
+
+message_box={
+    'signup_success':'Signup successful!',
+    'password_warning':'Password and confirm not matched!',
+}
+
 def signup(request):
     if request.method=="POST":
         username=request.POST.get('username')
@@ -16,7 +22,7 @@ def signup(request):
         gender=request.POST.get('gender')
         profile_picture=request.FILES.get('profile_picture')
         email=request.POST.get('email')
-        
+
         if password==confirm_password:
             user = CustomUserModel.objects.create_user(
                 username=username,
@@ -33,7 +39,11 @@ def signup(request):
             if user_type=="seeker":
                 user_tp=SeekerModel.objects.create(seeker_user=user)
             user_tp.save()
+            messages.success(request,message_box['signup_success'])
             return redirect('signin')
+        else:
+            messages.success(request,message_box['password_warning'])
+            return redirect('signup')
     return render(request,'common/signup.html')
 
 def signin(request):
@@ -45,6 +55,7 @@ def signin(request):
             username=username,
             password=password,
         )
+        print(f"The auth user is: {user}")
         if user:
             login(request,user)
             return redirect('dashboard')
@@ -155,6 +166,7 @@ def profileinfo(request):
 
 @login_required
 def basicprofile(request):
+    
     return render(request,'profile/basicprofile.html')
 
 @login_required
