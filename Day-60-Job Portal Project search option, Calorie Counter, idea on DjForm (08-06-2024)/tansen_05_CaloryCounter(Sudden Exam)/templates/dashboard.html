@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h3>User: {{user}}</h3>
+<p>Required Calory: {{user_info.result}}</p>
+
+<table border="2">
+    <tr>
+        <th>Date</th>
+        <th>item name</th>
+        <th>calory consume</th>
+    </tr>
+    {% for item in food_item %}
+    <tr>
+        <td>{{item.created_at}}</td>
+        <td>{{item.item_name}}</td>
+        <td>{{item.calory_consume}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+
+{% endblock content %}
+    

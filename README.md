@@ -11497,3 +11497,113 @@ Now let's view the data:
     - Add `Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b` in Thunder Client header and then send the request
 
 </details>
+
+<details>
+<summary>Day-58-Job Portal Project Apply Job (05-06-2024)</summary>
+
+## Day 58 Topics:
+- Job portal project recap
+  - Apply job
+- Task
+
+### Task
+- Recruiter page update
+  - List of Applied applicant
+  - Reject and send message button to that applicant
+
+</details>
+
+<details>
+<summary>Day-59-Job Portal Project Posted job,Applicant list, Applied job (06-06-2024)</summary>
+
+### Day 59 Topics:
+- Job portal project
+  - Recruiter profile
+    - Posted job
+    - Applicant list
+  - Seeker Profile
+    - Applied job
+
+</details>
+
+<details>
+<summary>Day-60-Job Portal Project search option, Calorie Counter Exam, Idea on Django Form (08-06-2024)</summary>
+
+## Day 60 Topics:
+- Job Portal Project
+  - When to user GET,POST
+  - Search option
+    - Using multi field search by `Q`
+    - Using only one field filter search
+- Calorie Counter Project (Sudden Exam)
+- Idea on Django form
+
+### When to user GET,POST
+- `POST`: When it is used must use csrf-token, while getting the value must use if condition to get value in views
+- `GET`: It will show in the url. No need to use csrf or if condition to get the value in views
+- In search option we will use `GET`
+
+### Search option
+- Get a search bar from [external source](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_searchbar3) and replace the old navbar with this one. Search will work on `viewjob.html` page
+- Now let's setup it
+    - After adding search option in navbar we need to show the search result
+    - As it will work on `viewjob` page and the result of search is just filtered version of that page
+    - So we will create a `searchpage.html` and copy the content of `viewjob.html` page
+
+  - Using only one field filter search
+    - In the `searchpage` function in `views.py` we will filtered the search query and return the result in dictionary
+      ```python
+      def searchpage(request):
+
+          # search option 
+          search=request.GET.get('search')
+          jobs = JobModel.objects.filter(job_title=search)
+
+          # change apply button for seeker when already applied 
+          job_filtered=[]
+          for i in jobs:
+              already_applied=ApplyJobModel.objects.filter(applicant=request.user,applied_job=i)
+              job_filtered.append(
+                  (i,already_applied),
+              )
+          jobDict={
+              'job_filtered':job_filtered
+          }
+          return render(request,'common/searchpage.html',jobDict)
+      ```
+- Using multi field search by `Q`
+    - In the `searchpage` function in `views.py` we will filtered the search query using `Q` and return the result in dictionary
+        ```python
+        def searchpage(request):
+            
+            # search option 
+            search=request.GET.get('search')
+
+            jobs = JobModel.objects.filter(
+                Q(job_title__icontains=search)|
+                Q(deadline__icontains=search)|
+                Q(created_by__username__icontains=search)
+                )
+            # change apply button for seeker when already applied 
+            job_filtered=[]
+            for i in jobs:
+                already_applied=ApplyJobModel.objects.filter(applicant=request.user,applied_job=i)
+                job_filtered.append(
+                    (i,already_applied),
+                )
+            jobDict={
+                'job_filtered':job_filtered
+            }
+            return render(request,'common/searchpage.html',jobDict)
+        ```
+        - Here we use `Q` which is imported by `from django.db.models import Q`
+
+### Calorie Counter Project (Sudden Exam)
+- In this project BMR was calculated
+- A dashboard to show the result
+
+### Idea on Django form
+- Initial idea was given on django form
+- Tomorrow this topic will be covered briefly
+
+</details>

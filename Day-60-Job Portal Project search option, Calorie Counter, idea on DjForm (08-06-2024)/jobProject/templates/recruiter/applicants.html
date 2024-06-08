@@ -1,0 +1,75 @@
+{% extends 'profile/baseprofile.html' %}
+
+
+{% block proinfo %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1 style="text-align: center;">List of applicants</h1>
+<h1 style="text-align: center;">{{job.job_title}}</h1>
+
+
+<table id="customers">
+  <tr>
+    <th>ID</th>
+    <th>Applicant name</th>
+    <th>Applied job</th>
+    <th>Skills</th>
+    <th>Qualifications</th>
+    <th>Resume</th>
+    <th>Action</th>
+    <th>Current status</th>
+  </tr>
+  {% for i in applicants %}
+
+  <tr>
+      <td>{{i.id}}</td>
+      <td>{{i.applicant}}</td>
+      <td>{{i.applied_job.job_title}}</td>
+      <td>{{i.skills}}</td>
+      <td>{{i.qualifications}}</td>
+      <td><a href="{{i.resume.url}}" target="_blank">{{i.applicant}} Resume</a></td>
+      <td>
+        <a href="{% url 'jobreject' i.id %}">Reject</a>
+        <a href="{% url 'jobcallinterview' i.id %}">Call for interview</a>
+        
+      </td>
+      <td>{{i.status}}</td>
+    </tr>
+    
+    {% endfor %}
+</table>
+
+
+</body>
+</html>
+
+{% endblock proinfo %}
