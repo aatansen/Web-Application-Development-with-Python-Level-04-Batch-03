@@ -11607,3 +11607,189 @@ Now let's view the data:
 - Tomorrow this topic will be covered briefly
 
 </details>
+
+<details>
+<summary>Day-61-TodoList Project using Django Form, Admin page modify, Meta class in model (09-06-2024)</summary>
+
+## Day 61 Topics:
+- Meta class in model
+- Admin page modify
+- Django Form
+- Task
+- Solution
+
+### Meta class in model
+- Using meta class we can modify the model
+    ```python
+    class CustomUserModel(AbstractUser):
+        city=models.CharField(max_length=100,null=True)
+        profile_pic=models.ImageField(upload_to='media/profile_pic',null=True)
+        USER_TYPE={
+            ('user','User'),
+            ('admin','Admin'),
+        }
+        user_type=models.CharField(choices=USER_TYPE,max_length=100,null=True)
+        
+        class Meta:
+            ordering=['username']
+            verbose_name = 'Custom User Model'
+            db_table='my_todo_list_table'
+            unique_together = ["email", "username"]
+            verbose_name_plural = "Custom User Models"
+        
+        def __str__(self):
+            return self.username
+    ```
+    - Here we modified the model using `Meta` which refers to `metadata`
+    - More modification option can be found in [Official Django Documentation in Model Meta options](https://docs.djangoproject.com/en/5.0/ref/models/options/)
+
+### Admin page modify
+- In `admin.py` we can modify the view of a model table i admin page
+    ```python
+    class CustomUserModelDisplay(admin.ModelAdmin):
+        list_display=['username','email','user_type','city']
+        search_fields=['username','email','user_type','city']
+        
+        fieldsets=[
+            (
+                "This is my title",
+                {
+                'fields':['username','email','password']
+                }
+            ),
+            (
+                "Advanced options",
+                {
+                    'classes':['collapse'],
+                    'fields':['first_name','last_name','city','profile_pic','user_type']
+                }
+            )
+        ]
+
+    admin.site.register(CustomUserModel,CustomUserModelDisplay)
+    ```
+    - Here `list_display` is used to show the main table with those fields
+    - `search_fields` is used to search through those fields
+    - `fieldsets` modified the view of a single table data. Inside that only those will be shown
+    - More modification option can be found in [Official Django Documentation in The Django admin site](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#discovery-of-admin-files)
+
+### Django Form
+- Create a `forms.py` file inside project directory
+- Utilize Django's built-in `UserCreationForm` and `AuthenticationForm` to create custom forms.
+- Define the required fields inside the `Meta` class for each form.
+    ```python
+    from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+    from django import forms
+    from todoApp.models import *
+
+    class CustomUserCreationForm(UserCreationForm):
+        class Meta:
+            model=CustomUserModel
+            fields=UserCreationForm.Meta.fields+('city','profile_pic','user_type','email','first_name','last_name')
+            
+    class CustomUserAuthenticationForm(AuthenticationForm):
+        class Meta:
+            model=CustomUserModel
+            fields=['username','password']
+    ```
+    - Here two custom form created
+    - First one is for signup `CustomUserCreationForm` which is created using `UserCreationForm`
+    - Second one is for signin `CustomUserAuthenticationForm` which is created using `AuthenticationForm`
+- Now in `views.py`
+    ```python
+    def signup(request):
+        if request.method == 'POST':
+            form = CustomUserCreationForm(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request, all_messages['signup_success'])
+                return redirect('signin')
+        else:
+            form = CustomUserCreationForm()
+
+        return render(request, 'common/signup.html', {'form': form})
+    ```
+    - Here in signup function we used `CustomUserCreationForm` where `request.POST`,`request.FILES`; It is important to write `request.FILES` otherwise images/files won't be received
+    - Then we check if form is valid or not
+    - In the else part we return the empty form `CustomUserCreationForm()` where user will fillup
+- Add the url in `urls.py`
+- Now the `signup.html`
+    ```python
+    <div>
+    <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{form}}
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+    ```
+    - Here we write the `{{form}}` which is returned by the `signup` function in `view.py`
+    - If any field missing here then we can add that in `forms.py` Meta class
+        ```python
+        class CustomUserCreationForm(UserCreationForm):
+            class Meta:
+                model=CustomUserModel
+                fields=UserCreationForm.Meta.fields+('city','profile_pic','user_type','email','first_name','last_name')
+        ```
+        - Make sure those fields present in model, otherwise won't work
+- Similarly we created the `signin.html` form, where `views.py` function is `signin`
+    ```python
+    def signin(request):
+        if request.method=="POST":
+            form=CustomUserAuthenticationForm(request,data=request.POST)
+            if form.is_valid():
+                user=form.get_user()
+                login(request,user)
+                messages.success(request,all_messages['signin_success'])
+                return redirect('dashboard')
+        else:
+            form=CustomUserAuthenticationForm()
+        return render(request,'common/signin.html',{'form':form})
+    ```
+    - Here everything is similar except `CustomUserAuthenticationForm(request,data=request.POST)`; Where `data=request.POST` is used to get the data and then check if it is valid or not
+    - If it is valid then we get the user data from `form.get_user()` and login using `login(request,user)`
+
+### Task
+- Create Signup / Signin normal form
+- Signup / Signin with Django form
+
+### Solution
+- [Signup / Signin normal form](#signup--signin-normal-form)
+- [Signup / Signin with Django form](#signup--signin-with-django-form)
+- [Fields in signup form](#fields-in-signup-form)
+- [Fields in signin form](#fields-in-signin-form)
+
+### Signup / Signin normal form
+- Get a form template from [external source](https://www.w3schools.com/css/css_form.asp)
+- Modify it according to required fields
+- Get the form data and add those data in the model
+
+### Signup / Signin with Django form
+- Create a `forms.py` file inside project directory
+- Utilize Django's built-in `UserCreationForm` and `AuthenticationForm` to create custom forms.
+- Define the required fields inside the `Meta` class for each form.
+
+> After successful signin it will redirect to dashboard
+
+> Also include logout, success/warning messages functionalities
+
+### Fields in signup form
+- First Name
+- Last Name
+- Username
+- Email
+- Password
+- Confirm Password
+- City
+- Profile Picture
+- User Type
+    - User
+    - Admin
+
+### Fields in signin form
+- Username
+- Password
+
+</details>
