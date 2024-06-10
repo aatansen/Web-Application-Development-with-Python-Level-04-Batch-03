@@ -11793,3 +11793,99 @@ Now let's view the data:
 - Password
 
 </details>
+
+<details>
+<summary>Day-62-TodoList Project Django Form CRUD Operations (10-06-2024)</summary>
+
+## Day 62 (10-09-2024) Topics:
+
+- [Model form](#model-form)
+    - [Category form](#category-form)
+    - [Task form with Widgets & Labels](#task-form-with-widgets--labels)
+- [CRUD Operation using django form](#crud-operation-using-django-form)
+
+### Model form
+- Previously `forms.py` file we used `UserCreationForm` & `AuthenticationForm`
+- Now to use Model Form we have to import forms by `from django import forms`
+
+### Category form
+- And create the required form for example category form
+    ```python
+    class CustomCategoryForm(forms.ModelForm):
+        class Meta:
+            model=CategoryModel
+            fields=['category_name']
+    ```
+    - Here only one field `category_name` this will be shown in html form page
+
+### Task form with Widgets & Labels
+- Now in task form we will use widgets to modify the css & labels to modify the field name in html page
+    ```python
+    class CustomTaskForm(forms.ModelForm):
+        class Meta:
+            model=TaskModel
+            fields=['task_name','task_description','task_status','task_priority','due_date','completed_date']
+            
+            widgets={
+                'due_date':forms.DateInput(attrs={'type':'date', 'class':'date-field'}),
+                'completed_date':forms.DateInput(attrs={'type':'date','class':'date-field'}),
+                'task_description':forms.Textarea(attrs={'type':'text','class':'textarea-field'})
+            }
+            
+            labels={
+                "task_description":"Enter description",
+        }
+    ```
+    - Here `widgets` & `labels` used to modify the field
+
+### CRUD Operation using django form
+- Create operation
+    ```python
+    @login_required
+    def addcategory(request):
+        if request.method=="POST":
+            current_user=request.user
+            form=CustomCategoryForm(request.POST)
+            if form.is_valid():
+                category=form.save(commit=False)
+                category.user=current_user
+                category.save()
+                return redirect('categorylist')
+        else:
+            form=CustomCategoryForm()
+        return render(request,'user/addcategory.html',{'form':form})
+    ```
+- Read Operation
+    ```python
+    @login_required
+    def categorylist(request):
+        cat=CategoryModel.objects.all()
+        return render(request,'user/categorylist.html',{'cat':cat})
+    ```
+- Update Operation
+    ```python
+    @login_required
+    def editcategory(request,catid):
+        cat=get_object_or_404(CategoryModel,id=catid)
+        if request.method=="POST":
+            form=CustomCategoryForm(request.POST,instance=cat)
+            if form.is_valid():
+                form.save()
+                return redirect('categorylist')
+        else:
+            form=CustomCategoryForm(instance=cat)
+        return render(request,'user/editcategory.html',{'form':form,'cat':cat})
+    ```
+- Delete Operation
+    ```python
+    @login_required
+    def categorydel(request,catid):
+        cat=get_object_or_404(CategoryModel,id=catid)
+        cat.delete()
+        return redirect('categorylist')
+    ```
+
+
+
+
+</details>
