@@ -1,0 +1,8 @@
+{% extends 'profile/baseprofile.html' %}
+{% block proinfo %}
+<!-- Seeker Other info  -->
+<h3>Skill Sets:</h3>
+<p>{{user.seekermodel.skill_sets}}</p>
+<h3>Resume:</h3>
+<a href="{{user.seekermodel.resume.url}}" target="_blank">Resume</a>
+{% endblock proinfo %}

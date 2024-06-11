@@ -11885,7 +11885,115 @@ Now let's view the data:
         return redirect('categorylist')
     ```
 
+</details>
 
+<details>
+<summary>Day-63-Django Form Exam on Job Portal Project (11-06-2024)</summary>
 
+## Day 63 (11-06-2024) Topics:
+
+- [Lab Exam on Job Portal Project using Django Form](#lab-exam)
+- [Notes](#notes)
+### Lab Exam
+> Question: Develop a job portal using Django. In this project, you have to incorporate multiple recruiters and multiple job seekers from different domains on one platform. A single recruiter can post multiple job openings using his/her account. A single job seeker is able to manage their account using a profile manager. 
+
+Job Specification Information:
+- Create a project named Name_ID_JobPortal
+- Develop a registration page using the following fields
+    - Username
+    - Display name
+    - Email
+    - Password
+    - Confirm Password
+    - User type
+- Develop a login page using the following fields
+    - Username
+    - Password
+- Develop a profile creation page based on user type
+    - Recruiters
+        - Company information
+    - Job Seekers 
+        - Skills set
+        - Resume upload option
+- Develop a job posting page for recruiters
+    - Title
+    - Number of openings
+    - Category
+    - Job description
+    - Skills
+- Develop a job applying page for Job Seeker
+    - Search
+- Develop a skill matching page for both recruiters and job seeker 
+    - Dashboard for skill matched job
+- Requirements:
+    - Create a Django Project
+        - Naming Convention: Name_ID_Project
+    - Create a Database
+    - Store the Database
+
+### Notes
+- Previously when using normal form and the `SeekerModel` or `RecruiterModel` has relationship with `CustomUserModel` we used this approach to assign the created custom user
+    ```python
+    def signup(request):
+        if request.method=="POST":
+            username=request.POST.get('username')
+            password=request.POST.get('password')
+            confirm_password=request.POST.get('confirm_password')
+            user_type=request.POST.get('user_type')
+            city=request.POST.get('city')
+            gender=request.POST.get('gender')
+            profile_picture=request.FILES.get('profile_picture')
+            email=request.POST.get('email')
+
+            if password==confirm_password:
+                user = CustomUserModel.objects.create_user(
+                    username=username,
+                    password=password,
+                    user_type=user_type,
+                    city=city,
+                    gender=gender,
+                    profile_picture=profile_picture,
+                    email=email,
+                )
+                user.save()
+                if user_type=="recruiter":
+                    user_tp=RecruiterModel.objects.create(recruiter_user=user)
+                if user_type=="seeker":
+                    user_tp=SeekerModel.objects.create(seeker_user=user)
+                user_tp.save()
+                messages.success(request,message_box['signup_success'])
+                return redirect('signin')
+            else:
+                messages.success(request,message_box['password_warning'])
+                return redirect('signup')
+        return render(request,'common/signup.html')
+    ```
+    - In this code snippet we first save data in `CustomUserModel` then assign that in other model according to their type
+
+- Now in Django Form, there are few modification
+    ```python
+    def signup(request):
+        if request.method=='POST':
+            form=CustomUserForm(request.POST)
+            if form.is_valid():
+                user=form.save(commit=False)
+                user.save()
+                print(user.user_type)
+                if user.user_type == 'recruiter':
+                    user = RecruiterModel.objects.create(
+                        user=user
+                    )
+                else:
+                    user = SeekerModel.objects.create(
+                        user=user
+                    )
+                return redirect('signin')
+        else:
+            form=CustomUserForm()
+        return render(request,'common/signup.html',{'form':form})
+    ```
+    - Here we did the same first save the user where we get it before commit `user=form.save(commit=False)` then check `user_type` this checking can be done in another way like `form.cleaned_data['user_type']` 
+    - `commit=False` allows us to manipulate the data before actually saving it to the database. It's useful when we need to perform some additional logic or set additional attributes on the model instance before saving it.
+    - After checking `user_type` we assign the user according to their type in the model
 
 </details>
