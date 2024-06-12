@@ -21,8 +21,14 @@ urlpatterns = [
     # profile 
     path('baseprofile/',baseprofile,name='baseprofile'),
     path('basicinfo/',basicinfo,name='basicinfo'),
+    
+    # seeker 
     path('seekerotherinfo/',seekerotherinfo,name='seekerotherinfo'),
+    path('appliedjob/',appliedjob,name='appliedjob'),
+    
+    # recruiter 
     path('recruiterotherinfo/',recruiterotherinfo,name='recruiterotherinfo'),
+    path('postedjob/',postedjob,name='postedjob'),
 
     
     

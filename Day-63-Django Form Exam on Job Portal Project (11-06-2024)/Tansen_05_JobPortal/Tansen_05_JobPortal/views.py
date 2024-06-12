@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,get_list_or_404
 from .forms import *
 from django.contrib.auth import login,logout
 from django.contrib.auth.decorators import login_required
@@ -107,6 +107,18 @@ def seekerotherinfo(request):
 
 def recruiterotherinfo(request):
     return render(request,'profile/recruiterotherinfo.html')
+
+def appliedjob(request):
+    current_user=request.user
+    # applied_job=get_list_or_404(JobApplyModel,applicant=current_user)
+    applied_job=JobApplyModel.objects.filter(applicant=current_user)
+    return render(request,'seeker/appliedjob.html',{'applied_job':applied_job})
+
+@login_required
+def postedjob(request):
+    current_user=request.user
+    jobs=JobModel.objects.filter(created_by=current_user)
+    return render(request,'recruiter/postedjob.html',{'jobs':jobs})
 
 
 
