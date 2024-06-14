@@ -11791,6 +11791,106 @@ Which of the following is true about instance variables and class variables?
 </details>
 
 <details>
+<summary>Day-52-Preskool 04 Session correction,add,view,count (29-05-2024)</summary>
+
+## Day 52 (29-05-2024) Topics:
+- [Student model session correction](#student-model-session-correction)
+- [Session year add,view,count](#session-year-addviewcount)
+
+### Student model session correction 
+- Create `SessionAddModel` model separately like department model
+    ```python
+    class SessionAddModel(models.Model):
+        Session_Year=models.CharField(max_length=100)
+        created_at=models.DateField(auto_now=True)
+        updated_at=models.DateField(auto_now_add=True)
+        
+        def __str__(self):
+            return self.Session_Year
+    ```
+- Now in student model make a relationship with session model
+    ```python
+    class StudentAddModel(models.Model):
+        mySessionYear=models.ForeignKey(SessionAddModel,on_delete=models.DO_NOTHING)
+        user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE)
+        myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)
+        Student_Id=models.CharField(max_length=100)
+        GENDER={
+            ("male","Male"),
+            ("female","Female"),
+            ("others","Others"),
+        }
+        Gender=models.CharField(max_length=100,choices=GENDER)
+        SECTION={
+            ('1','A'),
+            ('2','B'),
+            ('3','C'),
+            ('4','D'),
+        }
+        Section=models.CharField(choices=SECTION,max_length=100)
+        Date_of_Birth=models.DateField()
+        Religion=models.CharField(max_length=100)
+        Mobile_Number=models.CharField(max_length=100)
+        Student_Image=models.ImageField(upload_to='static/Student_Image')
+        Father_Name=models.CharField(max_length=100)
+        Father_Occupation=models.CharField(max_length=100)
+        Father_Mobile=models.CharField(max_length=100)
+        Father_Email=models.EmailField(max_length=100)
+        Mother_Name=models.CharField(max_length=100)
+        Mother_Occupation=models.CharField(max_length=100)
+        Mother_Mobile=models.CharField(max_length=100)
+        Mother_Email=models.EmailField(max_length=100)
+        Present_Address=models.TextField()
+        Permanent_Address=models.TextField()
+    ```
+    - Here `mySessionYear=models.ForeignKey(SessionAddModel,on_delete=models.DO_NOTHING)` is used to creating the relationship
+
+### Session year add,view,count
+- Add session 
+    ```python
+    def sessionadd(request):
+        if request.method=="POST":
+            Session_Year=request.POST.get('Session_Year')
+            session=SessionAddModel.objects.create(
+                Session_Year=Session_Year
+            )
+            session.save()
+            return redirect('sessionlist')
+            
+        return render(request,'sessions/sessionadd.html')
+    ```
+    - In this `sessionadd` function we add the session in our session model
+- View and count the student in that session
+    ```python
+    def sessionlist(request):
+        session=SessionAddModel.objects.all()
+        session_list=[]
+        
+        for i in session:
+            student_count=StudentAddModel.objects.filter(mySessionYear=i).count()
+            
+            session_list.append(
+                {
+                    'id':i.id,
+                    'student_count':student_count,
+                    'Session_Year':i.Session_Year,
+                }
+            )
+            
+        
+        sessionDict={
+            'session_list':session_list,
+        }
+        
+        return render(request,'sessions/sessionlist.html',sessionDict)
+    ```
+    - In `sessionlist` function we count the total student in that session where we used filter and count method
+    - It is possible due to relationship we created in our model
+    - Finally we return the dictionary in `sessionlist.html` page to view it
+
+</details>
+
+<details>
 <summary>Day-56-Rest API Framework, Serializer 02 (03-06-2024)</summary>
 
 ### Task Solution:
