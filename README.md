@@ -11997,3 +11997,31 @@ Job Specification Information:
     - After checking `user_type` we assign the user according to their type in the model
 
 </details>
+
+<details>
+<summary>Day-64-TodoList Project Using Django Form & Normal bootstrap form (12-06-2024)</summary>
+
+## Day 64 (12-06-2024) Topics:
+- [Complete TodoList Project](#complete-todolist-project)
+- [Recreate TodoList Project using Bootstrap](#recreate-todolist-project-using-bootstrap)
+
+### Complete TodoList Project
+- Functionalities
+    - There are two types of user
+        - User
+        - Admin
+- User
+    - User can create / update task
+    - Can create categories
+    - Can mark task as completed / in-completed
+    - A dashboard to see progress
+- Admin
+    - Admin can see and delete the user
+
+### Recreate TodoList Project using Bootstrap
+- Bootstrap version 5 is used
+- It will be done using normal form 
+- It is still in progress
+- Only Sign-up/in completed
+
+</details>
