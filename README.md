@@ -10924,7 +10924,7 @@ Now let's view the data:
 </details>
 
 <details>
-<summary>Day-50-Preskool Project Template Mastering & CRUD 02 (27-05-2024)</summary>
+<summary>Day-50-Python Day 19 Exam, Preskool Project 02 Add student (27-05-2024)</summary>
 
 ## Day 50 (27-05-2024) Topics:
 - Python Day-19
@@ -11644,17 +11644,149 @@ Which of the following is true about instance variables and class variables?
 </details>
 
 <details>
-<summary>Day-51-Preskool Project Part 03 (28-05-2024)</summary>
+<summary>Day-51-Preskool 03 Subject,Student,Teacher,department (28-05-2024)</summary>
 
-## Day 51 Topics:
-- Preskool Project Part 03
-    - Student and teacher relationship with department
-    - Department View
-    - Student count
-- Task
+## Day 51 (28-05-2024) Topics:
+- [In Subject add section of html page add department field](#in-subject-add-section-of-html-page-add-department-field)
+- [Add Student department field correction](#add-student-department-field-correction)
+- [Teacher Model relationship with Department model](#teacher-model-relationship-with-department-model)
+- [Student - Teacher count in Department dashboard](#student---teacher-count-in-department-dashboard)
+- [Task](#task)
+
+### In Subject add section of html page add department field
+- In pre-template there are many unnecessary fields. So we need to clean some of the fields
+- As per requirement we need to add the department field in subject section
+
+### Add Student department field correction
+- In add student model Make foreign key relationship with department model
+- As department model will be in student model so need to create the department model first
+- Create `DepartmentAddModel`
+    ```python
+    class DepartmentAddModel(models.Model):
+        Department_Name=models.CharField(max_length=100)
+        Head_of_Department=models.CharField(max_length=100)
+        created_at=models.DateField(auto_now=True)
+        updated_at=models.DateField(auto_now_add=True)
+        
+        def __str__(self):
+            return self.Department_Name
+    ```
+- Now create `StudentAddModel`
+    ```python
+    class StudentAddModel(models.Model):
+        user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE)
+        First_Name=models.CharField(max_length=100)
+        Last_Name=models.CharField(max_length=100)
+        Email=models.EmailField(max_length=100)
+        Student_Id=models.CharField(max_length=100)
+        GENDER={
+            ("male","Male"),
+            ("female","Female"),
+            ("others","Others"),
+        }
+        Gender=models.CharField(max_length=100,choices=GENDER)
+        SECTION={
+            ('1','A'),
+            ('2','B'),
+            ('3','C'),
+            ('4','D'),
+        }
+        Section=models.CharField(choices=SECTION,max_length=100)
+        Date_of_Birth=models.DateField()
+        Religion=models.CharField(max_length=100)
+        Mobile_Number=models.CharField(max_length=100)
+        SESSION_OPTION={
+            ('1',"Summer Session"),
+            ('2',"Fall Session"),
+            ('3',"Spring Session"),
+        }
+        Session_Year=models.CharField(choices=SESSION_OPTION,max_length=100)
+        Student_Image=models.ImageField(upload_to='static/Student_Image')
+        Father_Name=models.CharField(max_length=100)
+        Father_Occupation=models.CharField(max_length=100)
+        Father_Mobile=models.CharField(max_length=100)
+        Father_Email=models.EmailField(max_length=100)
+        Mother_Name=models.CharField(max_length=100)
+        Mother_Occupation=models.CharField(max_length=100)
+        Mother_Mobile=models.CharField(max_length=100)
+        Mother_Email=models.EmailField(max_length=100)
+        Present_Address=models.TextField()
+        Permanent_Address=models.TextField()
+        
+        myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)
+        
+        def __str__(self):
+            return self.First_Name
+    ```
+    - Here `myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)` is the ForeignKey relationship with department model
+    - `on_delete=models.DO_NOTHING` means when department is deleted student won't be effected
+
+[⬆️ Go to top](#day-51-28-05-2024-topics)
+
+### Teacher Model relationship with Department model
+- Create `TeacherAddModel` model
+    ```python
+    class TeacherAddModel(models.Model):
+        user=models.OneToOneField(CustomUserModel,on_delete=models.CASCADE)
+        teacher_id=models.CharField(max_length=100)
+        name=models.CharField(max_length=100)
+        GENDER={
+            ("male","Male"),
+            ("female","Female"),
+            ("others","Others"),
+        }
+        gender=models.CharField(max_length=100,choices=GENDER)
+        mobile=models.CharField(max_length=100)
+        joining_date=models.DateField()
+        QUALIFICATION={
+            ("bsc","BSc. in CSE"),
+            ("msc","MSc. in CSE"),
+        }
+        qualification=models.CharField(max_length=100,choices=QUALIFICATION)
+        experience=models.CharField(max_length=100)
+        myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)
+        profile_image=models.ImageField(upload_to='static/teacher_img')
+        present_address=models.CharField(max_length=100)
+        permanent_address=models.CharField(max_length=100)
+    ```
+    - Here similarly we make a relationship with department model `myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)`
+
+[⬆️ Go to top](#day-51-28-05-2024-topics)
+
+### Student - Teacher count in Department dashboard
+- In `departmentslist` function we implement the count
+    ```python
+    def departmentslist(request):
+        department=DepartmentAddModel.objects.all()
+        departmentList=[]
+        for i in department:
+            student_count = StudentAddModel.objects.filter(myDepartment=i).count()
+            teacher_count = TeacherAddModel.objects.filter(myDepartment=i).count()
+            print(student_count)
+            
+            departmentList.append(
+                {
+                    'Department_Name':i.Department_Name,
+                    'Head_of_Department':i.Head_of_Department,
+                    'student_count':student_count,
+                    'teacher_count':teacher_count,
+                    'id':i.id,
+                }
+            )
+            
+        departmentDict={
+            'departmentList':departmentList,
+        }
+        return render(request,'department/departmentslist.html',departmentDict)
+    ```
+    - To count the number of student in that department we filter through each department and student model 
+    - Similar thing done while counting teacher in each department
+    - Note that we created a relationship earlier which helping us to do this
+
+[⬆️ Go to top](#day-51-28-05-2024-topics)
 
 ### Task
-- Teacher Add,count
+- Teacher Add and count
 
 </details>
 
