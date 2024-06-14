@@ -7,4 +7,5 @@
 <p>{{user.get_user_type_display}}</p>
 <h3>Email:</h3>
 <p>{{user.email}}</p>
+<button><a href="{% url 'editbasic' user.id %}">Edit basic</a></button>
 {% endblock proinfo %}

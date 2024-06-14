@@ -10,6 +10,14 @@ class CustomUserForm(UserCreationForm):
             'username':None,
         }
 
+class CustomUserEditForm(forms.ModelForm):
+    class Meta:
+        model=CustomUserModel
+        fields=('display_name','email',)
+        help_texts={
+            'username':None,
+        }
+
 class CustomUserAuthForm(AuthenticationForm):
     class Meta:
         model=CustomUserModel

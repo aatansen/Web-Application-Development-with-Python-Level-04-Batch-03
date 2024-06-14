@@ -64,11 +64,13 @@ def joblist(request):
     }
     return render(request,'common/joblist.html',jobDict)
 
+@login_required
 def deletejob(request,jobid):
     job=get_object_or_404(JobModel,id=jobid)
     job.delete()
     return redirect('joblist')
 
+@login_required
 def editjob(request,jobid):
     job=get_object_or_404(JobModel,id=jobid)
     if request.method=="POST":
@@ -80,6 +82,7 @@ def editjob(request,jobid):
         form=JobForm(instance=job)
     return render(request,'recruiter/editjob.html',{'form':form})
 
+@login_required
 def applyjob(request,jobid):
     # job=JobModel.objects.get(id=jobid)
     current_user=request.user
@@ -96,18 +99,24 @@ def applyjob(request,jobid):
         form=JobApplyForm()
     return render(request,'seeker/applyjob.html',{'form':form})
 
+@login_required
 def baseprofile(request):
     return render(request,'profile/baseprofile.html')
 
+@login_required
 def basicinfo(request):
     return render(request,'profile/basicinfo.html')
 
+@login_required
 def seekerotherinfo(request):
-    return render(request,'profile/seekerotherinfo.html')
+    user_info=SeekerModel.objects.get(user=request.user)
+    return render(request,'profile/seekerotherinfo.html',{'user_info':user_info})
 
+@login_required
 def recruiterotherinfo(request):
     return render(request,'profile/recruiterotherinfo.html')
 
+@login_required
 def appliedjob(request):
     current_user=request.user
     # applied_job=get_list_or_404(JobApplyModel,applicant=current_user)
@@ -120,6 +129,29 @@ def postedjob(request):
     jobs=JobModel.objects.filter(created_by=current_user)
     return render(request,'recruiter/postedjob.html',{'jobs':jobs})
 
+@login_required
+def editbasic(request,basicid):
+    basic=CustomUserModel.objects.get(id=basicid)
+    if request.method=="POST":
+        form=CustomUserEditForm(request.POST,instance=basic)
+        if form.is_valid():
+            form.save()
+            return redirect('basicinfo')
+    else:
+        form=CustomUserEditForm(instance=basic)
+    return render(request,'profile/editbasic.html',{'form':form,'basic':basic})
+
+@login_required
+def editseekerotherinfo(request,seekerid):
+    seeker=SeekerModel.objects.get(id=seekerid)
+    if request.method=="POST":
+        form=SeekerForm(request.POST,request.FILES,instance=seeker)
+        if form.is_valid():
+            form.save()
+            return redirect('seekerotherinfo')
+    else:
+        form=SeekerForm(instance=seeker)
+    return render(request,'profile/editseekerotherinfo.html',{'form':form,'seeker':seeker})
 
 
 

@@ -6,7 +6,6 @@
     <p>{{user.display_name}}</p>
     
     <button><a href="{% url 'basicinfo' %}">Basic Info</a></button>
-    <button><a href="">Edit Profile</a></button>
     
     {% if user.user_type == 'seeker' %}
     <button><a href="{% url 'seekerotherinfo' %}">Seeker Other Info</a></button>

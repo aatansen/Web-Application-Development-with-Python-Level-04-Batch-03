@@ -21,6 +21,8 @@ urlpatterns = [
     # profile 
     path('baseprofile/',baseprofile,name='baseprofile'),
     path('basicinfo/',basicinfo,name='basicinfo'),
+    path('editbasic/<str:basicid>',editbasic,name='editbasic'),
+    path('editseekerotherinfo/<str:seekerid>',editseekerotherinfo,name='editseekerotherinfo'),
     
     # seeker 
     path('seekerotherinfo/',seekerotherinfo,name='seekerotherinfo'),
