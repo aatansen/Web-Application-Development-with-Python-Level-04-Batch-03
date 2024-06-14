@@ -12025,3 +12025,87 @@ Job Specification Information:
 - Only Sign-up/in completed
 
 </details>
+
+<details>
+<summary>Day-65-Final Exam Suggestion (13-06-2024)</summary>
+
+## Day 65 (13-06-2024) Topics:
+- [Final Exam QnA Suggestion](#final-exam-qna-suggestion)
+- [Extra](#extra)
+
+### Final Exam QnA Suggestion
+- How to activate/deactivate python environment
+- How to create superuser
+- What Django app structure contains
+- By default what app contains
+- What admin.py used for
+- Task of each files in project/app; e.g:
+    - Task of `models.py`
+    - Task of `views.py`
+- How to setup static files
+- How `forms.py` worked
+- Where app installed
+- What Middleware used for
+- What template used for in settings.py
+- Where database can be changed
+- How to change timezone
+- How custom user permission granted
+- What `LOGIN_URL` used for
+- What is Django by default database
+- Why used `manage.py`
+- Which types of queries do we commonly use in Django? (all, filter, get, count, __icontains, __gt, distinct) 
+- Why used values in distinct (unique)
+- Explain why __ is imported
+- from where messages imported
+- Why used `login_required`
+- How many way you can create object in database
+    - Create
+    - Create user (only used in signup)
+    - After getting object with `id` then using dot
+    - Directly assign 
+- Why used request.POST (form will work)
+- Why used request.GET (form won't work, mainly used in search)
+- Why used update_session_auth_hash
+- How user password checked
+- Why `Q` is used
+- How data sent in template
+- When `request.FILES` used
+- Why authenticate used in signin (django used both auth and validation in authenticate)
+- When used `render`,`redirect`
+- Usage of `set_password`,`set_username`
+- Usage of Django built in user
+- Usage of `is_active`=True/False (used in email verification)
+- Usage of `is_authenticated`
+- Usage of `get_user`
+- usage of `check_password`,`set_password`,`update session`
+- How many parameter in `get_objects_or_404`
+- What is `exists()` used for and what the field will became after using it
+- Why `__icontains` used in search
+- How many relationship used in job apply and why
+- Usage of many to many
+- Looping in many to many : `for subject in student.subject.all` 
+- What is `class Meta` in `models.py`,`forms.py`
+- How can you reduce code repetition in Django templates?
+- Usage of `is_deleted` (it is default True)
+- Importance of virtual environment setup for Django.
+- Learn about django signal
+
+### Extra
+- Mandatory in custom user (`username`,`password`)
+- Remember to use method correctly (`.save()`, `.delete()`)
+- Use `print()` to find out bug/error
+- Regular expression practice: [regex101](https://regex101.com/)
+- Regular expression in url re_path: [Official docs](https://docs.djangoproject.com/en/5.0/topics/http/urls/#using-regular-expressions)
+- Go through Model [instances documentation](https://docs.djangoproject.com/en/5.0/ref/models/instances/)
+- Usage of [is_stuff](https://docs.djangoproject.com/en/5.0/ref/contrib/auth/)
+- Read through [Django Auth Documentation](https://docs.djangoproject.com/en/5.0/topics/auth/default/) more:  [here](https://docs.djangoproject.com/en/5.0/ref/contrib/auth/)
+- Search and read through: [Google search](https://www.google.com/search?q=interview+question+django) -  [Another Search](https://www.google.com/search?q=Django+100+interview+questions)
+    - [turing](https://www.turing.com/interview-questions/django) 
+    - [geeksforgeeks](https://www.geeksforgeeks.org/django-interview-questions/)
+    - [interviewbit](https://www.interviewbit.com/django-interview-questions/)
+    - [simplilearn](https://www.simplilearn.com/django-interview-questions-article)
+    - [anywhere](https://anywhere.epam.com/en/blog/django-interview-questions) 
+    - [edureka](https://www.edureka.co/blog/interview-questions/django-interview-questions/)
+    - [tealhq](https://www.tealhq.com/interview-questions/python-django-developer)
+
+</details>
