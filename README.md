@@ -11891,6 +11891,135 @@ Which of the following is true about instance variables and class variables?
 </details>
 
 <details>
+<summary>Day-53-Preskool 05 Subject add,view,count (30-05-2024)</summary>
+
+## Day 53 (30-05-2024) Topics:
+- [Subject Add,View](#subject-addview)
+  - Count per department how many subject
+- [Relationship](#relationship)
+  - One to many
+  - Many to one
+  - Foreign Key
+  - Many to many
+
+### Subject Add,View
+- Subject model
+  ```python
+  class SubjectModel(models.Model):
+      sub_id=models.CharField(max_length=100)
+      sub_name=models.CharField(max_length=100)
+      myDepartment=models.ForeignKey(DepartmentAddModel,on_delete=models.DO_NOTHING)
+      
+      def __str__(self):
+          return self.sub_name
+  ```
+  - Here we make a `ForeignKey` relationship with department
+
+- To add subject create `subjectsadd` function
+  ```python
+  def subjectsadd(request):
+      department=DepartmentAddModel.objects.all()
+      deptDict={
+          'department':department
+      }
+      
+      if request.method=="POST":
+          sub_id=request.POST.get('sub_id')
+          sub_name=request.POST.get('sub_name')
+          Department_ID=request.POST.get('Department_ID')
+          
+          dept=DepartmentAddModel.objects.get(id=Department_ID)
+          
+          subject=SubjectModel.objects.create(
+              sub_id=sub_id,
+              sub_name=sub_name,
+              myDepartment=dept,
+          )
+          subject.save()
+          return redirect('subjectslist')
+  ```
+  - Here after getting data from user we used `.create` to create that subject in the model and save it
+- To count and view the subject we loop through the department and count the subject in that specific department.
+  ```python
+  def departmentslist(request):
+      department=DepartmentAddModel.objects.all()
+      departmentList=[]
+      for i in department:
+          student_count = StudentAddModel.objects.filter(myDepartment=i).count()
+          teacher_count = TeacherAddModel.objects.filter(myDepartment=i).count()
+          subject_count = SubjectModel.objects.filter(myDepartment=i).count()
+          print(student_count)
+          
+          departmentList.append(
+              {
+                  'Department_Name':i.Department_Name,
+                  'Head_of_Department':i.Head_of_Department,
+                  'student_count':student_count,
+                  'teacher_count':teacher_count,
+                  'subject_count':subject_count,
+                  'id':i.id,
+              }
+          )
+          
+      departmentDict={
+          'departmentList':departmentList,
+      }
+      return render(request,'department/departmentslist.html',departmentDict)
+  ```
+  - Here we used filter which will filter out all the match result in the loop and after counting it we append it
+
+### Relationship
+- One to many:
+  - A university has many departments.
+  - A zoo has many animals.
+  - A company has many employees.
+  - A blog post can have many comments.
+  - A teacher teaches multiple students. 
+  - A manufacturer produces many products.
+  - A parent has many children.
+  - A manager oversees many employees.
+  - A country has many cities.
+  - A playlist contains many songs. 
+
+- Many to one:
+  - Many employees work for one CEO.
+  - Many students belong to one class.
+  - Many cities are in one country.
+  - Many tasks report to one project manager.
+  - Many products are manufactured by one company. 
+  - Many ingredients are used in one recipe.
+  - Many messages are sent to one recipient.
+  - Many tasks are assigned to one team leader.
+  - Many transactions are processed by one bank.
+  - Many purchases are made by one customer. 
+
+- Foreign Key:
+  - In a bookstore database, the 'author_id' in a 'books' table referencing the 'id' in an 'authors' table.
+  - In a school database, the 'teacher_id' in a 'students' table referencing the 'id' in a 'teachers' table.
+  - In a banking database, the 'account_holder_id' in a 'bank_accounts' table referencing the 'id' in a 'account_holders' table.
+  - In an e-commerce database, the 'category_id' in a 'products' table referencing the 'id' in a 'categories' table.
+  - In a hospital database, the 'doctor_id' in a 'patients' table referencing the 'id' in a 'doctors' table. 
+  - In a social media database, the 'user_id' in a 'posts' table referencing the 'id' in a 'users' table.
+  - In an inventory management system, the 'supplier_id' in a 'products' table referencing the 'id' in a 'suppliers' table.
+  - In a hotel reservation system, the 'room_type_id' in a 'rooms' table referencing the 'id' in a 'room_types' table.
+  - In a movie database, the 'director_id' in a 'movies' table referencing the 'id' in a 'directors' table.
+  - In a music streaming service database, the 'artist_id' in a 'songs' table referencing the 'id' in an 'artists' table. 
+
+- Many to many:
+  - A student can enroll in many courses, and a course can have many students.
+  - Actors can play in many movies, and movies can have many actors.
+  - A user can belong to many groups, and a group can have many users.
+  - A book can be categorized under multiple genres, and each genre can have multiple books.
+  - A recipe can have multiple ingredients, and an ingredient can be used in multiple recipes.
+  - A student can participate in many extracurricular activities, and an activity can have many students.
+  - Many authors can contribute to one anthology, and an author can contribute to many anthologies.
+  - A customer can order many products, and a product can be ordered by many customers.
+  - Many users can be part of one chat group, and a user can be part of many chat groups.
+  - A doctor can be associated with many patients, and a patient can have consultations with many doctors.
+
+</details>
+
+<details>
 <summary>Day-56-Rest API Framework, Serializer 02 (03-06-2024)</summary>
 
 ### Task Solution:
