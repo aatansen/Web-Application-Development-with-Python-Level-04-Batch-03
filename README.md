@@ -12020,6 +12020,54 @@ Which of the following is true about instance variables and class variables?
 </details>
 
 <details>
+<summary>Day-54-Job Portal Project Recap 04 Each field validation (01-06-2024)</summary>
+
+## Day 54 (01-06-2024) Topics:
+- Job Portal recap 04
+    - [Signup page each field validation](#signup-page-each-field-validation)
+
+### Signup page each field validation
+- Username validation pattern we used is `r'^[a-z0-9]+$'`
+    - This pattern means only accepts a to z lowercase alphabet and number
+    ```python
+    # username validate 
+    pattern = r'^[a-z0-9]+$'
+    if not re.match(pattern, username):
+        messages.warning(request,message_box['username_warning'])
+        return redirect('signup')
+    ```
+- Password validation pattern we used is `r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[a-zA-Z0-9@$!%*?&#]+$'`
+    - This long patterns contains many pattern inside it
+        - Contains at least one lowercase letter (`a-z`).
+        - Contains at least one uppercase letter (`A-Z`).
+        - Contains at least one digit (`0-9`).
+        - Contains at least one special character from the set `@$!%*?&#`.
+        - Consists solely of characters from the combined set of lowercase, uppercase letters, digits, and specified special characters.
+    - This is very hard combination of strong password checking pattern
+- City name validation pattern we used is `r'^[a-zA-Z]+$'`
+    - This pattern only accepts lowercase and uppercase letter for naming
+    ```python
+        # city name validate 
+        pattern = r'^[a-zA-Z]+$'
+        if not re.match(pattern, city):
+            messages.warning(request,message_box['city_warning'])
+            return redirect('signup')
+    ```
+- profile image validation we used size limit
+    ```python
+        # profile image validate 
+        max_size_bytes = 5 * 1024 * 1024
+        profile_picture.seek(0, 2)  # Move to the end of the file
+        file_size = profile_picture.tell()  # Get the current position, which is the file size
+        if file_size > max_size_bytes:
+            messages.warning(request, message_box['picture_warning'])
+            return redirect('signup')
+    ```
+    - It means only file which is less than 5mb will be accepted
+
+</details>
+
+<details>
 <summary>Day-56-Rest API Framework, Serializer 02 (03-06-2024)</summary>
 
 ### Task Solution:
