@@ -12068,6 +12068,59 @@ Which of the following is true about instance variables and class variables?
 </details>
 
 <details>
+<summary>Day-55-Summative Assessment 01 (02-06-2024)</summary>
+
+## Day 55 (02-06-2024) Topics:
+- [Summative Assessment 01](#summative-assessment-01)
+
+### Summative Assessment 01
+- **Project Name**: Job Portal Project
+    - **Authentication for both Recruiters and Job Seekers**
+        - **Task**: Create the registration and login functionalities for Recruiters and Job Seekers. Ensure secure password storage using hashing.
+        - **Requirements**:
+            - A registration form that collects username,password,Confirm Password and role(Recruiter or Job Seeker), City, Gender, Profile Picture and Email.
+            - A login form that verifies the credentials and starts a session. (Username and Password)
+            - Every user can logout from their portal. Without authentication they can't login.
+    - **Role-Based Access Control (RBAC)**
+        - **Task**: Implement role-based access control to differentiate between Recruiters and Job Seekers
+        - **Requirements**:
+            - Ensure Recruiter can create, read, update, and delete job postings.
+            - Ensure Job Seekers can only view job postings.
+    - **Create Job Posting Functionalities for Recruiters**
+        - **Task**: Allow Recruiters to create job postings
+        - **Requirements**:
+            - A form to collect job details such as Job title, Company Description, Company Logo, Company name, Company Location, Qualifications, Deadline and Salary.
+            - Store the job details in a database.
+    - **View Job Postings**
+        - **Task**: Implement a feature for all users (including unauthenticated visitors) to view job postings
+        - **Requirements**:
+            - Display a list of job postings with details like job title, description, salary, deadline and company name
+            - Ensure proper routing to handle unauthenticated access.
+    - **Profile Management**
+        - **Task**: Allow users to update their profile information
+        - **Requirements**:
+            - For Recruiters, include basic information and contact details.
+            - For Job Seekers, include basic information, educational qualifications and work experience must show as resume style
+    - **Password Change Functionality**
+        - **Task**: Implement the ability for users to change their password
+        - **Requirements**:
+            - Verify the old password before allowing a new password to be set.
+            - Ensure that the session remains active after the password is changed.
+    - **Display Posted Jobs in Recruiter Profile**
+        - **Task**: Display a list of jobs posted by the Recruiter on their profile page.
+        - **Requirements**:
+            - Fetch and display the job postings associated with the logged-in Recruiter.
+            - Ensure the Recruiter can view and manage their job posts from this page.
+    - **Job Seeker Profile with Education and Work Experience**
+        - **Task**: Allow Job Seekers to add and update their educational qualifications and work experience.
+        - **Requirements**: 
+            - Forms to add educational qualifications and work experience.
+            - Display this information on the Job Seeker's profile page.
+> Everything was implemented well but at the last point it was confusing to me to create separate model for seeker education and work experience which ruined the timing. Thus profile edit not implemented and final score I got 100/80
+
+</details>
+
+<details>
 <summary>Day-56-Rest API Framework, Serializer 02 (03-06-2024)</summary>
 
 ### Task Solution:
