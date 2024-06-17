@@ -12671,15 +12671,66 @@ Which of the following is true about instance variables and class variables?
 <details>
 <summary>Day-58-Job Portal Project Apply Job (05-06-2024)</summary>
 
-## Day 58 Topics:
+## Day 58 (05-06-2024) Topics:
 - Job portal project recap
-  - Apply job
-- Task
+  - [Apply job](#apply-job)
 
+### Apply job
+- First create `ApplyJobModel` model
+  ```python
+  class ApplyJobModel(models.Model):
+      applicant=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name='applicantinfo')
+      applied_job=models.ForeignKey(JobModel,on_delete=models.CASCADE)
+      skills=models.CharField(max_length=100)
+      resume = models.FileField(upload_to='media/seeker_resume')
+      seeker_profile_pic = models.ImageField(upload_to='media/seeker_profile_pic')
+      qualifications = models.TextField()
+      def __str__(self):
+          return self.applicant.username
+  ```
+  - Here we can see two model relationship.
+  - `applicant` for tracking who is applying
+  - `applied_job` to get the job which he apply
+- Now in `views.py` create `applyjob` function
+  ```python
+  @login_required
+  def applyjob(request,jobid):
+      job=get_object_or_404(JobModel,id=jobid)
+      jobDict={
+          'job':job
+      }
+      
+      already_applied=ApplyJobModel.objects.filter(applicant=request.user,applied_job=job).exists()
+      if already_applied:
+          messages.warning(request,"Already applied")
+          return redirect('viewjob')
+      
+      if request.method=="POST":
+          skills=request.POST.get('skills')
+          resume=request.FILES.get('resume')
+          seeker_profile_pic=request.FILES.get('seeker_profile_pic')
+          qualifications=request.POST.get('qualifications')
+          
+          job_apply=ApplyJobModel.objects.create(
+              skills=skills,
+              resume=resume,
+              seeker_profile_pic=seeker_profile_pic,
+              qualifications=qualifications,
+              applicant=request.user,
+              applied_job=job,
+          )
+          job_apply.save()
+          return redirect('viewjob')
+      jobDict['already_applied'] = already_applied
+      return render(request,'seeker/applyjob.html',jobDict)
+  ```
+  - Here if user already applied to a job it will show `Already applied` message
+  - `jobDict['already_applied'] = already_applied` is not working as expected so will find another way to do that
+  - The main target is when a job is already applied it will show the button already applied but we are returning the value in `applyjob.html` but we have to return that to `viewjob.html` page then it will work
 ### Task
-- Recruiter page update
+- Recruiter page upadte
   - List of Applied applicant
-  - Reject and send message button to that applicant
+  - Approved and send message button to that applicant
 
 </details>
 
