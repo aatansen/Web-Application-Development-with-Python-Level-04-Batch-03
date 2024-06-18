@@ -12123,7 +12123,7 @@ Which of the following is true about instance variables and class variables?
 <details>
 <summary>Day-56-Rest API Framework, Serializer 02 (03-06-2024)</summary>
 
-### Task Solution:
+## Day 56 (03-06-2024) Topics:
 - Initial setup
 - Working with model serializers
 - Creating Object using Shell
@@ -12432,10 +12432,9 @@ Which of the following is true about instance variables and class variables?
             path('StudentUpdateDelete/<int:pk>',StudentUpdateDelete.as_view(),name='StudentUpdateDelete'),
         ]
         ```
-        - Here we can see `StudentUpdateDelete/<int:pk>` has `pk` which is private key, as we are updating/deleting we need specific `id` to do that
+        - Here we can see `StudentUpdateDelete/<int:pk>` has `pk` which is primary key, as we are updating/deleting we need specific `id` to do that
         - Now we can update/delete in `http://127.0.0.1:8000/StudentUpdateDelete/1` route
             > Here pk which is id is important and it need to be valid
-> Similarly we will create 4 more to complete the task
 
 </details>
 
@@ -12737,13 +12736,74 @@ Which of the following is true about instance variables and class variables?
 <details>
 <summary>Day-59-Job Portal Project Posted job,Applicant list, Applied job (06-06-2024)</summary>
 
-### Day 59 Topics:
+## Day 59 (06-06-2024) Topics:
 - Job portal project
   - Recruiter profile
-    - Posted job
-    - Applicant list
+    - [Posted job (specific job posted by recruiter)](#posted-job-specific-job-posted-by-recruiter)
+    - [Applicant list](#applicant-list)
   - Seeker Profile
-    - Applied job
+    - [Applied job](#applied-job)
+
+### Posted job (specific job posted by recruiter)
+- Create a function `specificjobpost` in `views.py`
+    ```python
+    @login_required
+    def specificjobpost(request):
+        current_user=request.user
+        
+        if current_user.user_type == "recruiter":
+            jobs = JobModel.objects.filter(created_by=current_user)
+            
+            jobDict={
+                'jobs':jobs
+            }
+        return render(request,'profile/specificjobpost.html',jobDict)
+    ```
+    - Here we filter out the job posted by the recruiter
+
+### Applicant list
+- Create `applicants` function in `views.py`
+    ```python
+    def applicants(request,jobid):
+        job=JobModel.objects.get(id=jobid)
+
+        applicants=ApplyJobModel.objects.filter(applied_job=job)
+            
+        jobDict={
+            'applicants':applicants,
+            'job':job,
+        }
+        return render(request,'recruiter/applicants.html',jobDict)
+    ```
+    - Here we filter out the applicant from the `ApplyJobModel` model
+
+### Applied job
+- Applied job list can be found in two ways
+    ```python
+    def appliedjob(request):
+        jobs=JobModel.objects.all()
+        all_applied_job=[]
+        for job in jobs:
+            appliedjob=ApplyJobModel.objects.filter(applied_job=job)
+        
+            if appliedjob:
+                all_applied_job.append(job)
+        jobDict={
+             'all_applied_job':all_applied_job
+         }
+        return render(request,'seeker/appliedjob.html',jobDict)
+    ```
+    - Here we get it using the `applied_job` in `ApplyJobModel` model
+    ```python
+    def appliedjob(request):
+    current_user=request.user
+    appliedjob = ApplyJobModel.objects.filter(applicant=current_user)
+    jobDict={
+        'appliedjob':appliedjob
+    }
+    return render(request,'seeker/appliedjob.html',jobDict)
+    ```
+    - Here we get it using `applicant` in `ApplyJobModel` model
 
 </details>
 
@@ -12752,14 +12812,14 @@ Which of the following is true about instance variables and class variables?
 
 ## Day 60 Topics:
 - Job Portal Project
-  - When to user GET,POST
+  - When to use GET,POST
   - Search option
     - Using multi field search by `Q`
     - Using only one field filter search
 - Calorie Counter Project (Sudden Exam)
 - Idea on Django form
 
-### When to user GET,POST
+### When to use GET,POST
 - `POST`: When it is used must use csrf-token, while getting the value must use if condition to get value in views
 - `GET`: It will show in the url. No need to use csrf or if condition to get the value in views
 - In search option we will use `GET`
