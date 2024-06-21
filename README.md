@@ -10795,6 +10795,7 @@ Which of the following creates a list in Python?
 - Django Shell
 - Brainstorming
 - Task
+- Signup using terminal
 
 ### API
 - `API` : Application Programming Interface
@@ -10888,6 +10889,11 @@ Now let's view the data:
 
 ### Task
 - Preskool template setup in Django
+
+### Signup using terminal
+- `py manage.py shell`
+  - `from lawApp.models import CustomUserModel`
+  - `CustomUserModel.objects.create_user(username='tansen',password='123')`
 
 </details>
 
