@@ -13398,7 +13398,96 @@ Job Specification Information:
 </details>
 
 <details>
-<summary>Day-66-(22-06-2024)</summary>
+<summary>Day-66-Final Project Assigned(22-06-2024)</summary>
+
+## Day 66 (22-06-2024) Topics:
+- [New 6 team created by sir for final project](#new-6-team-created-by-sir-for-final-project)
+- [Projects lottery between 6 team](#projects-lottery-between-6-team)
+- [Lottery result](#lottery-result)
+- [All important days announced](#all-important-days-announced)
+- [Django Project Ideas](#django-project-ideas)
+- [Website templates](#website-templates)
+
+### New 6 team created by sir for final project
+- My team members:
+    - Md. Alahi Almin Tansen (`DIPTI-ICT-WADP-L4-03-05`)
+    - Tumpa Moni Mim (`DIPTI-ICT-WADP-L4-03-02`)
+    - Dolonchapa Khan Urmi (`DIPTI-ICT-WADP-L4-03-14`)
+    - Farhun Arif Hassan Chowdhury (`DIPTI-ICT-WADP-L4-03-04`)
+
+- Md. Shakil team members:
+    - Md. Shakil (`DIPTI-ICT-WADP-L4-03-17`)
+    - Jessica Tithi Chakrabarty (`DIPTI-ICT-WADP-L4-03-19`)
+    - Md. Fuad Hossain (`DIPTI-ICT-WADP-L4-03-20`)
+    - Sheikh Tarek Mahmud (`DIPTI-ICT-WADP-L4-03-22`)
+
+- Shamim Hossen team members:
+    - Shamim Hossen (`DIPTI-ICT-WADP-L4-03-06`)
+    - Md. Sajjad Hossain (`DIPTI-ICT-WADP-L4-03-03`)
+    - Monira Akther (`DIPTI-ICT-WADP-L4-03-01`)
+    - Moniruzzaman (`DIPTI-ICT-WADP-L4-03-15`)
+
+- Md. Rejone Hossain team members:
+    - Md. Rejone Hossain (`DIPTI-ICT-WADP-L4-03-09`)
+    - Protikha Hira Tanwi (`DIPTI-ICT-WADP-L4-03-13`)
+    - Sharmin Akter (`DIPTI-ICT-WADP-L4-03-18`)
+    - Nazmul Hossain (`DIPTI-ICT-WADP-L4-03-07`)
+
+- Sagor Mia team members:
+    - Sagor Mia (`DIPTI-ICT-WADP-L4-03-11`)
+    - Dipu Ray (`DIPTI-ICT-WADP-L4-03-12`)
+    - Ranajit Chandra Das (`DIPTI-ICT-WADP-L4-03-10`)
+    - Dheeman Chakma (`DIPTI-ICT-WADP-L4-03-24`)
+
+- Md. Abdullah Al Mamun team members:
+    - Md. Abdullah Al Mamun (`DIPTI-ICT-WADP-L4-03-16`)
+    - Md. Naim Islam (`DIPTI-ICT-WADP-L4-03-21`)
+    - M.A Hannan (`DIPTI-ICT-WADP-L4-03-08`)
+    - Afsana Akter Mimi (`DIPTI-ICT-WADP-L4-03-23`)
+
+### Projects lottery between 6 team
+- News Portal + Blog combined
+- Job portal + Resume Builder + Quiz System combined
+- Hospital Management system
+- School Management system
+- Food recipe
+- Fitness Tracker + Calorie Counter combined
+- To-let + Blog combined
+- TodoList + Blog + News Portal combined
+
+### Lottery result
+- My team get `To-let + Blog combined`
+- Md. Shakil team get `School Management system` 
+- Shamim Hossen team get `Job portal + Resume Builder + Quiz System combined`
+- Md. Rejone Hossain team get `Hospital Management system`
+- Sagor Mia team get `Fitness Tracker + Calorie Counter combined`
+- Md. Abdullah Al Mamun team get `News Portal + Blog combined`
+
+### All important days announced
+- Presentation date:
+  - 24-06-2024 (Monday)
+- Project update date:
+  - 26-06-2024 (Wednesday)
+
+- Project update 2 date:
+  - 29-06-2024
+
+- Project submission date:
+  - 30-06-2024 (Sunday)
+
+### Django Project Ideas
+- [Django project ideas for beginners](https://www.placementpreparation.io/blog/django-project-ideas-for-beginners/)
+
+### Website templates
+- [Uicookies](https://uicookies.com/free-real-estate-website-templates/)
+- [Bootstrapmade](https://bootstrapmade.com/)
+- [Startbootstrap](https://startbootstrap.com/themes)
+- [Themefisher](https://themefisher.com/free-bootstrap-templates)
+- [Creative tim](https://www.creative-tim.com/bootstrap-themes/free)
+- [Mobirise](https://mobirise.com/bootstrap-template/)
+- [Colorlib](https://colorlib.com/wp/cat/bootstrap/)
+- [Bootswatch](https://bootswatch.com/)
+
 </details>
 
 <details>
