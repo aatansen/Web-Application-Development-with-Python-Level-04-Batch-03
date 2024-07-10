@@ -13600,7 +13600,7 @@ Job Specification Information:
 <details>
 <summary>Day-77-Last Class, Party & Prize Giving Ceremony (04-07-2024)</summary>
 
-## Day 77 (04-05-2024) Topics:
+## Day 77 (04-07-2024) Topics:
 - Last class (Party and prize giving ceremony)
     - Md. Shakil team - School Management Project (`Champion`)
     - My team - To-let Project (`1st Runners-up`)
@@ -13609,5 +13609,24 @@ Job Specification Information:
 </details>
 
 <details>
-<summary>Day-78-(08-07-2024)</summary>
+<summary>Day-78-Final Assessment Day (08-07-2024)</summary>
+
+## Day 78 (08-07-2024) Topics:
+- Final Assessment Day
+    - Initial assessment start at 10:00 AM
+    - Written Exam (MCQ and Short Question) start at 10:30 AM
+    - Demonstration (Project) first 2 hours start at 11:30 AM and break at 01:30 PM
+    - Last 2 hours start at 03:00 PM
+    - Demonstration (Project) time ended at 05:00 PM
+    - Oral test and project showcase started at 05:30 PM and ended at 7:10 PM
+    - Final result at 08:15 PM
+        - Total student = 24
+        - Competent = 13
+        - Not Yet Competent = 10
+        - Absent = 1
+
+<div align="center">
+  <img src="https://github.com/aatansen/Web-Application-Development-with-Python-Level-04-Batch-03/blob/main/Day-65-Full%20Job%20Portal%20Project%20using%20Normal%20Form/jobProject/media/profile_picture/end.jpg" alt="end" width="400" />
+</div>
+
 </details>
