@@ -13491,47 +13491,121 @@ Job Specification Information:
 </details>
 
 <details>
-<summary>Day-67-(23-06-2024)</summary>
+<summary>Day-67-Written, MCQ Exam & Project update(23-06-2024)</summary>
+
+## Day 67 (23-06-2024) Topics:
+- Written and MCQ exam held, I got (written 11 and MCQ 14) total 25 out of 30.
+- To-let project
+  - Project update taken
+  - I show the update using github project board table
+
 </details>
 
 <details>
-<summary>Day-68-(24-06-2024)</summary>
+<summary>Day-68-Project Pre-presentation & To-let Project Initial Template Mastering (24-06-2024)</summary>
+
+## Day 68 (24-06-2024) Topics:
+- To-let project
+  - Presentation on project,  my team scored 24/30
+  - Work on assigned project template mastering
+
 </details>
 
 <details>
-<summary>Day-69-(25-06-2024)</summary>
+<summary>Day-69-To-let Project Admin Dashboard Template Mastering (25-06-2024)</summary>
+
+## Day 69 (25-06-2024) Topics:
+- To-let project
+  - Admin dashboard full template mastering
+
 </details>
 
 <details>
-<summary>Day-70-(26-06-2024)</summary>
+<summary>Day-70-To-let Project Add Property Multiple Image Integration (26-06-2024)</summary>
+
+## Day 70 (26-06-2024) Topics:
+- To-let project
+  - Add property correction
+    - Add property JavaScript integration
+    - Multiple image selection and view
+
 </details>
 
 <details>
-<summary>Day-71-(27-06-2024)</summary>
+<summary>Day-71-Written, Oral Test Suggestion & Mock Oral Exam (27-06-2024)</summary>
+
+## Day 71 (27-06-2024) Topics:
+- Written and oral test suggestion
+- Oral test where I scored 9/10. Mistake on django form example
+
 </details>
 
 <details>
-<summary>Day-72-(29-06-2024)</summary>
+<summary>Day-72-To-let issues, Index page,Image,Favourite,Property Views & Schedule, Review Added (29-06-2024)</summary>
+
+## Day 72 (29-06-2024) Topics:
+- To-let project
+    - Solve many issue in to let project
+    - Index page summary data view
+    - Image/favourite/Property page view logic
+    - Schedule / Review Added
+
 </details>
 
 <details>
-<summary>Day-73-(30-06-2024)</summary>
+<summary>Day-73-To-let Admin Dashboard, Issue Solved in Favourite / User review (30-06-2024)</summary>
+
+## Day 73 (30-06-2024) Topics:
+- To-let project
+    - Worked on admin dashboard of to let project
+    - New task (add notification)
+    - Solved favourite / User review
+
 </details>
 
 <details>
-<summary>Day-74-(01-07-2024)</summary>
+<summary>Day-74-To-let Notification,Blog Added,Revamped Property List Page (01-07-2024)</summary>
+
+## Day 74 (01-07-2024) Topics:
+- To-let project
+    - Notification Added
+    - Blog added
+    - Revamped property listing with agent image
+
 </details>
 
 <details>
-<summary>Day-75-(02-07-2024)</summary>
+<summary>Day-75-To-let Edit/Delete,Password Change Added, New Logo,Customized Template,Final Exam Date revealed (02-07-2024)</summary>
+
+## Day 75 (02-07-2024) Topics:
+- To-let project
+    - Edit/delete added in blog,property,favourite
+    - Customizing template a bit with new logo
+    - Fixed mobile routes
+    - Reworked on Editing multiple images
+    - Password change added
+- Final Exam date revealed (8th July,2024)
+
 </details>
 
 <details>
-<summary>Day-76-(03-07-2024)</summary>
+<summary>Day-76-To-let Final Project Submission(03-07-2024)</summary>
+
+## Day 76 (03-07-2024) Topics:
+- To-let project
+    - Final Project Submission day
+
 </details>
 
 <details>
-<summary>Day-77-(04-07-2024)</summary>
+<summary>Day-77-Last Class, Party & Prize Giving Ceremony (04-07-2024)</summary>
+
+## Day 77 (04-05-2024) Topics:
+- Last class (Party and prize giving ceremony)
+    - Md. Shakil team - School Management Project (`Champion`)
+    - My team - To-let Project (`1st Runners-up`)
+    - Md. Rejone Hossain team - Hospital Management Project (`2nd Runners-up`)
+
 </details>
 
 <details>
